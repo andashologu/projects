@@ -1,0 +1,172 @@
+body{
+    font-size: 0.8333333333333334vw;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 20px;
+    font-weight: 500;
+    min-height: 100%;
+}
+.hidden{
+    display: none;
+}
+input{
+    border: none;
+}
+input:focus, textarea:focus{
+    outline:  none;
+}
+.page-padding{
+    padding: 10em 8%;
+}
+.container{
+    max-width: 1920px;
+    margin: 0 auto;
+}
+.auth_form_wrapper{
+    position: relative;
+    margin: 0 auto;
+    padding: 115px 40px 0px;/*top , left&right, bottom*/
+    width: 280px;
+    height: 350px;
+    border: 1px solid #cacaca;
+    background-color: #fff;
+}
+.auth_form_wrapper.large{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: auto;
+    padding: 0 0px 60px;/*top , left&right, bottom*/
+    border: none;
+    box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.2)
+}
+.auth-component{
+    position: relative;
+    padding: 115px 40px 0px;
+    background-color: #fdfdfd;
+}
+.auth_form_wrapper.large .form-block{
+ background-color: #fdfdfd;
+ padding: 0 45px;
+}
+
+.form-block{
+    display: flex;
+    flex-direction: column;
+}
+.field-wrapper{
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+}
+.field-wrapper-2{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: stretch;
+    margin: auto 0;
+}
+.small-margin{
+    margin-bottom: 1em;
+}
+.medium-margin{
+    margin-bottom: 3em;
+}
+.link-field.small-margin{
+    margin: 14px;
+    letter-spacing: 1px;
+}
+.text-field{
+    background-color: transparent;
+    padding: 12px 0;
+    border: 1px solid #cacaca;
+    border-radius: 5px;
+    min-width: 0; /*avoid flex children (inputs have min width > 100) exceed parent wodth*/
+}
+.field-wrapper .label-field{
+    flex-grow: 1;
+    align-self: center;
+}
+.text-field-2{
+    background-color: transparent;
+    padding: 15px 0;
+    text-align: center;
+}
+.text-field{
+    padding-left: 15px;
+}
+.small-text{
+    font-size: 14px;
+}
+.large-text{
+    font-size: 18px;
+}
+.medium-text{
+    font-size: 16px;
+    letter-spacing: 1.15px;
+}
+.bold-text{
+    font-weight: bold;
+}
+.light{
+    color: grey;
+}
+.link-field{
+    align-self: center;/* prevents equal height on children*/
+    color: #357abe;
+}
+.horozontalline-wrapper{
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.horozontalline{
+    background-color: #cacaca;
+    height: 1px;
+    width: 100%;
+}
+.button, .submit-button{
+    padding: 10px 35px;
+    color: white;
+    border-radius: 20px;
+    font-weight: bold;
+    /*background-color: #002D62;*/
+    background-color: black;
+    align-self: center;
+    /*box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.5);*/
+    cursor: pointer;
+}
+.submit-button{
+    min-width: 300px;
+    border-radius: 5px;
+    /*background-color: #002244;*/
+}
+.bottom{/*parent must be set relative with reasonable height, should not display flex*/
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.top{/*parent must be set relative with reasonable height*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.field-wrapper.bottom{
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+.overlay{
+    height: 30%;
+    background-image: linear-gradient(0deg, rgb(243 243 243 / 43%) 27%, transparent 38%);
+    mix-blend-mode: normal;
+}
+.authlogo{
+    margin-top: 25px;
+}
+.error{
+    color: red;
+}

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PropertycheckApplication<propertycheck>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.kapelle.propertycheck.PropertycheckApplication",
+            "projectName": "propertycheck",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
