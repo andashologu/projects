@@ -1,12 +1,17 @@
 package com.kapelle.propertycheck.config;
 
-import org.springframework.context.annotation.*; 
-import org.springframework.security.authentication.dao.*; 
-import org.springframework.security.config.annotation.web.builders.*; 
-import org.springframework.security.config.annotation.web.configuration.*; 
-import org.springframework.security.core.userdetails.*; 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.DelegatingSecurityContextRepository;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 import com.kapelle.propertycheck.Services.Security.UserInfoService;
 
@@ -32,8 +37,16 @@ public class WebSecurityConfig{
         return authProvider;
     } 
 
+    @Bean
+    public SecurityContextRepository securityContextRepository() {
+      return new DelegatingSecurityContextRepository(
+          new RequestAttributeSecurityContextRepository(),
+          new HttpSessionSecurityContextRepository()
+      );
+    }
+
     @Bean 
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
+    public SecurityFilterChain filterChain(HttpSecurity http, SecurityContextRepository securityContextRepository) throws Exception { 
         http
             .authorizeHttpRequests( (authorize) -> authorize
                 .requestMatchers("/**").permitAll()
@@ -51,26 +64,11 @@ public class WebSecurityConfig{
                 .and() 
             .logout().permitAll()
                 .deleteCookies("KSESSIONLGN")
-                .logoutSuccessUrl("/")
                 .and()
+            .securityContext()
+                .securityContextRepository(securityContextRepository)
+            .and()
             .csrf().disable();
             return http.build();
-
-
-            /* *.antMatchers( "/**").permitAll()
-            .and() 
-            .formLogin()
-            .loginPage("/login").permitAll()//support POST method /*Post mapping for this url must not be rewritten in the controller */
-            /* .successForwardUrl("/login_success_handler")//support POST method
-            .failureHandler(failureHandler)
-            .and()
-            .rememberMe().key("sessionlogin")
-            .rememberMeParameter("rememberMe")
-            .rememberMeCookieName("rememberlogin")//name of the cookie
-            .and() 
-            .logout()
-            .logoutSuccessUrl("/").permitAll()
-            .and()
-            .csrf().disable();*/
     } 
 }

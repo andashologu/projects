@@ -1,9 +1,12 @@
+html, body{
+    height: 100%;
+}
 body{
     font-size: 0.8333333333333334vw;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 20px;
     font-weight: 500;
-    min-height: 100%;
+    margin: 0; /*remove default*/
 }
 .hidden{
     display: none;
@@ -17,6 +20,13 @@ input:focus, textarea:focus{
 .page-padding{
     padding: 10em 8%;
 }
+.page-padding.full_centered{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding: 0;
+}
 .container{
     max-width: 1920px;
     margin: 0 auto;
@@ -24,9 +34,9 @@ input:focus, textarea:focus{
 .auth_form_wrapper{
     position: relative;
     margin: 0 auto;
-    padding: 115px 40px 0px;/*top , left&right, bottom*/
+    padding: 95px 40px 0px;/*top , left&right, bottom*/
     width: 280px;
-    height: 350px;
+    min-height: 400px;
     border: 1px solid #cacaca;
     background-color: #fff;
 }
@@ -35,18 +45,16 @@ input:focus, textarea:focus{
     flex-direction: column;
     width: 600px;
     height: auto;
-    padding: 0 0px 60px;/*top , left&right, bottom*/
+    padding: 50px 55px 60px;/*top , left&right, bottom*/
     border: none;
-    box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.2)
+    /*box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.2)*//*No need*/
 }
 .auth-component{
     position: relative;
     padding: 115px 40px 0px;
-    background-color: #fdfdfd;
 }
 .auth_form_wrapper.large .form-block{
- background-color: #fdfdfd;
- padding: 0 45px;
+    padding: 25px 45px 0;
 }
 
 .form-block{
@@ -127,6 +135,7 @@ input:focus, textarea:focus{
     width: 100%;
 }
 .button, .submit-button{
+    flex-grow: 1;
     padding: 10px 35px;
     color: white;
     border-radius: 20px;
@@ -140,7 +149,7 @@ input:focus, textarea:focus{
 .submit-button{
     min-width: 300px;
     border-radius: 5px;
-    /*background-color: #002244;*/
+    margin-top: 5px;
 }
 .bottom{/*parent must be set relative with reasonable height, should not display flex*/
     position: absolute;
@@ -165,7 +174,7 @@ input:focus, textarea:focus{
     mix-blend-mode: normal;
 }
 .authlogo{
-    margin-top: 25px;
+    margin: 25px auto 0;
 }
 .error{
     color: red;

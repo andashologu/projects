@@ -19,31 +19,31 @@ public class UserEntity{
     @GeneratedValue(strategy=GenerationType.AUTO)
     public Long id;
 
-    @Pattern(regexp ="^[a-zA-Z]*$", message="Incorrect first name")
+    @Pattern(regexp ="^[a-zA-Z]*$", message="Incorrect first name format")
     @Column(name = "firstname", columnDefinition = "varchar(100)")
     public String firstname;
     
-    @Pattern(regexp ="^[a-zA-Z]*$", message="Incorrect second name")
+    @Pattern(regexp ="^[a-zA-Z]*$", message="Incorrect second name format")
     @Column(name = "lastname", columnDefinition = "varchar(100)")
     public String lastname;
 
-    @Email(message = "Incorrect email")
+    @Email(message = "Incorrect email format")
     @UniqueEmailConstraint
     @Column(name = "email", columnDefinition = "varchar(100)")
     public String email;
 
     @Column(name = "username", columnDefinition = "varchar(100)")
-    @Pattern(regexp ="^[a-zA-Z]*$", message="Incorrect username")
+    @Pattern(regexp ="^[a-zA-Z]*$", message="Incorrect username format")
     @UniqueUsernameConstraint
     public String username;
     
-    @Pattern(regexp ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,200}$", message="Password must contain Uppercase and Lowercases Latin characters, Digits and Special characters")
+    @Pattern(regexp ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,200}$", message="Incorrect password format")
     @Column(name = "password", columnDefinition = "varchar(100)")
     public String password;
 
     @Column(name = "role", columnDefinition = "varchar(100)")
     public String role = "USER";
-
+    
     public UserEntity(){
     }
     public UserEntity(String firstname, String lastname, String email, String username, String password, String role){

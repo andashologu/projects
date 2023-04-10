@@ -16,8 +16,8 @@
             <div class="container">
                 <div class="auth_form_wrapper large">
                     <div class="auth-component">
-                        <h1 class="mediumheading">Sign Up Form</h1>
-                        <p class="large-text light medium-margin">We would love to be in touch with you! Please  sign up to recieve email from us!</p>
+                        <p class="large-text light medium-margin" style="text-align: center">We would love to be with you!</p>
+                            <img class="authlogo top" alt="logo" src="/images/authlogo.svg" hight="75" width="350"/>
                         <div class="horozontalline-wrapper">
                             <div class="horozontalline"></div>
                         </div>
@@ -42,7 +42,7 @@
                             <input class="text-field medium-text" type="email" placeholder="e.g myname@gmail.com" value="${user.email}" name="email" minlength="10" maxlength="100"/>
                             <form:errors path="email" class="error small-text"/>
                         </div>
-                        <div class="field-wrapper">
+                        <div class="field-wrapper medium-margin">
                             <label class="label-field large-text">Username</label>
                             <div class="field-wrapper-2">
                                 <input class="text-field medium-text" type="text" value="${user.username}" name="username" minlength="3" maxlength="100"/>
@@ -59,6 +59,7 @@
                         <input class="submit-button medium-text medium-margin" type="submit" value="Signup"/>
                         <div class="horozontalline"></div>
                     </form:form>
+                    <img class="authlogo" alt="logo" src="/images/authlogo.svg" hight="75" width="350"/>
                 </div>
             </div>
         </div>
