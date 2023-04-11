@@ -28,11 +28,11 @@
                             <label class="label-field large-text small-margin">Full name</label>
                             <div class="field-wrapper">
                                 <div class="field-wrapper-2">
-                                    <input class="text-field medium-text" type="text" placeholder="First name" value="${user.firstname}" name="firstname" minlength="3" maxlength="100"/>
+                                    <input class="text-field medium-text" type="text" placeholder="First name" value="${user.firstname}" pattern="^[a-zA-Z]*$" name="firstname" minlength="3" maxlength="100"/>
                                     <form:errors path="firstname" class="error small-text"/>
                                 </div>
                                 <div class="field-wrapper-2">
-                                    <input class="text-field medium-text" type="text" placeholder="Last name" value="${user.lastname}" name="lastname" minlength="3" maxlength="100"/>
+                                    <input class="text-field medium-text" type="text" placeholder="Last name" value="${user.lastname}" pattern="^[a-zA-Z]*$" name="lastname" minlength="3" maxlength="100"/>
                                     <form:errors path="lastname" class="error small-text"/>
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                         <div class="field-wrapper medium-margin">
                             <label class="label-field large-text">Username</label>
                             <div class="field-wrapper-2">
-                                <input class="text-field medium-text" type="text" value="${user.username}" name="username" minlength="3" maxlength="100"/>
+                                <input class="text-field medium-text" type="text" value="${user.username}" pattern="^[a-zA-Z]*$" name="username" minlength="3" maxlength="100"/>
                                 <form:errors path="username" class="error small-text"/>
                             </div>
                         </div>

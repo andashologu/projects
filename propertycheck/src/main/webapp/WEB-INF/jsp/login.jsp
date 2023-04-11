@@ -14,7 +14,7 @@
         <div id="modal" class="page-padding full_centered">
             <div class="container">
                 <div class="auth_form_wrapper">
-                    <form id="login_form" class="form-block"  action="/login">
+                    <form id="login_form" class="form-block"  method="POST" action="/login">
                         <div class="field-wrapper-2 lgn medium-margin">
                             <input class="text-field-2 large-text" type="text" placeholder="Username" name="username" minlength="3" maxlength="100"/>
                             <div class="horozontalline"></div>

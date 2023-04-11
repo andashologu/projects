@@ -19,11 +19,9 @@ public class UserEntity{
     @GeneratedValue(strategy=GenerationType.AUTO)
     public Long id;
 
-    @Pattern(regexp ="^[a-zA-Z]*$", message="Incorrect first name format")
     @Column(name = "firstname", columnDefinition = "varchar(100)")
     public String firstname;
     
-    @Pattern(regexp ="^[a-zA-Z]*$", message="Incorrect second name format")
     @Column(name = "lastname", columnDefinition = "varchar(100)")
     public String lastname;
 
@@ -33,7 +31,6 @@ public class UserEntity{
     public String email;
 
     @Column(name = "username", columnDefinition = "varchar(100)")
-    @Pattern(regexp ="^[a-zA-Z]*$", message="Incorrect username format")
     @UniqueUsernameConstraint
     public String username;
     
