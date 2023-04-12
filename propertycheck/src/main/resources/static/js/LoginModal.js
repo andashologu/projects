@@ -1,46 +1,46 @@
 $("#login_button").on('click', function(e){
-    /*$.get("/login", function(data){
-        $("body").append(data);
-    });*/
-
-    $.ajax({
-        async: false,
-        type: 'GET',
-        url: '/login',
-        success: function(data) {
-            /*alert($(data).find('#modal').html())
-            $("body").append($(data).find('#modal').html());
-
-            */
-            $('<div />').load('/login', function(data) {
-                //$("body").append($(this).find('modal').html());
-                document.getElementByTagName("body").appendChild(document.createTextNode($(this).find('modal').html()));
-            });
-
-            $("#close_button").on('click', function(e){
-                $("#modal").remove();
-             });
-        }
-    });
+    if(!document.getElementById("#modal")){
+        $("modal-login").load("/login #modal", function(response, status, xhr){//function for onCemplete
+            if(status == "success"){
+                loginForm();
+            }else{
+                console.log(xhr.statusText);
+            }
+        });
+    }
 });
-
-
-
-
-
-let formData = new FormData();
-$("#login_form").on('submit', function(e){
-    e.preventDefault();
-    formData = $(this).serializeArray();
-    $.ajax({
-        url: "/login",
-        type: "POST", 
-        data: $.param(formData),
-        success: function(){
-            location.reload();
-        },
-        error: function(response){
-            document.getElementById("error_label").innerHTML = "Incorrect username or password";
-        }
+function loginForm(){
+    $("#login_form").on('submit', function(e){
+        e.preventDefault();
+        let formData = new FormData();
+        formData = $(this).serializeArray();
+        $.ajax({
+            url: "/login",
+            type: "POST", 
+            data: $.param(formData),
+            success: function(){
+                location.reload();
+            },
+            error: function(){
+                document.getElementById("error_label").innerHTML = "Incorrect username or password";
+            }
+        });
     });
-});
+    $("#close_button").on('click', function(e){
+        $("#modal").remove();
+    });
+}
+if(!document.getElementById("#logout_button")){
+    $("#logout_button").on('click', function(e){
+        $.ajax({
+            url: "/logout",
+            type: "POST", 
+            success: function(){
+                location.reload();
+            },
+            error: function(xhr){
+                console.log(xhr.statusText);
+            }
+        });
+    });
+}
