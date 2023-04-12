@@ -14,8 +14,10 @@
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript" ></script>
     <security:authorize access="!isAuthenticated()">
         <a id="login_button">Login</a>
-        <%@ include file = "login.jsp" %>
         <script src="/js/LoginModal.js" type="text/javascript"></script>
     </security:authorize>
+
+
+
 </body>
 </html>

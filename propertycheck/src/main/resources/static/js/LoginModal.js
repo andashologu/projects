@@ -1,12 +1,37 @@
-document.getElementById("modal").style.display = "none";
 $("#login_button").on('click', function(e){
-    document.getElementById("modal").style.display = "flex";
+    /*$.get("/login", function(data){
+        $("body").append(data);
+    });*/
+
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: '/login',
+        success: function(data) {
+            /*alert($(data).find('#modal').html())
+            $("body").append($(data).find('#modal').html());
+
+            */
+            $('<div />').load('/login', function(data) {
+                //$("body").append($(this).find('modal').html());
+                document.getElementByTagName("body").appendChild(document.createTextNode($(this).find('modal').html()));
+            });
+
+            $("#close_button").on('click', function(e){
+                $("#modal").remove();
+             });
+        }
+    });
 });
+
+
+
+
 
 let formData = new FormData();
 $("#login_form").on('submit', function(e){
     e.preventDefault();
-    var formData = $(this).serializeArray();
+    formData = $(this).serializeArray();
     $.ajax({
         url: "/login",
         type: "POST", 
