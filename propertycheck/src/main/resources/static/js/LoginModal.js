@@ -1,8 +1,10 @@
 $("#login_button").on('click', function(e){
     if(!document.getElementById("#modal")){
+        document.getElementById("loader-wrapper").style.display = "flex";
         $("modal-login").load("/login #modal", function(response, status, xhr){//function for onCemplete
+            document.getElementById("loader-wrapper").style.display = "none";
             if(status == "success"){
-                loginForm();
+                
             }else{
                 console.log(xhr.statusText);
             }
