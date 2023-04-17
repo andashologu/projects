@@ -1,3 +1,20 @@
-@media screen and (max-width: 767px){
-
+@media screen and (max-width: 478px){
+    .large-text{
+        font-size: 22px;
+    }
+    .auth_form_wrapper{
+        padding: 95px 50px 0px;
+        min-height: 430px;
+        border: none;
+    }
+    .auth_form_wrapper .overlay{
+        display: none;
+    }
+    .field-wrapper.bottom div {
+        display: inherit;
+        flex-direction: column;
+    }
+    .link-field.small-margin {
+        margin: 5px;
+    }
 }

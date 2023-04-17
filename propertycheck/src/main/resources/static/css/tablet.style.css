@@ -1,3 +1,19 @@
 @media screen and (max-width: 991px){
-
+    .form-block{
+        row-gap: 5px;
+    }
+    .large-text{
+        font-size: 26px;
+    }
+    .small-text{
+        font-size: 20px;
+    }
+    .auth_form_wrapper{
+        padding: 115px 50px 0px;
+        width: 400px;
+        min-height: 550px;
+    }
+    .button, .submit-button {
+        padding: 12px 35px;
+    }
 }

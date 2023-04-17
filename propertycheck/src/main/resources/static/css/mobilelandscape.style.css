@@ -1,3 +1,17 @@
-@media screen and (max-width: 478px){
-
+@media screen and (max-width: 767px){
+    .large-text{
+        font-size: 22px;
+    }
+    .small-text{
+        font-size: 18px;
+    }
+    .auth_form_wrapper{
+        padding: 95px 50px 0px;
+        width: 280px;
+        min-height: 400px;
+    }
+    .button, .submit-button {
+        padding: 10px 35px;
+    }
+    
 }

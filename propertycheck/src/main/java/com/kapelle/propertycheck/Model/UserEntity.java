@@ -30,6 +30,7 @@ public class UserEntity{
     @Column(name = "email", columnDefinition = "varchar(100)")
     public String email;
 
+    @Pattern(regexp = "^[a-zA-Z]*$", message="Only letters allowed")
     @Column(name = "username", columnDefinition = "varchar(100)")
     @UniqueUsernameConstraint
     public String username;
