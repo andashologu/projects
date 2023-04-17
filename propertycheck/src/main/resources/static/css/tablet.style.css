@@ -1,6 +1,6 @@
 @media screen and (max-width: 991px){
     .form-block{
-        row-gap: 5px;
+        row-gap: 15px;
     }
     .large-text{
         font-size: 26px;
