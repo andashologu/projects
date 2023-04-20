@@ -1,15 +1,15 @@
-package com.kapelle.propertycheck.Controller;
+package com.kapelle.propertycheck.PropertyCheck.Controller;
 
 
 //@Controller
 public class User{
     /* 
-    @GetMapping("/user/update-account")
+    @GetMapping("/user/settings/update-account")
     public String accountSettings(){
         //return id with model attributes
         return "edit/account";
     }
-    @PutMapping("/user/edit/{id}")
+    @PutMapping("/user/post/edit/{id}")
     public ResponseEntity<UserEntity> updateUser(@PathVariable (value = "id") Long id, @Valid @RequestBody UserEntity userDetails) throws ResourceNotFoundException{
         UserEntity user = userRepository.findById(id)
         orElseThrow(() -> new ResourceNotFoundException("User Not found for this id :: "+id));
@@ -32,19 +32,19 @@ public class User{
         final UserEntity updatedUser = userRepository.save(user);
         return ResponseEntity.ok(updatedUser);
     }
-    @DeleteMapping("/user/delete-account")
+    @DeleteMapping("/user/settings/delete-account")
     public String deleteAccount(){
         return null;
     }
-    @GetMapping("/user/payment-informartion")
+    @GetMapping("/user/settings/payment-informartion")
     public String paymentInfo(){
         return null;
     }
-    @PutMapping("/user/update-payment")
+    @PutMapping("/user/settings/update-payment")
     public String editPaymentInfo(){
         return null;
     }
-    @DeleteMapping("/user/remove-payment")
+    @DeleteMapping("/user/settings/remove-payment")
     public String deletePayment(){
         return null;
     }

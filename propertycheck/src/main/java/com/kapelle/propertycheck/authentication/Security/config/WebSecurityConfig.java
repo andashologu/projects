@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.config;
+package com.kapelle.propertycheck.authentication.Security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 
-import com.kapelle.propertycheck.Services.Security.UserInfoService;
+import com.kapelle.propertycheck.authentication.user.Service.UserInfoService;
 
 @Configuration 
 @EnableWebSecurity 

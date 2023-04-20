@@ -1,13 +1,13 @@
-package com.kapelle.propertycheck.Services.Security;
+package com.kapelle.propertycheck.authentication.user.Service;
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.security.core.userdetails.UserDetails; 
 import org.springframework.security.core.userdetails.UserDetailsService; 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.kapelle.propertycheck.Model.UserEntity;
-import com.kapelle.propertycheck.Model.UserRepository;
-import com.kapelle.propertycheck.Security.UserInfo;
+import com.kapelle.propertycheck.authentication.Security.UserInfo;
+import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
+import com.kapelle.propertycheck.authentication.user.Model.UserRepository;
 
 public class UserInfoService implements UserDetailsService { 
     @Autowired 

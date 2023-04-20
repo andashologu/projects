@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.Security;
+package com.kapelle.propertycheck.authentication.Security;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.kapelle.propertycheck.Model.UserEntity;
+import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
 
 public class UserInfo implements UserDetails{
     

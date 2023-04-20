@@ -1,7 +1,7 @@
-package com.kapelle.propertycheck.Model;
+package com.kapelle.propertycheck.authentication.user.Model;
 
-import com.kapelle.propertycheck.Validation.UniqueEmailConstraint;
-import com.kapelle.propertycheck.Validation.UniqueUsernameConstraint;
+import com.kapelle.propertycheck.authentication.user.Validation.UniqueEmailConstraint;
+import com.kapelle.propertycheck.authentication.user.Validation.UniqueUsernameConstraint;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

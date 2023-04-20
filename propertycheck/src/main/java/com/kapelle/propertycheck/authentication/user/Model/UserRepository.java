@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.Model;
+package com.kapelle.propertycheck.authentication.user.Model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

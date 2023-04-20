@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.Validation;
+package com.kapelle.propertycheck.authentication.user.Validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

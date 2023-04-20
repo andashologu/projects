@@ -1,12 +1,12 @@
-package com.kapelle.propertycheck.Validation;
+package com.kapelle.propertycheck.authentication.user.Validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.kapelle.propertycheck.Model.UserEntity;
-import com.kapelle.propertycheck.Model.UserRepository;
+import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
+import com.kapelle.propertycheck.authentication.user.Model.UserRepository;
 
 
 
