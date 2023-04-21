@@ -8,5 +8,6 @@
 </head>
 <body>
     An error has occur. Please contact support if you would like us to fix the error...
+    ${message}
 </body>
 </html>

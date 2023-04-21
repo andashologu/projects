@@ -46,29 +46,29 @@ public class WebSecurityConfig{
     }
 
     @Bean 
-    public SecurityFilterChain filterChain(HttpSecurity http, SecurityContextRepository securityContextRepository) throws Exception { 
+    public SecurityFilterChain filterChain(HttpSecurity http, SecurityContextRepository securityContextRepository) throws Exception {
         http
-            .authorizeHttpRequests( (authorize) -> authorize
+            .authorizeHttpRequests()
                 .requestMatchers("/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/user/**").hasRole("USER") // url such as /user/add/post
-            )
+            .and()
             .formLogin()
-                .loginPage("/login").permitAll() 
+                .loginPage("/login").permitAll()
                 .successForwardUrl("/login_success_handler")//support POST method
-                .failureForwardUrl("/login_failure_handler")//support POST method
-                .and()
-            .rememberMe().key("KSESSIONLGN")
+                .failureForwardUrl("/login_failure_handler")
+            .and()
+            .rememberMe(me -> me.key("KSESSIONLGN")
                 .rememberMeParameter("rememberMe")
-                .rememberMeCookieName("rememberlogin")//name of the cookie
-                .and() 
-            .logout().permitAll()
-                .deleteCookies("KSESSIONLGN")
-                .and()
+                .rememberMeCookieName("rememberlogin"))
+            .logout(logout -> logout.permitAll()
+                .deleteCookies("KSESSIONLGN"))
             .securityContext()
                 .securityContextRepository(securityContextRepository)
             .and()
             .csrf().disable();
+            //.csrf(withDefaults()).disable();
+            //.csrf(withDefaults());
             return http.build();
     } 
 }
