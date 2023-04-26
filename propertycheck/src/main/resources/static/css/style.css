@@ -43,14 +43,25 @@ input[name="rememberMe"]{
     max-width: 1920px;
     margin: 0 auto;
 }
+.background_image{
+    position: absolute;
+    background-image: url("/images/istockphoto-693579192-612x612.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
 .auth_form_wrapper{
     position: relative;
     margin: 0 auto;
-    padding: 95px 40px 0px;/*top , left&right, bottom*/
-    width: 280px;
-    min-height: 400px;
+    padding: 95px 80px 0px;/*top , left&right, bottom*/
+    width: 325px;
+    min-height: 515px;
     border: 1px solid #cacaca;
     background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
 }
 .auth_form_wrapper.large{
     display: flex;
@@ -72,6 +83,7 @@ input[name="rememberMe"]{
 .form-block{
     display: flex;
     flex-direction: column;
+    row-gap: 25px;
 }
 .field-wrapper{
     display: flex;
@@ -149,7 +161,7 @@ input[name="rememberMe"]{
 }
 .button, .submit-button{
     flex-grow: 1;
-    padding: 10px 35px;
+    padding: 15px 15px;
     color: white;
     border-radius: 20px;
     font-weight: bold;
@@ -185,6 +197,7 @@ input[name="rememberMe"]{
     display: inherit;
 }
 .overlay{
+    position: absolute;
     height: 30%;
     background-image: linear-gradient(0deg, rgb(243 243 243 / 43%) 27%, transparent 38%);
     mix-blend-mode: normal;

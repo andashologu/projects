@@ -11,6 +11,8 @@
         <link href="/css/mobileportrait.style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
+        <div class="background_image"></div>
+        <div class="overlay"></div>
         <div id="modal" class="page-padding full_centered">
             <div class="container">
                 <div class="auth_form_wrapper">
