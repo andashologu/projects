@@ -1,4 +1,6 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,7 +11,9 @@
     </head>
     <body>
         <security:authorize access="isAuthenticated()">
-            <a href="/logout">Logout</a>
+            <form:form action="/logout" method="POST">
+                <input type="submit" value="Logout"/>
+            </form:form>
         </security:authorize>
         <security:authorize access="!isAuthenticated()">
             <a href="/login">Login</a>

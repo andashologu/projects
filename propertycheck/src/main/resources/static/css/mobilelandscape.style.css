@@ -1,17 +1,28 @@
 @media screen and (max-width: 767px){
     .large-text{
-        font-size: 22px;
+        font-size: 20px;
     }
     .small-text{
         font-size: 18px;
     }
     .auth_form_wrapper{
-        padding: 95px 50px 0px;
-        width: 280px;
-        min-height: 400px;
+        padding: 65px 80px 0px;
+        width: 300px;
+        min-height: 500px;
     }
     .button, .submit-button {
         padding: 10px 35px;
     }
-    
+    .button.small-text, .button.small-text.dark {
+        padding: 16px 15px;
+    }
+    .field-wrapper{
+        flex-direction: column;
+    }
+    .field-wrapper .label-field {
+        align-self: flex-start;
+    }
+    .radial_background{
+        display: none;
+    }
 }

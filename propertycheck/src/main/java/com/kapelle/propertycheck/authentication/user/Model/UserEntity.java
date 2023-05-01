@@ -4,6 +4,7 @@ import com.kapelle.propertycheck.authentication.user.Validation.UniqueEmailConst
 import com.kapelle.propertycheck.authentication.user.Validation.UniqueUsernameConstraint;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,13 +25,15 @@ public class UserEntity{
     
     @Column(name = "lastname", columnDefinition = "varchar(100)")
     public String lastname;
+    
+    @Embedded
+    public Address address;
 
     @Email(message = "Incorrect email format")
     @UniqueEmailConstraint
     @Column(name = "email", columnDefinition = "varchar(100)")
     public String email;
 
-    @Pattern(regexp = "^[a-zA-Z]*$", message="Only letters allowed")
     @Column(name = "username", columnDefinition = "varchar(100)")
     @UniqueUsernameConstraint
     public String username;
@@ -44,10 +47,11 @@ public class UserEntity{
     
     public UserEntity(){
     }
-    public UserEntity(String firstname, String lastname, String email, String username, String password, String role){
+    public UserEntity(String firstname, String lastname, Address address, String email, String username, String password, String role){
         this.firstname = firstname;
         this.lastname = lastname;
-        this.username = email;
+        this.address = address;
+        this.email = email;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -87,6 +91,13 @@ public class UserEntity{
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public Address getAddress() {
+        return address;
+    }
+    public void setAddress(Address address) {
+        this.address = address;
+    }
     
     public String getPassword() {
         return password;
@@ -108,6 +119,7 @@ public class UserEntity{
                 "id = " + id +
                 " , firstname = " + firstname +
                 " , lastname = " + lastname +
+                " , address = " + address +
                 " , email = " + email +
                 " , username = " + username +
                 " , password = " + password +

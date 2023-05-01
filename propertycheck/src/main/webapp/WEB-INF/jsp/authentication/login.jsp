@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -11,35 +11,30 @@
         <link href="/css/mobileportrait.style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div class="background_image"></div>
-        <div class="overlay"></div>
         <div id="modal" class="page-padding full_centered">
             <div class="container">
                 <div class="auth_form_wrapper">
+                    <div class="radial_background"></div>
                     <button id="close_button" class="hidden">Close</button>
-                    <form id="login_form" class="form-block"  method="POST" action="/login">
+                    <form:form id="login_form" class="form-block"  action="/login" method="POST">
                         <div class="field-wrapper-2 lgn medium-margin">
-                            <input class="text-field-2 large-text" type="text" placeholder="Username" name="username" minlength="3" maxlength="100"/>
+                            <input class="text-field-2 large-text" type="text" placeholder="Username" name="username" value="${username}" minlength="3" maxlength="100"/>
                             <div class="horozontalline"></div>
-                            <input class="text-field-2 large-text" type="password" placeholder="Password" name="password" minlength="8" maxlength="100"/>
+                            <input class="text-field-2 large-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
+                            <label id="error_label" class="error small-text">${message}</label>
                         </div>
                         <div class="field-wrapper">
                             <input class="button small-text" type="submit" value="Login"/>
                         </div>
-                        <a href="" class="link-field small-text">Forgot password ?</a>
+                        <a href="" class="button small-text dark">Forgot password ?</a>
+                        <a href="/signup" class="button small-text dark">Sign up</a>
                         <div style="margin-top: 25px;">
-                            <input type="checkbox" name="rememberMe"/>
-                            <label class="label-field small-text">Remember me</label>
+                            <input type="checkbox" id="rememberMe" name="rememberMe"/>
+                            <label for="rememberMe" class="label-field small-text dark">Remember me</label>
                         </div>
-                        <label id="error_label" class="error small-text">${message}</label>
-                    </form>
+                        <!--input  type="hidden" value="${cookie['XSRF-TOKEN'].getValue()}"/--><!--Not needed because form:form tags already do the job-->
+                    </form:form>
                     <div class="overlay bottom"></div>
-                    <div class="field-wrapper bottom">
-                        <div>
-                            <label class="link-field small-text">New to PropertyCheck?</label>
-                            <a href="/signup" class="link-field small-text small-margin">Create an account</a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

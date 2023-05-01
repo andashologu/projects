@@ -1,11 +1,15 @@
 @media screen and (max-width: 478px){
+    .container{
+        width: 100%;
+    }
     .large-text{
         font-size: 22px;
     }
     .auth_form_wrapper{
-        padding: 95px 50px 0px;
-        min-height: 430px;
-        border: none;
+        padding: 95px 25px 0px;
+        min-height: z;
+        border-radius: 0;
+        width: 100vw;
     }
     .auth_form_wrapper .overlay{
         display: none;
@@ -16,5 +20,19 @@
     }
     .link-field.small-margin {
         margin: 5px;
+    }
+    .auth_form_wrapper.large{
+        padding: 50px 0 60px;
+    }
+    .page-padding.full_centered{
+        background-color: #fff;
+    }
+    .text-field {
+        background-color: #cacaca2a;
+        border-bottom: none;
+        border-radius: 35px;
+    }
+    .auth-component {
+        padding: 0 40px 0px;
     }
 }

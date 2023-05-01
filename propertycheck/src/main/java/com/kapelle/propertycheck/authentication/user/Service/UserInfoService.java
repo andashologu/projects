@@ -10,13 +10,16 @@ import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
 import com.kapelle.propertycheck.authentication.user.Model.UserRepository;
 
 public class UserInfoService implements UserDetailsService { 
+    
     @Autowired 
     private UserRepository userRepository; 
     
     @Override public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { 
-        UserEntity user = userRepository.findByUsername(username); 
+        UserEntity user = userRepository.findByUsernameIgnoreCase(username); 
         if (user == null) { 
-            throw new UsernameNotFoundException("Could not find user"); 
+            user = userRepository.findByEmailIgnoreCase(username); 
+            if(user == null)
+                throw new UsernameNotFoundException("Could not find user");
         } 
         return new UserInfo(user); 
     } 

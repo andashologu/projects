@@ -24,7 +24,7 @@ function loginForm(){
                 location.reload();
             },
             error: function(){
-                document.getElementById("error_label").innerHTML = "Incorrect username or password";
+                console.log("login failed");
             }
         });
     });

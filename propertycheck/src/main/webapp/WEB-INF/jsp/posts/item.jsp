@@ -86,7 +86,7 @@
         <button type="button" id="logout_button">Logout</button>
     </security:authorize>
     <security:authorize access="!isAuthenticated()">
-        <a id="login_button">Login</a>
+        <a id="login_button dark">Login</a>
         <modal-login></modal-login>
         <div id="loader-wrapper">
             <div class="loader-container">

@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -14,13 +15,11 @@ public class LoginController {
 		    return "authentication/login";
 	}
     @PostMapping("/login_failure_handler")
-	public String loginFailureHandler(Model model, HttpServletResponse response){
-        model.addAttribute("message", "Invalid username or password");
+	public String loginFailureHandler(Model model, HttpServletResponse response, HttpServletRequest request){
+        model.addAttribute("username", request.getParameter("username"));
+        model.addAttribute("password", request.getParameter("password"));
+        model.addAttribute("message", "Incorrect username or password");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         return "authentication/login";
-	}
-    @PostMapping("/login_success_handler")
-	public String loginSuccessHandler(){
-        return "redirect:/";
 	}
 }

@@ -9,11 +9,18 @@
         font-size: 20px;
     }
     .auth_form_wrapper{
-        padding: 115px 50px 0px;
+        padding: 115px 90px 0px;
         width: 400px;
-        min-height: 550px;
+        min-height: 650px;
     }
     .button, .submit-button {
         padding: 12px 35px;
+    }
+    .button.small-text, .button.small-text.dark{
+        padding: 22px 15px;
+    }
+    .auth_form_wrapper.large {
+        width: 100%;
+        max-width: none;
     }
 }
