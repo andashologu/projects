@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.chat.ActiveUsers;
+package com.kapelle.propertycheck.Chat.ActiveUsers;
 
 public class ActiveUserStore {
     

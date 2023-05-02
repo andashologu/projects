@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -60,7 +59,7 @@ public class WebSecurityConfig{
         //spring security forms already take care of this...
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
-        
+
         http
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -84,19 +83,18 @@ public class WebSecurityConfig{
                 .permitAll()
                 .deleteCookies("KSESSIONLGN")
             )
-            .securityContext()
-            .securityContextRepository(securityContextRepository)
-            .and()
-            .headers()
-            .frameOptions()
-            .sameOrigin()
-            .and()
+            .securityContext(context -> context
+                .securityContextRepository(securityContextRepository))
+            .headers(headers -> headers
+                .frameOptions()
+                .sameOrigin()
+            )
             //spring security forms already take care of this...
             .csrf((csrf) -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .csrfTokenRequestHandler(requestHandler)
             );
-            return http.build();
+        return http.build();
     } 
 
     @Bean

@@ -12,10 +12,11 @@
         <link href="css/mobileportrait.style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div style="padding: 0" class="page-padding">
+        <div id="modal" style="padding: 0" class="page-padding">
+            <div style="opacity: 0.3;" class="background_image_2"></div>
             <div class="container">
                 <div class="auth_form_wrapper large">
-                    <div class="radial_background"></div>
+                    <div style="opacity: 0.3;" class="background_image_2"></div>
                     <div class="auth-component">
                         <h1 class="small-heading dark small-margin">PropertyCheck</h1>
                         <p class="large-text dark medium-margin">Register</p>
@@ -43,17 +44,17 @@
                             <label class="label-field small-text small-margin dark bold-text">Address details</label>
                             <div class="field-wrapper small-margin">
                                 <div class="field-wrapper-2">
-                                    <input class="text-field small-text dark" type="text" placeholder="Street" value="${user.address.street}" pattern="^[a-zA-Z\s]*$" name="address.street" minlength="3" maxlength="100"/>
+                                    <input class="text-field small-text dark" type="text" placeholder="Street" value="${user.address.street}" name="address.street" minlength="3" maxlength="100"/>
                                     <form:errors path="address.street" class="error small-text"/>
                                 </div>
                                 <div class="field-wrapper-2">
-                                    <input class="text-field small-text" type="text" placeholder="City" value="${user.address.city}" pattern="^[a-zA-Z\s]*$" name="address.city" minlength="3" maxlength="100"/>
+                                    <input class="text-field small-text" type="text" placeholder="City" value="${user.address.city}" name="address.city" minlength="3" maxlength="100"/>
                                     <form:errors path="address.city" class="error small-text"/>
                                 </div>
                             </div>
                             <div class="field-wrapper">
                                 <div class="field-wrapper-2">
-                                    <input class="text-field small-text" type="text" placeholder="Country" value="${user.address.country}" pattern="^[a-zA-Z\s]*$" name="address.country" minlength="3" maxlength="100"/>
+                                    <input class="text-field small-text" type="text" placeholder="Country" value="${user.address.country}" name="address.country" minlength="3" maxlength="100"/>
                                     <form:errors path="address.country" class="error small-text"/>
                                 </div>
                                 <div class="field-wrapper-2">

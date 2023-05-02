@@ -5,9 +5,15 @@
     .large-text{
         font-size: 22px;
     }
+    #modal > .background_image_2{
+        display: block;
+        opacity: 0.3;
+    }
+    .auth_form_wrapper > .background_image_2{
+        display: none;
+    }
     .auth_form_wrapper{
         padding: 95px 25px 0px;
-        min-height: z;
         border-radius: 0;
         width: 100vw;
     }
@@ -34,5 +40,14 @@
     }
     .auth-component {
         padding: 0 40px 0px;
+    }
+    .button.small-text, .button.small-text.dark {
+        padding: 12px 15px;
+    }
+    .button.small-text::input[type="button"] {
+       margin: auto;
+    }
+    .button, .submit-button {
+        margin: auto;
     }
 }

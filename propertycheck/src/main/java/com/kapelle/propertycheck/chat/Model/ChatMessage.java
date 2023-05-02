@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.chat.Model;
+package com.kapelle.propertycheck.Chat.Model;
 
 public class ChatMessage {
     

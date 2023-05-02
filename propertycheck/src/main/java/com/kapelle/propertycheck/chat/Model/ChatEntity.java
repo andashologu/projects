@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.chat.Model;
+package com.kapelle.propertycheck.Chat.Model;
 
 import java.sql.Date;
 import java.sql.Time;

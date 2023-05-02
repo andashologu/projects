@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.chat.Controller;
+package com.kapelle.propertycheck.Chat.Controller;
 
 import java.security.Principal;
 
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
 import com.kapelle.propertycheck.authentication.user.Model.UserRepository;
-import com.kapelle.propertycheck.chat.Model.ChatMessage;
-import com.kapelle.propertycheck.chat.Model.ChatEntity;
-import com.kapelle.propertycheck.chat.Model.ChatRepository;
+import com.kapelle.propertycheck.Chat.Model.ChatMessage;
+import com.kapelle.propertycheck.Chat.Model.ChatEntity;
+import com.kapelle.propertycheck.Chat.Model.ChatRepository;
 
 @Controller
 public class ChatController {

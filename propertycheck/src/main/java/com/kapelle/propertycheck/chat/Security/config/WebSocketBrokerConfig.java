@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.chat.Security.config;
+package com.kapelle.propertycheck.Chat.Security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

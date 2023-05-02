@@ -32,6 +32,7 @@ input[name="rememberMe"]{
 
 }
 .page-padding{
+    position: relative;
     padding: 10em 8%;
 }
 .page-padding.full_centered{
@@ -40,7 +41,6 @@ input[name="rememberMe"]{
     justify-content: center;
     min-height: 100%;
     padding: 0;
-    background-color: #cacaca2a;
 }
 .container{
     display: flex;/*fix width block position on tablet*/
@@ -49,7 +49,7 @@ input[name="rememberMe"]{
 }
 .background_image{
     position: absolute;
-    background-image: url("/images/istockphoto-1209585940-612x612.jpg");
+    background-image: url("/images/240_F_303009196_lTnrOy6Vtv212qeLboUgteSTwuyJDlPp.jpg");
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover;
@@ -63,15 +63,24 @@ input[name="rememberMe"]{
     background-color: black;
     mix-blend-mode: soft-light;
 }
-.radial_background{
+.background_image_2{
+/*.radial_background{*/
     position: absolute;
+    background-image: url("/images/240_F_253026992_KFnLZd6w3anSspGooEYZrPx3djbr0E8B.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
     top: 0;
     bottom: 0;
-    left: 50%;
+    left: 0;
+    right: 0;
+    opacity: 0.6;
+    /*left: 50%;
     transform: translate(-50%, 0);
-    width: 80vw;
-    z-index: -1;
-    background: radial-gradient(#cacaca1a 0%, transparent 70%);
+    /*background: radial-gradient(#cacaca1a 0%, transparent 70%);*/
+}
+#modal > .background_image_2{
+    display: none;
 }
 .auth_form_wrapper{
     position: relative;
@@ -83,6 +92,7 @@ input[name="rememberMe"]{
     background-color: #fff;
     border-radius: 10px;
     overflow: visible;
+    background-color: transparent;
 }
 .auth_form_wrapper.large{
     display: flex;
@@ -102,9 +112,11 @@ input[name="rememberMe"]{
     row-gap: 25px;
 }
 .form-block{
+    position: relative;
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    z-index: 2;
 }
 .field-wrapper{
     display: flex;
@@ -203,6 +215,7 @@ input[name="rememberMe"]{
     /*box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.5);*/
     cursor: pointer;
     font-weight: 600;
+    min-width: 200px;
 }
 .submit-button{
     min-width: 300px;
@@ -210,7 +223,7 @@ input[name="rememberMe"]{
     margin-top: 5px;
 }
 .button.small-text.dark {
-    background-color: #fff;
+    background-color: transparent;
     color: black;
     align-self: stretch;
     text-align: center;

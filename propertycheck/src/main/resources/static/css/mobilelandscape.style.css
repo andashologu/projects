@@ -6,8 +6,8 @@
         font-size: 18px;
     }
     .auth_form_wrapper{
-        padding: 65px 80px 0px;
-        width: 300px;
+        padding: 65px 40px 0px;
+        width: 350px;
         min-height: 500px;
     }
     .button, .submit-button {
@@ -15,9 +15,6 @@
     }
     .button.small-text, .button.small-text.dark {
         padding: 16px 15px;
-    }
-    .field-wrapper{
-        flex-direction: column;
     }
     .field-wrapper .label-field {
         align-self: flex-start;

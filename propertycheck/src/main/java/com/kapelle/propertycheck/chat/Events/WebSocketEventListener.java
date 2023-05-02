@@ -1,4 +1,4 @@
-package com.kapelle.propertycheck.chat.Events;
+package com.kapelle.propertycheck.Chat.Events;
 
 import java.security.Principal;
 
@@ -11,7 +11,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 
-import com.kapelle.propertycheck.chat.Model.ChatEntity;
+import com.kapelle.propertycheck.Chat.Model.ChatEntity;
 
 @Component
 public class WebSocketEventListener {
