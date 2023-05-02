@@ -1,4 +1,7 @@
 @media screen and (max-width: 478px){
+    .page-padding.full_centered{
+        align-items: flex-start;
+    }
     .container{
         width: 100%;
     }
@@ -7,20 +10,19 @@
     }
     #modal > .background_image_2{
         display: block;
-        opacity: 0.3;
     }
     .auth_form_wrapper > .background_image_2{
         display: none;
     }
     .auth_form_wrapper{
-        padding: 95px 25px 0px;
+        padding: 25px 25px 0px;
         border-radius: 0;
         width: 100vw;
     }
     .auth_form_wrapper .overlay{
         display: none;
     }
-    .field-wrapper.bottom div {
+    .field-wrapper{
         display: inherit;
         flex-direction: column;
     }
@@ -35,8 +37,6 @@
     }
     .text-field {
         background-color: #cacaca2a;
-        border-bottom: none;
-        border-radius: 35px;
     }
     .auth-component {
         padding: 0 40px 0px;

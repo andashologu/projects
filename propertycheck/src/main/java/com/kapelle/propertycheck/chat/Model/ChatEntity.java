@@ -40,8 +40,6 @@ public class ChatEntity{
     @Basic
     Time time;
 
-    public ChatEntity(){
-    }
     public ChatEntity(UserEntity sender, UserEntity recipient, String message, Date date, Time time){
         this.sender = sender;
         this.recipient = recipient;

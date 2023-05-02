@@ -18,22 +18,25 @@
                     <div class="background_image_2"></div>
                     <button id="close_button" class="hidden">Close</button>
                     <form:form id="login_form" class="form-block"  action="/login" method="POST">
-                        <h1 style="margin: auto;" class="small-heading dark">PropertyCheck</h1>
-                        <div class="field-wrapper-2 lgn ">
-                            <input class="text-field-2 large-text" type="text" placeholder="Username" name="username" value="${username}" minlength="3" maxlength="100"/>
-                            <div style="background-color: #cacaca2a" class="horozontalline"></div>
-                            <input  class="text-field-2 large-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
+                        <h1 style="margin-left: auto; margin-right: auto;" class="small-heading dark">PropertyCheck</h1>
+                        <div class="field-wrapper-2 lgn medium-margin">
+                            <input class="text-field large-text" type="text" placeholder="Username" name="username" value="${username}" minlength="3" maxlength="100"/>
+                            <input  class="text-field large-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
                             <label id="error_label" class="error small-text">${message}</label>
                         </div>
                         <input style="margin: auto;" class="button small-text" type="submit" value="Login"/>
-                        <div class="horozontalline medium-margin"></div>
-                        <a style="margin: auto;" href="" class="button small-text dark">Forgot password ?</a>
-                        <a style="margin: auto;" href="" class="button small-text dark">Sign up</a>
-                        <!--input style="background-color:  #008CBA; margin: auto;" class="button small-text" type="button" value="Sign up"/-->
+                        <a style="margin-left: auto; margin-right: auto;" href="" class="button small-text dark small-margin">Forgot password ?</a>
+                        <div style="flex-direction: row;" class="field-wrapper lgn small-margin">
+                            <div style="margin: auto 0" class="horozontalline"></div>
+                            <label class="label-field small-text dark">OR</label>
+                            <div style="margin: auto 0" class="horozontalline"></div>
+                        </div>
+                        <a style="margin: auto;" href="/signup" class="button small-text dark">Sign up</a>
                         <div style="margin-top: 25px;">
                             <input type="checkbox" id="rememberMe" name="rememberMe"/>
                             <label for="rememberMe" class="label-field small-text dark">Remember me</label>
                         </div>
+                        <!--Put more content here, such as our social media links-->
                         <!--input  type="hidden" value="${cookie['XSRF-TOKEN'].getValue()}"/--><!--Not needed because form:form tags already do the job-->
                     </form:form>
                     <div class="overlay bottom"></div>

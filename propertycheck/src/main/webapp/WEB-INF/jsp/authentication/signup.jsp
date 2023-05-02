@@ -13,13 +13,12 @@
     </head>
     <body>
         <div id="modal" style="padding: 0" class="page-padding">
-            <div style="opacity: 0.3;" class="background_image_2"></div>
             <div class="container">
                 <div class="auth_form_wrapper large">
-                    <div style="opacity: 0.3;" class="background_image_2"></div>
+                    <div style="opacity: 0.1;" class="background_image_2"></div>
                     <div class="auth-component">
                         <h1 class="small-heading dark small-margin">PropertyCheck</h1>
-                        <p class="large-text dark medium-margin">Register</p>
+                        <p class="large-text dark medium-margin">Signup Form</p>
                         <!--img class="authlogo top" alt="logo" src="/images/authlogo.svg" hight="75" width="350"/-->
                         <div class="horozontalline-wrapper">
                             <div class="horozontalline"></div>
@@ -84,6 +83,7 @@
                         </div>
                         <input class="submit-button medium-text medium-margin" type="submit" value="Signup"/>
                         <div class="horozontalline"></div>
+                        <!--Put more content here, such as our going back to the login if already have an account...-->
                         <input type="hidden" name="_csrf.parameterName" value="_csrf.token"/>
                     </form:form>
                 </div>

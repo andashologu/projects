@@ -26,9 +26,8 @@ input:focus, textarea:focus{
 }
 input[name="rememberMe"]{
     border: 2px solid #cacaca;/*prevent ignore on real mobile devices*/
-    width: 12px;
-    border-radius: 3px;
-    height: 12px;
+    width: 15px;
+    height: 15px;
 
 }
 .page-padding{
@@ -74,7 +73,7 @@ input[name="rememberMe"]{
     bottom: 0;
     left: 0;
     right: 0;
-    opacity: 0.6;
+    opacity: 0.3;
     /*left: 50%;
     transform: translate(-50%, 0);
     /*background: radial-gradient(#cacaca1a 0%, transparent 70%);*/
@@ -100,7 +99,7 @@ input[name="rememberMe"]{
     width: 800px;
     max-width: 60vw; /*for radial space*/
     height: auto;
-    padding: 50px 55px 60px;/*top , left&right, bottom*/
+    padding: 0 55px 60px;/*top , left&right, bottom*/
     border: none;
 }
 .auth-component{

@@ -45,8 +45,6 @@ public class UserEntity{
     @Column(name = "role", columnDefinition = "varchar(100)")
     public String role = "USER";
     
-    public UserEntity(){
-    }
     public UserEntity(String firstname, String lastname, Address address, String email, String username, String password, String role){
         this.firstname = firstname;
         this.lastname = lastname;
