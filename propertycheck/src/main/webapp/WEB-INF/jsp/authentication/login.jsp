@@ -18,15 +18,18 @@
                     <div class="background_image_2"></div>
                     <button id="close_button" class="hidden">Close</button>
                     <form:form id="login_form" class="form-block"  action="/login" method="POST">
-                        <div class="field-wrapper-2 lgn medium-margin">
+                        <h1 style="margin: auto;" class="small-heading dark">PropertyCheck</h1>
+                        <div class="field-wrapper-2 lgn ">
                             <input class="text-field-2 large-text" type="text" placeholder="Username" name="username" value="${username}" minlength="3" maxlength="100"/>
-                            <div class="horozontalline"></div>
-                            <input class="text-field-2 large-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
+                            <div style="background-color: #cacaca2a" class="horozontalline"></div>
+                            <input  class="text-field-2 large-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
                             <label id="error_label" class="error small-text">${message}</label>
                         </div>
-                        <input class="button small-text" type="submit" value="Login"/>
-                        <a href="" class="button small-text dark">Forgot password ?</a>
-                        <input class="button small-text" type="button" value="Sign up"/>
+                        <input style="margin: auto;" class="button small-text" type="submit" value="Login"/>
+                        <div class="horozontalline medium-margin"></div>
+                        <a style="margin: auto;" href="" class="button small-text dark">Forgot password ?</a>
+                        <a style="margin: auto;" href="" class="button small-text dark">Sign up</a>
+                        <!--input style="background-color:  #008CBA; margin: auto;" class="button small-text" type="button" value="Sign up"/-->
                         <div style="margin-top: 25px;">
                             <input type="checkbox" id="rememberMe" name="rememberMe"/>
                             <label for="rememberMe" class="label-field small-text dark">Remember me</label>

@@ -44,10 +44,4 @@
     .button.small-text, .button.small-text.dark {
         padding: 12px 15px;
     }
-    .button.small-text::input[type="button"] {
-       margin: auto;
-    }
-    .button, .submit-button {
-        margin: auto;
-    }
 }
