@@ -81,7 +81,7 @@
                                 <form:errors path="password" class="error small-text"/>
                             </div>
                         </div>
-                        <input class="submit-button medium-text medium-margin" type="submit" value="Signup"/>
+                        <input class="submit-button medium-text medium-margin" type="submit" value="Submit"/>
                         <div class="horozontalline"></div>
                         <!--Put more content here, such as our going back to the login if already have an account...-->
                         <input type="hidden" name="_csrf.parameterName" value="_csrf.token"/>
