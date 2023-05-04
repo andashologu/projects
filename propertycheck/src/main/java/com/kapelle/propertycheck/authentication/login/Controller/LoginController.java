@@ -1,9 +1,13 @@
 package com.kapelle.propertycheck.authentication.login.Controller;
 
+import java.time.ZoneId;
+import java.util.TimeZone;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LoginController {
     @GetMapping("login")//login PostMapping is supported by Security
     public String login() {
+        
 		    return "authentication/login";
 	}
     @PostMapping("/login_failure_handler")
@@ -20,6 +25,11 @@ public class LoginController {
         model.addAttribute("password", request.getParameter("password"));
         model.addAttribute("message", "Incorrect username or password");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+        //TimeZone timeZone = RequestContextUtils.getTimeZone(request);
+     //return (timeZone != null ? timeZone.toZoneId() : ZoneId.systemDefault());
+     
+
         return "authentication/login";
 	}
 }

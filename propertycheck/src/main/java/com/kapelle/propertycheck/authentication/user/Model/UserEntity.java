@@ -34,6 +34,9 @@ public class UserEntity{
     @Column(name = "email", columnDefinition = "varchar(100)")
     public String email;
 
+    @Column(name = "companyname", columnDefinition = "varchar(100)")
+    public String companyname;
+
     @Column(name = "username", columnDefinition = "varchar(100)")
     @UniqueUsernameConstraint
     public String username;
@@ -44,12 +47,15 @@ public class UserEntity{
 
     @Column(name = "role", columnDefinition = "varchar(100)")
     public String role = "USER";
+
+    public UserEntity(){}
     
-    public UserEntity(String firstname, String lastname, Address address, String email, String username, String password, String role){
+    public UserEntity(String firstname, String lastname, Address address, String email, String companyname, String username, String password, String role){
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
         this.email = email;
+        this.companyname = companyname;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -83,6 +89,13 @@ public class UserEntity{
         this.email = email;
     }
 
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
+    }
+    public String getCompanyname() {
+        return companyname;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -119,6 +132,7 @@ public class UserEntity{
                 " , lastname = " + lastname +
                 " , address = " + address +
                 " , email = " + email +
+                " , companyname = " + companyname +
                 " , username = " + username +
                 " , password = " + password +
                 " , role = " + role +

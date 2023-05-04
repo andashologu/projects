@@ -41,7 +41,7 @@
                         </div>
                         <div class="field-wrapper-2">
                             <label class="label-field small-text small-margin dark bold-text">Address details</label>
-                            <div class="field-wrapper small-margin">
+                            <div class="field-wrapper">
                                 <div class="field-wrapper-2">
                                     <input class="text-field small-text dark" type="text" placeholder="Street" value="${user.address.street}" name="address.street" minlength="3" maxlength="100"/>
                                     <form:errors path="address.street" class="error small-text"/>
@@ -67,15 +67,20 @@
                             <input class="text-field small-text" type="email" placeholder="e.g myname@gmail.com" value="${user.email}" name="email" minlength="10" maxlength="100"/>
                             <form:errors path="email" class="error small-text"/>
                         </div>
+                        <div class="field-wrapper-2 medium-margin">
+                            <label class="label-field small-text small-margin dark bold-text">Company name (Not compulsory)</label>
+                            <input class="text-field small-text" type="text" placeholder="e.g Kapelle" value="${user.companyname}" name="companyname" minlength="10" maxlength="100"/>
+                            <form:errors path="companyname" class="error small-text"/>
+                        </div>
                         <div class="field-wrapper small-margin">
-                            <label class="label-field small-text dark bold-text">Username</label>
+                            <label class="label-field small-text dark bold-text small-margin">Username</label>
                             <div class="field-wrapper-2">
                                 <input class="text-field small-text" type="text" placeholder="e.g Smith" value="${user.username}" name="username" pattern="^[a-zA-Z]*$" title="Only letters allowed" minlength="3" maxlength="100"/>
                                 <form:errors path="username" class="error small-text"/>
                             </div>
                         </div>
                         <div class="field-wrapper medium-margin">
-                            <label class="label-field small-text dark bold-text">Passoword</label>
+                            <label class="label-field small-text dark bold-text small-margin">Passoword</label>
                             <div class="field-wrapper-2">
                                 <input class="text-field small-text" type="password" placeholder="********" value="${user.password}" name="password"/>
                                 <form:errors path="password" class="error small-text"/>
@@ -84,7 +89,6 @@
                         <input class="submit-button medium-text medium-margin" type="submit" value="Submit"/>
                         <div class="horozontalline"></div>
                         <!--Put more content here, such as our going back to the login if already have an account...-->
-                        <input type="hidden" name="_csrf.parameterName" value="_csrf.token"/>
                     </form:form>
                 </div>
             </div>
