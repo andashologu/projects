@@ -8,10 +8,8 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-import org.springframework.web.socket.messaging.SessionSubscribeEvent;
-import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 
-import com.kapelle.propertycheck.Chat.Model.ChatEntity;
+import com.kapelle.propertycheck.Chat.Model.ChatMessage;
 
 @Component
 public class WebSocketEventListener {
@@ -24,10 +22,9 @@ public class WebSocketEventListener {
         Principal user = event.getUser();
         if(user != null){
             String username = user.getName();
-            /*
-             * Check baeldung website example of how to keep track of logged users in java arraylist
-             * 
-             */
+            ChatMessage message = new ChatMessage();
+            message.setText(username+" connected");
+            messagingTemplate.convertAndSend("/topic/onlinestatus/"+username, message);
         }
     }
     
@@ -36,10 +33,9 @@ public class WebSocketEventListener {
         Principal user = event.getUser();
         if(user != null){
             String username = user.getName();
-            /*
-             * 
-             * 
-             */
+            ChatMessage message = new ChatMessage();
+            message.setText(username+" disconnected");
+            messagingTemplate.convertAndSend("/topic/onlinestatus/"+username, message);
         }
     }
     

@@ -1,5 +1,11 @@
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <html lang="en">
+    <style>
+        .text-field.large-text{
+            font-size: 18px;
+            padding: 8px 0;
+        }
+    </style>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +40,7 @@
                         <a style="margin: auto;" href="/signup" class="button small-text dark">Sign up</a>
                         <div style="margin-top: 25px;">
                             <input type="checkbox" id="rememberMe" name="rememberMe"/>
-                            <label for="rememberMe" class="label-field small-text dark">Remember me</label>
+                            <label for="rememberMe" class="label-field small-text dark">Remember me next time</label>
                         </div>
                         <!--Put more content here, such as our social media links-->
                         <!--input  type="hidden" value="${cookie['XSRF-TOKEN'].getValue()}"/--><!--Not needed because form:form tags already do the job-->

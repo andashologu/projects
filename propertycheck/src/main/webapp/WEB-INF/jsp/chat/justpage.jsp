@@ -11,6 +11,7 @@
 
         var stompClient = null;
         var privateStompClient = null;
+        var stompClientGroup = null;
 
         var headerName = "${_csrf}";
         var token = "${_csrf.token}";
@@ -21,11 +22,9 @@
 
         var socket = null;
         function connect(){
-
             socket = new SockJS('/ws');
             stompClient = Stomp.over(socket);
             stompClient.connect(headers, function(frame) {
-                console.log(frame);
                 stompClient.subscribe('/topic/messages', function(result) {
                     show(JSON.parse(result.body));
                 });
@@ -33,32 +32,57 @@
             socket = new SockJS('/ws');
             privateStompClient = Stomp.over(socket);
             privateStompClient.connect(headers, function(frame) {
-                //console.log(frame);
                 privateStompClient.subscribe('/user/queue/reply', function(result) {
-                    console.log("response:"+result.body);
+                    show(JSON.parse(result.body));
+                });
+            });
+            socket = new SockJS('/ws');
+            stompClientGroup = Stomp.over(socket);
+            stompClientGroup.connect(headers, function(frame) {
+                stompClientGroup.subscribe('/topic/onlinestatus/Anda', function(result) {
                     show(JSON.parse(result.body));
                 });
             });
         }
+        connect();
         window.addEventListener('visibilitychange', () => {
-            if(document.visibilityState == 'visible'){
+            /*Problem !!!
+                Page visibilty only detects tab focus/when switching tabs, and not background/foreground status of the broswer.
+                When app/browser is pushed to the background, websocket is closed. 
+                And so, we cannot detect when user push app/browser to the backdround to perform unsubscribe and disconnect events.
+                The Solution for now is - onclose websocket -blur event must be forced to trigger.
+            */
+            if (socket.readyState === 2 | socket.readyState === 3) {
                 connect();
             }
-            else{
-                console.log("user leaves the page");
-                stompClient.unsubscribe();
-                privateStompClient.unsubscribe();
-                stompClient.disconnect();
-                privateStompClient.disconnect();
-                socket.close();
-            }
         });
-        connect();
+        
+        
+        socket.onclose =function(event){
+            console.log("websocket closed");
+            stompClient.unsubscribe();
+            privateStompClient.unsubscribe();
+            stompClientGroup.unsubscribe();
+            stompClient.disconnect();
+            privateStompClient.disconnect();
+            stompClientGroup.disconnect();
+            window.trigger("blur"); /*
+            this forces visibilty change to be triggered when browser push to background.
+            when the user clicks back or comes back to the window, the focus event will be force to trigger
+            whenever the user start interacting with the app*/
+        }
+
         function sendMessage() {
+            if (socket.readyState === 2 | socket.readyState === 3) {
+                connect();
+            }
             var text = document.getElementById('text').value;
             stompClient.send("/app/all", {}, JSON.stringify({'text':text}));
         }
         function sendPrivateMessage() {
+            if (socket.readyState === 2 | socket.readyState === 3) {
+                connect();
+            }
             var text = document.getElementById('privateText').value;
             var to = document.getElementById('to').value;
             stompClient.send("/app/specific", {}, JSON.stringify({'text':text, 'to':to}));

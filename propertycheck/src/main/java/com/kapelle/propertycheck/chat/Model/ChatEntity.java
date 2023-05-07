@@ -2,7 +2,6 @@ package com.kapelle.propertycheck.Chat.Model;
 
 import java.sql.Date;
 import java.sql.Time;
-
 import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
 
 import jakarta.persistence.Basic;
@@ -40,12 +39,16 @@ public class ChatEntity{
     @Basic
     Time time;
 
-    public ChatEntity(UserEntity sender, UserEntity recipient, String message, Date date, Time time){
+    @Column(name = "timezone")
+    String timezone;
+
+    public ChatEntity(UserEntity sender, UserEntity recipient, String message, Date date, Time time, String timezone){
         this.sender = sender;
         this.recipient = recipient;
         this.message = message;
         this.date = date;
         this.time = time;
+        this.timezone = timezone;
     }
 
     public Long getId() {
@@ -76,7 +79,7 @@ public class ChatEntity{
         this.message = message;
     }
 
-    public Date  getDate() {
+    public Date getDate() {
         return date;
     }
     public void setDate(Date date) {
@@ -89,6 +92,13 @@ public class ChatEntity{
     public void setTime(Time time) {
         this.time = time;
     }
+
+    public String getTimezone(){
+        return timezone;
+    }
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
     
     @Override
     public String toString() {
@@ -99,7 +109,7 @@ public class ChatEntity{
                 "', message='" + message +
                 "', date='" + date +
                 "', time='" + time +
-
+                "', timezone='" + timezone +
                 "'}";
     }
 }

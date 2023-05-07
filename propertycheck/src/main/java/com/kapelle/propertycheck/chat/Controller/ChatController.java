@@ -1,9 +1,15 @@
 package com.kapelle.propertycheck.Chat.Controller;
 
 import java.security.Principal;
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -32,7 +38,7 @@ public class ChatController {
 
     @GetMapping("/chat")
     public String index(){
-        return "chat/index";
+        return "chat/justpage";
     }
 
     // Mapped as /app/all
@@ -44,12 +50,21 @@ public class ChatController {
 
     // Mapped as /app/specific
     @MessageMapping("/specific")
-    public void sendToSpecificUser(@Payload ChatMessage message, Principal user) throws UsernameNotFoundException{
-        System.out.println("username of send with email login in: "+user.getName());//must test !!!
+    public void sendToSpecificUser(@Payload ChatMessage message, Principal user, TimeZone timezone) throws UsernameNotFoundException{
         UserEntity sender = userRepository.findByUsernameIgnoreCase(user.getName());
         UserEntity recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
         if(sender != null | recipient != null){
-            ChatEntity chat = new ChatEntity(sender, recipient, message.getText(), null, null);
+            ZonedDateTime serverDateTime = ZonedDateTime.now();
+            ZoneId clientTimeZone = timezone.toZoneId();
+            ZonedDateTime clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
+            LocalDate date = clientDateTime.toLocalDate();
+            Date sqlDate = Date.valueOf(date);
+            LocalTime time = clientDateTime.toLocalTime();
+            Time sqlTime = Time.valueOf(time);
+            message.setDate(sqlDate.toString());
+            message.setTime(sqlTime.toString());
+            message.setTimezone(timezone.getDisplayName());
+            ChatEntity chat = new ChatEntity(sender, recipient, message.getText(), sqlDate, sqlTime, timezone.getDisplayName());
             chatRepository.save(chat);
             simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
         }
@@ -57,13 +72,4 @@ public class ChatController {
             throw new UsernameNotFoundException("Sender or Recipient could not be found !!!");
         }
     }
-
-    //Mapped as /app/typing/{status}
-   /*  @MessageMapping("/specific/{userId}")
-    public void sendToSpecificUser(@DestinationVariable String userId, Principal user) {
-
-        simpMessagingTemplate.convertAndSendToUser(chat.getRecipient().getUsername(), "/specific", "");
-        //Must get a boolean true if user is typing or false of not....
-        //And send the status to specific user...
-    }*/
 }

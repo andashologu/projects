@@ -2,15 +2,12 @@ package com.kapelle.propertycheck.PropertyCheck.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import org.springframework.stereotype.Controller;
@@ -20,16 +17,15 @@ public class Home {
 
     @GetMapping("/")
     public String index(){
-        return "home";
+        return "home/index";
     }
     @GetMapping("/post/{id}")
     public String index(@PathVariable("id") String username){
         return "posts/item";
     }
     @GetMapping("/test")
-    public String test(HttpServletRequest request, TimeZone timezone, Locale locale){
-        
-        
+    public String test(HttpServletRequest request, TimeZone timezone){
+ 
       /* Object obj = null;
      if(timezone != null){
         System.out.println("client:...");
@@ -43,16 +39,6 @@ public class Home {
         obj =  ZoneId.systemDefault();
         
      }*/
-     System.out.println("Current time zone: "+timezone.toZoneId());
-     System.out.println("Current  locate: "+locale.getDisplayCountry());
-     String country = timezone.getDisplayName(locale);//country
-     System.out.println("Country: "+country);
-
-     Currency currency = null;
-     
-     System.out.println("Currency: "+Currency.getInstance(locale));
-     System.out.println("");
-
         // Current date and time using now()
 		ZonedDateTime currentDateTime = ZonedDateTime.now();
 
@@ -80,7 +66,6 @@ public class Home {
 		System.out.println("Dubai time now : " + formatter.format(dubaiDateTime));
 
         //............................................................................
-        System.out.println(locale.getCountry());
 
         return "test";
     }
