@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,9 +19,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
 import com.kapelle.propertycheck.authentication.user.Model.UserRepository;
+
 import com.kapelle.propertycheck.Chat.Model.ChatMessage;
 import com.kapelle.propertycheck.Chat.Model.ChatEntity;
 import com.kapelle.propertycheck.Chat.Model.ChatRepository;
+import com.kapelle.propertycheck.Chat.Model.Status;
 
 @Controller
 public class ChatController {
@@ -50,12 +51,12 @@ public class ChatController {
 
     // Mapped as /app/specific
     @MessageMapping("/specific")
-    public void sendToSpecificUser(@Payload ChatMessage message, Principal user, TimeZone timezone) throws UsernameNotFoundException{
+    public void sendToSpecificUser(@Payload ChatMessage message, Principal user) throws UsernameNotFoundException{
         UserEntity sender = userRepository.findByUsernameIgnoreCase(user.getName());
         UserEntity recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
         if(sender != null | recipient != null){
             ZonedDateTime serverDateTime = ZonedDateTime.now();
-            ZoneId clientTimeZone = timezone.toZoneId();
+            ZoneId clientTimeZone = ZoneId.of(message.getTimezone());
             ZonedDateTime clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
             LocalDate date = clientDateTime.toLocalDate();
             Date sqlDate = Date.valueOf(date);
@@ -63,8 +64,7 @@ public class ChatController {
             Time sqlTime = Time.valueOf(time);
             message.setDate(sqlDate.toString());
             message.setTime(sqlTime.toString());
-            message.setTimezone(timezone.getDisplayName());
-            ChatEntity chat = new ChatEntity(sender, recipient, message.getText(), sqlDate, sqlTime, timezone.getDisplayName());
+            ChatEntity chat = new ChatEntity(sender, recipient, message.getText(), Status.SEEN, sqlDate, sqlTime, message.getTimezone());
             chatRepository.save(chat);
             simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
         }

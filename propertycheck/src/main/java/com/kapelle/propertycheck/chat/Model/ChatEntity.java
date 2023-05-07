@@ -8,6 +8,8 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,6 +35,9 @@ public class ChatEntity{
     @Column(name = "message", columnDefinition = "varchar(500)")
     public String message;
 
+    @Enumerated(EnumType.ORDINAL)
+    public Status status;
+
     @Basic
     Date date;
 
@@ -42,10 +47,11 @@ public class ChatEntity{
     @Column(name = "timezone")
     String timezone;
 
-    public ChatEntity(UserEntity sender, UserEntity recipient, String message, Date date, Time time, String timezone){
+    public ChatEntity(UserEntity sender, UserEntity recipient, String message, Status status, Date date, Time time, String timezone){
         this.sender = sender;
         this.recipient = recipient;
         this.message = message;
+        this.status = status;
         this.date = date;
         this.time = time;
         this.timezone = timezone;
@@ -79,6 +85,13 @@ public class ChatEntity{
         this.message = message;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -107,6 +120,7 @@ public class ChatEntity{
                 "', sender='" + sender.username +
                 "', recipient='" + recipient.username +
                 "', message='" + message +
+                "', status='" + status +
                 "', date='" + date +
                 "', time='" + time +
                 "', timezone='" + timezone +

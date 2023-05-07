@@ -5,10 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messaging</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript" ></script>
+    <script src="https://cdn.jsdelivr.net/gh/manuelmhtr/countries-and-timezones@latest/dist/index.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
     <script type="text/javascript">
-
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      console.log("timezone: "+timezone);
         var stompClient = null;
         var privateStompClient = null;
         var stompClientGroup = null;
@@ -85,7 +88,7 @@
             }
             var text = document.getElementById('privateText').value;
             var to = document.getElementById('to').value;
-            stompClient.send("/app/specific", {}, JSON.stringify({'text':text, 'to':to}));
+            stompClient.send("/app/specific", {}, JSON.stringify({'text':text, 'to':to, 'timezone': timezone}));
         }
         function show(message) {
             var response = document.getElementById('messages');
