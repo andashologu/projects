@@ -68,9 +68,9 @@
                             <form:errors path="email" class="error small-text"/>
                         </div>
                         <div class="field-wrapper-2 medium-margin">
-                            <label class="label-field small-text small-margin dark bold-text">Company name (Not compulsory)</label>
-                            <input class="text-field small-text" type="text" placeholder="e.g Kapelle" value="${user.companyname}" name="companyname" minlength="10" maxlength="100"/>
-                            <form:errors path="companyname" class="error small-text"/>
+                            <label class="label-field small-text small-margin dark bold-text">Company (Not compulsory)</label>
+                            <input class="text-field small-text" type="text" placeholder="e.g Kapelle" value="${user.company}" name="company" minlength="10" maxlength="100"/>
+                            <form:errors path="company" class="error small-text"/>
                         </div>
                         <div class="field-wrapper small-margin">
                             <label class="label-field small-text dark bold-text small-margin">Username</label>

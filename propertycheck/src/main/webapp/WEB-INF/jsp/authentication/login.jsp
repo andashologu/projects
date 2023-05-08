@@ -1,9 +1,9 @@
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <html lang="en">
     <style>
-        .text-field.large-text{
+        .text-field.large-text, .text-field.large-text::placeholder{
             font-size: 18px;
-            padding: 8px 0;
+            padding: 8px 5px;
         }
     </style>
     <head>

@@ -39,7 +39,7 @@ public class ChatController {
 
     @GetMapping("/chat")
     public String index(){
-        return "chat/justpage";
+        return "chat/index";
     }
 
     // Mapped as /app/all
@@ -54,7 +54,7 @@ public class ChatController {
     public void sendToSpecificUser(@Payload ChatMessage message, Principal user) throws UsernameNotFoundException{
         UserEntity sender = userRepository.findByUsernameIgnoreCase(user.getName());
         UserEntity recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
-        if(sender != null | recipient != null){
+        if(sender != null & recipient != null){
             ZonedDateTime serverDateTime = ZonedDateTime.now();
             ZoneId clientTimeZone = ZoneId.of(message.getTimezone());
             ZonedDateTime clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
@@ -64,7 +64,7 @@ public class ChatController {
             Time sqlTime = Time.valueOf(time);
             message.setDate(sqlDate.toString());
             message.setTime(sqlTime.toString());
-            ChatEntity chat = new ChatEntity(sender, recipient, message.getText(), Status.SEEN, sqlDate, sqlTime, message.getTimezone());
+            ChatEntity chat = new ChatEntity(sender, recipient, message.getText(), Status.SENT, sqlDate, sqlTime, message.getTimezone());
             chatRepository.save(chat);
             simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
         }
