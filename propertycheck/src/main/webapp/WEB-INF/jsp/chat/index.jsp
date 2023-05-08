@@ -79,8 +79,8 @@
                     <div class="profile_pic"></div>
                     <div class="field-wrapper-2">
                         <!--NB, to do.. company name mucst be unique-->
-                        <label class="label-field medium-text dark bold-text">Username/ company name (if applicable) </label>
-                        <label class="label-field small-text light">last seen</label>
+                        <label class="label-field medium-text dark bold-text">Username/ company name (if provided) </label>
+                        <label class="label-field small-text light">Online status</label>
                     </div>
                 </div>
                 <div style="width: 80%; margin: auto 10%;" class="horozontalline"></div>

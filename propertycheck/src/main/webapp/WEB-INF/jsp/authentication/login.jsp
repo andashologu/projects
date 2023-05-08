@@ -1,11 +1,5 @@
 <%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <html lang="en">
-    <style>
-        .text-field.large-text, .text-field.large-text::placeholder{
-            font-size: 18px;
-            padding: 8px 5px;
-        }
-    </style>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,6 +10,16 @@
         <link href="/css/mobilelandscape.style.css" rel="stylesheet" type="text/css">
         <link href="/css/mobileportrait.style.css" rel="stylesheet" type="text/css">
     </head>
+    <style>
+        .text-field-2.large-text, .text-field.large-text-2::placeholder{
+            font-size: 16px;
+        }
+        .text-field-2 {
+            position: relative;
+            width: 120%;
+            left: -10%;
+        }
+    </style>
     <body>
         <div id="modal" class="page-padding full_centered">
             <div class="background_image_2"></div>
@@ -26,8 +30,9 @@
                     <form:form id="login_form" class="form-block"  action="/login" method="POST">
                         <h1 style="margin-left: auto; margin-right: auto;" class="small-heading dark">PropertyCheck</h1>
                         <div class="field-wrapper-2 lgn medium-margin">
-                            <input class="text-field large-text" type="text" placeholder="Username" name="username" value="${username}" minlength="3" maxlength="100"/>
-                            <input  class="text-field large-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
+                            <input class="text-field-2 large-text" type="text" placeholder="Username" name="username" value="${username}" minlength="3" maxlength="100"/>
+                            <div class="horozontalline"></div>
+                            <input  class="text-field-2 large-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
                             <label id="error_label" class="error small-text">${message}</label>
                         </div>
                         <input style="margin: auto;" class="button small-text" type="submit" value="Login"/>
