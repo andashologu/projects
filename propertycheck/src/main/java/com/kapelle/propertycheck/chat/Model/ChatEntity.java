@@ -2,6 +2,8 @@ package com.kapelle.propertycheck.Chat.Model;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
+
 import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
 
 import jakarta.persistence.Basic;
@@ -20,9 +22,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "chats")
 public class ChatEntity{
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     public Long id;
+
+    @Column(name = "users_id")
+    public Long usersId;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "sender_id", referencedColumnName = "id")
@@ -43,17 +49,23 @@ public class ChatEntity{
 
     @Basic
     Time time;
+    
+    Timestamp datetime;
 
     @Column(name = "timezone")
     String timezone;
 
-    public ChatEntity(UserEntity sender, UserEntity recipient, String message, Status status, Date date, Time time, String timezone){
+    public ChatEntity(){}
+
+    public ChatEntity(Long usersId, UserEntity sender, UserEntity recipient, String message, Status status, Date date, Time time, Timestamp datetime, String timezone){
+        this.usersId = usersId;
         this.sender = sender;
         this.recipient = recipient;
         this.message = message;
         this.status = status;
         this.date = date;
         this.time = time;
+        this.datetime = datetime;
         this.timezone = timezone;
     }
 
@@ -62,6 +74,13 @@ public class ChatEntity{
     }
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUsersid() {
+        return usersId;
+    }
+    public void setUsersid() {
+        this.usersId = sender.getId()+recipient.getId();
     }
 
     public UserEntity getSender() {
@@ -106,6 +125,13 @@ public class ChatEntity{
         this.time = time;
     }
 
+    public Timestamp getDatetime() {
+        return datetime;
+    }
+    public void setDatetime(Timestamp datetime) {
+        this.datetime = datetime;
+    }
+
     public String getTimezone(){
         return timezone;
     }
@@ -115,14 +141,16 @@ public class ChatEntity{
     
     @Override
     public String toString() {
-        return "User{" +
+        return "Message{" +
                 "id='" + id +
+                "usersId="+ usersId +
                 "', sender='" + sender.username +
                 "', recipient='" + recipient.username +
-                "', message='" + message +
+                "', text='" + message +
                 "', status='" + status +
                 "', date='" + date +
                 "', time='" + time +
+                "', datetime='" + datetime +
                 "', timezone='" + timezone +
                 "'}";
     }

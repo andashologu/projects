@@ -30,6 +30,9 @@ input[name="rememberMe"]{
     height: 15px;
 
 }
+p{
+    margin: 0;
+}
 .page-padding{
     position: relative;
     padding: 10em 8%;
@@ -46,15 +49,15 @@ input[name="rememberMe"]{
     max-width: 1920px;
     margin: 0 auto;
 }
-.background_image{
+/*.background_image{
     position: absolute;
     background-image: url("/images/240_F_303009196_lTnrOy6Vtv212qeLboUgteSTwuyJDlPp.jpg");
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
+    background-position: center; /* Center the image 
+    background-repeat: no-repeat; /* Do not repeat the image 
     background-size: cover;
     height: 100%;
     width: 100%;
-}
+}*/
 .background_overlay{
     position: absolute;
     width: 100%;
@@ -62,12 +65,11 @@ input[name="rememberMe"]{
     background-color: black;
     mix-blend-mode: soft-light;
 }
-.background_image_2{
-/*.radial_background{*/
+/*.background_image_2{
     position: absolute;
     background-image: url("/images/240_F_253026992_KFnLZd6w3anSspGooEYZrPx3djbr0E8B.jpg");
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
+    background-position: center; /* Center the image 
+    background-repeat: no-repeat; /* Do not repeat the image 
     background-size: cover;
     top: 0;
     bottom: 0;
@@ -76,22 +78,21 @@ input[name="rememberMe"]{
     opacity: 0.3;
     /*left: 50%;
     transform: translate(-50%, 0);
-    /*background: radial-gradient(#cacaca1a 0%, transparent 70%);*/
-}
+    /*background: radial-gradient(#cacaca1a 0%, transparent 70%);
+}*/
 #modal > .background_image_2{
     display: none;
 }
 .auth_form_wrapper{
     position: relative;
     margin: 0 auto;
-    padding: 90px 80px 0 80px;/*top , left&right, bottom*/
+    padding: 90px 80px 40px 80px;/*top , left&right, bottom*/
     width: 275px;
     min-height: 475px;
-    /*box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.5);*/
-    background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
     background-color: transparent;
+    box-shadow: inset 0px 0px 3px 1px rgb(202 202 202 / 50%);/*#cacaca80 same*/
 }
 .auth_form_wrapper.large{
     display: flex;
@@ -121,8 +122,11 @@ input[name="rememberMe"]{
     display: flex;
     flex-direction: row;
     column-gap: 15px;
-    justify-content: space-between;
-    margin-bottom: 0.5em;
+    justify-content: flex-start;
+}
+.row{/*similar to field-wrapper, but does not change to column on mobile*/
+    display: flex;
+    column-gap: 1.3em;
 }
 .field-wrapper-2{
     display: flex;
@@ -151,7 +155,6 @@ input[name="rememberMe"]{
     min-width: 0; /*avoid flex children (inputs have min width > 100) exceed parent wodth*/
     border-radius: 0;
 }
-
 .field-wrapper .label-field{
     flex-grow: 1;
     align-self: center;
@@ -264,4 +267,55 @@ input[name="rememberMe"]{
 }
 .error{
     color: red;
+}
+.full_block{
+    width: 100%;
+    height: 100vh;
+}
+.grid_3 {
+    width: 100%;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1.2fr 0.8fr;
+    grid-auto-columns: 1fr;
+    display: grid;
+}
+.chat_item.contacts{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.contact{
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+.chat_item.content{
+    display: flex;
+    flex-direction: column;
+    align-self: end;
+    justify-content: center;
+    padding: 15px;
+}
+.chat_item.profile{
+    background-color: white;
+}
+.chat_component{
+    min-height: 80vh;
+    width: 80%;
+    background-color: white;
+    padding: 15px;
+}
+.profile_pic{
+    width: 4rem;
+    height: 4rem;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    background-color: #cacaca;
+}
+.messages{
+    min-height: 80vh;
+    width: 80%;
+    padding: 0 10%;
 }

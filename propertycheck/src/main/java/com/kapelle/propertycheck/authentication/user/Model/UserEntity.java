@@ -10,7 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
@@ -20,16 +20,23 @@ public class UserEntity{
     @GeneratedValue(strategy=GenerationType.AUTO)
     public Long id;
 
+    @Pattern(regexp = "^[a-zA-Z]*$", message="Only alphabets allowed in this field")
     @Column(name = "firstname", columnDefinition = "varchar(100)")
     public String firstname;
     
+    @Pattern(regexp = "^[a-zA-Z]*$", message="Only alphabets allowed in this field")
     @Column(name = "lastname", columnDefinition = "varchar(100)")
     public String lastname;
     
     @Embedded
     public Address address;
 
-    @Email(message = "Incorrect email format")
+    @NotEmpty(message = "Compulsory field must not be empty")
+    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" 
+        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message="Incorrect email format")
+    /*So some of the email addresses that will be valid via this email validation technique are: username@domain.com, user.name@domain.com, user-name@domain.com, username@domain.co.in, user_name@domain.com
+        Here's a shortlist of some email addresses that will be invalid via this email validation: username.@domain.com, .user.name@domain.com, user-name@domain.com., username@.com*/
+    
     @UniqueEmailConstraint
     @Column(name = "email", columnDefinition = "varchar(100)")
     public String email;
@@ -37,11 +44,13 @@ public class UserEntity{
     @Column(name = "companyname", columnDefinition = "varchar(100)")
     public String company;
 
-    @Column(name = "username", columnDefinition = "varchar(100)")
+    @NotEmpty(message = "Compulsory field must not be empty")
+    @Pattern(regexp = "^[a-zA-Z]*$", message="Only alphabets allowed in this field")@Column(name = "username", columnDefinition = "varchar(100)")
     @UniqueUsernameConstraint
     public String username;
     
-    @Pattern(regexp ="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,200}$", message="Incorrect password format")
+    @NotEmpty(message = "Compulsory field must not be empty")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,200}$", message="Incorrect password format. Password must be strong")
     @Column(name = "password", columnDefinition = "varchar(100)")
     public String password;
 

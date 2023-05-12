@@ -8,12 +8,6 @@
     .large-text{
         font-size: 22px;
     }
-    #modal > .background_image_2{
-        display: block;
-    }
-    .auth_form_wrapper > .background_image_2{
-        display: none;
-    }
     .auth_form_wrapper{
         padding: 25px 25px 0px;
         border-radius: 0;

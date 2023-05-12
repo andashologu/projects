@@ -1,57 +1,7 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
-    <style>
-        .full_block{
-            width: 100%;
-            height: 100vh;
-        }
-        .grid_3 {
-            width: 100%;
-            grid-template-rows: auto;
-            grid-template-columns: 1fr 1.2fr 0.8fr;
-            grid-auto-columns: 1fr;
-            display: grid;
-        }
-        .chat_item.contacts{
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            justify-content: flex-end;
-        }
-        .chat_item.content{
-            display: flex;
-            flex-direction: column;
-            align-self: end;
-            justify-content: center;
-        }
-        .chat_item.profile{
-            background-color: white;
-        }
-        .chat_component{
-            min-height: 80vh;
-            border-radius: 5px 5px 0 0;
-            width: 80%;
-            background-color: white;
-        }
-        .bar{
-            display: flex;
-            column-gap: 1.3em;
-            padding: 15px 25px;
-        }
-        .profile_pic{
-            width: 4rem;
-            height: 4rem;
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
-            background-color: #cacaca;
-        }
-        .messages{
-            min-height: 80vh;
-            width: 100%;
-        }
-
-    </style>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,33 +11,80 @@
     <link href="/css/tablet.style.css" rel="stylesheet" type="text/css">
     <link href="/css/mobilelandscape.style.css" rel="stylesheet" type="text/css">
     <link href="/css/mobileportrait.style.css" rel="stylesheet" type="text/css">
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Red+Hat+Display:400,500,900&display=swap");
+        body {
+            font-family: Red hat Display, sans-serif;
+        }
+        .medium-text {
+            letter-spacing: 0.5px;
+        }
+    </style>
 </head>
-<style>
-    .medium-text {
-    letter-spacing: 0.5px;
-}
-</style>
 <!--https://codepen.io/mubangadv/pen/rXrOQa-->
-<body style="background-color: #cacaca2a;">
+<body>
     <div class="container">
         <div class="full_block grid_3">
             <div class="chat_item contacts">
-                <div class="chat_component"></div>
+                <div class="chat_component">
+                    <c:forEach var="contact" items="${contacts}">
+                        <div class="contact row small-margin">
+                            <div class="profile_pic"></div>
+                            <div class="field-wrapper-2">
+                                <c:if test = "${contact.getSender().getUsername() != username}">
+                                    <div class="label-field medium-text dark bold-text">${contact.getSender().getUsername()}</div><!--label tag does not inherit cursor-->
+                                </c:if>
+                                <c:if test = "${contact.getRecipient().getUsername() != username}">
+                                    <div class="label-field medium-text dark bold-text">${contact.getRecipient().getUsername()}</div><!--label tag does not inherit cursor-->
+                                </c:if>
+                                <div style="justify-content: space-between;" class="row small-margin">
+                                    <p class="small-text light">${contact.getMessage()}</p>
+                                    <label class="label-field small-text light">${contact.getTime()}</label>
+                                </div>
+                                <div class="horozontalline"></div>
+                            </div>
+                        </div>
+                        
+                    </c:forEach>
+                </div>
             </div>
             <div class="chat_item content">
-                <div class="bar">
+                <div class="row small-margin">
                     <div class="profile_pic"></div>
-                    <div class="field-wrapper-2">
+                    <div class="field-wrapper-2 small-margin">
                         <!--NB, to do.. company name mucst be unique-->
-                        <label class="label-field medium-text dark bold-text">Username/ company name (if provided) </label>
+                        <label class="label-field medium-text dark bold-text">Username</label>
                         <label class="label-field small-text light">Online status</label>
                     </div>
                 </div>
-                <div style="width: 80%; margin: auto 10%;" class="horozontalline"></div>
-                <div class="messages"></div>
-                <div class="input"></div>
+                <div style="width: 90%; margin-left: 5%; margin-right: 5%;" class="horozontalline medium-margin"></div>
+                <div class="messages">
+                    <div id="messages" class="field-wrapper-2">
+                        <div class="field-wrapper-2 small-margin">
+                            <div class="row">
+                                <label class="label-field small-text dark bold-text">Username</label>
+                                <label class="label-field small-text light">time</label>
+                            </div>
+                            <p class="small-text dark">Message here. The filed will need to have maximum width for logn messages. Just kidding will need to test first...</p>
+                            <label class="label-field small-text light">Message status</label>
+                        </div>
+                        <div class="field-wrapper-2 small-margin">
+                            <div class="row">
+                                <label class="label-field small-text dark bold-text">You</label>
+                                <label class="label-field small-text light">time</label>
+                            </div>
+                            <p class="small-text dark">Your response here. All messages will be aligned left</p>
+                            <label class="label-field small-text light">Message status</label>
+                        </div>
+                    </div>
+                    <div class="field-wrapper-2">
+                        <input class="text-field-2 small-text dark" type="text" placeholder="type message...">
+                    </div>
+                </div>
             </div>
-            <div class="chat_item profile"></div>
+            <!--div class="chat_item profile">
+                <!--iframe></iframe-->
+            </div-->
         </div>
     </div>
 </body>

@@ -59,7 +59,20 @@
                 connect();
             }
         });
-        
+        window.addEventListener('visibilitychange', () => {
+            /*Problem !!!
+                Page visibilty only detects tab focus/when switching tabs, and not background/foreground status of the broswer.
+                When app/browser is pushed to the background, websocket is closed. 
+                And so, we cannot detect when user push app/browser to the backdround to perform unsubscribe and disconnect events.
+                The Solution for now is - onclose websocket -blur event must be forced to trigger.
+            */
+            if (socket.readyState === 2 | socket.readyState === 3) {
+                connect();
+            }
+        });
+        window.addEventListener('resume', () => {
+            alert("resumimg!!!");
+        });
         
         socket.onclose =function(event){
             console.log("websocket closed");
