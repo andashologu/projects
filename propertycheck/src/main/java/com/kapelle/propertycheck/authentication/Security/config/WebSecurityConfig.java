@@ -64,7 +64,7 @@ public class WebSecurityConfig{
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/user/**").hasRole("USER") // url such as /user/add/post
-                .requestMatchers("/chat").authenticated()
+                .requestMatchers("/chat", "chat/**").authenticated()
                 .anyRequest().permitAll()
             )
             .formLogin((form) -> form

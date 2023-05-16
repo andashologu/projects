@@ -1,12 +1,12 @@
 package com.kapelle.propertycheck.Chat.Model;
+import java.time.ZonedDateTime;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.TimeZoneStorage;
+import org.hibernate.type.SqlTypes;
 
 import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
 
-import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,42 +31,33 @@ public class ChatEntity{
     public Long usersId;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "sender_id", referencedColumnName = "id")
+    @JoinColumn(name = "sender_id", referencedColumnName = "id", nullable = false)
     public UserEntity sender;
     
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "recipient_id", referencedColumnName = "id")
+    @JoinColumn(name = "recipient_id", referencedColumnName = "id", nullable = false)
     public UserEntity recipient;
 
-    @Column(name = "message", columnDefinition = "varchar(500)")
+    @JdbcTypeCode(SqlTypes.LONGVARCHAR)/*for long text storage. But please specify max size for this field in js and html */
+    @Column(name = "message", nullable = false)
     public String message;
 
     @Enumerated(EnumType.ORDINAL)
     public Status status;
 
-    @Basic
-    Date date;
-
-    @Basic
-    Time time;
-    
-    Timestamp datetime;
-
-    @Column(name = "timezone")
-    String timezone;
+    @Column(name = "datetime")
+    @TimeZoneStorage
+    ZonedDateTime datetime;
 
     public ChatEntity(){}
 
-    public ChatEntity(Long usersId, UserEntity sender, UserEntity recipient, String message, Status status, Date date, Time time, Timestamp datetime, String timezone){
+    public ChatEntity(Long usersId, UserEntity sender, UserEntity recipient, String message, Status status, ZonedDateTime datetime){
         this.usersId = usersId;
         this.sender = sender;
         this.recipient = recipient;
         this.message = message;
         this.status = status;
-        this.date = date;
-        this.time = time;
         this.datetime = datetime;
-        this.timezone = timezone;
     }
 
     public Long getId() {
@@ -111,32 +102,11 @@ public class ChatEntity{
         this.status = status;
     }
 
-    public Date getDate() {
-        return date;
-    }
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
-    public Timestamp getDatetime() {
+    public ZonedDateTime getDatetime() {
         return datetime;
     }
-    public void setDatetime(Timestamp datetime) {
+    public void setDatetime(ZonedDateTime datetime) {
         this.datetime = datetime;
-    }
-
-    public String getTimezone(){
-        return timezone;
-    }
-    public void setTimezone(String timezone) {
-        this.timezone = timezone;
     }
     
     @Override
@@ -148,10 +118,7 @@ public class ChatEntity{
                 "', recipient='" + recipient.username +
                 "', text='" + message +
                 "', status='" + status +
-                "', date='" + date +
-                "', time='" + time +
                 "', datetime='" + datetime +
-                "', timezone='" + timezone +
                 "'}";
     }
 }

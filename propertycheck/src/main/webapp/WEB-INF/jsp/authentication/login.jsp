@@ -33,8 +33,10 @@
                             <input  class="text-field-2 large-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
                             <label id="error_label" class="error small-text">${message}</label>
                         </div>
-                        <input style="margin: auto;" class="button small-text" type="submit" value="Login"/>
-                        <a style="margin-left: auto; margin-right: auto; font-style: oblique;" href="" class="button small-text dark small-margin">Forgot password ?</a>
+                        <div style="max-width: max-content; margin: 0 auto; gap: 10px;" class="field-wrapper-2">
+                            <input style="box-shadow: 1px 1px 9px 2px #cacaca;" class="button small-text" type="submit" value="Login"/>
+                            <a style="margin-left: auto; margin-right: auto;" href="" class="button small-text dark small-margin">Forgot password ?</a>
+                        </div>
                         <div style="flex-direction: row;" class="field-wrapper lgn small-margin">
                             <div style="margin: auto 0" class="horozontalline"></div>
                             <label class="label-field small-text dark">OR</label>

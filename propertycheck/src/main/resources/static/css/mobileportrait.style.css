@@ -12,6 +12,7 @@
         padding: 25px 25px 0px;
         border-radius: 0;
         width: 100vw;
+        box-shadow: none;
     }
     .auth_form_wrapper .overlay{
         display: none;

@@ -1,17 +1,16 @@
 package com.kapelle.propertycheck.Chat.Controller;
 
 import java.security.Principal;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -20,9 +19,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kapelle.propertycheck.authentication.user.Model.UserEntity;
 import com.kapelle.propertycheck.authentication.user.Model.UserRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 import com.kapelle.propertycheck.Chat.Model.ChatMessage;
 import com.kapelle.propertycheck.Chat.Model.ChatEntity;
@@ -43,12 +45,67 @@ public class ChatController {
 
     @GetMapping("/chat")
     public String index(Model model, Principal loggedUser){
-        List<ChatEntity> contactsList = chatRepository.findContacts(userRepository.findByUsername(loggedUser.getName()));
-        model.addAttribute("contacts", contactsList);
         model.addAttribute("username", loggedUser.getName());
         return "chat/index";
     }
 
+    @GetMapping("/chat/api/contacts")
+    public String contacts(@RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser, HttpSession session){
+        Pageable pageable = PageRequest.of(pagenumber, pagesize);
+        Slice<ChatEntity> contactsSlice = chatRepository.findContacts(userRepository.findByUsername(loggedUser.getName()), pageable);
+        List<ChatEntity> contactsList = contactsSlice.getContent();
+        //Would need List<ChatEntity> contactsList = new ArrayList<ChatEntity>();, contactsSlice.getContent() is not working with messagesList.sort(Comparator.comparing(ChatEntity::getDatetime).thenComparing(Comparator.comparingLong(ChatEntity::getId).reversed()));/* method to reverse List<Entity>*/
+        ZonedDateTime clientCurrentTime = ZonedDateTime.now(timezone.toZoneId());
+        ZonedDateTime today =  clientCurrentTime.minusDays(1);
+        ZonedDateTime yesterday =  clientCurrentTime.minusDays(2);
+        ZonedDateTime chatDateTime = null;
+        ZonedDateTime loggedUserDateTime = null;
+        for(ChatEntity contact: contactsSlice){
+            chatDateTime = contact.getDatetime();
+            loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
+            contact.setDatetime(loggedUserDateTime);
+        }
+        model.addAttribute("contacts", contactsList);
+        model.addAttribute("hasNextContacts", contactsSlice.hasNext());
+        model.addAttribute("pagenumber", pagenumber);
+        model.addAttribute("username", loggedUser.getName());
+        model.addAttribute("today", today);
+        model.addAttribute("yesterday", yesterday);
+        return "chat/components/contacts";
+    }
+    @GetMapping("/chat/api/messages")
+    public String messages(@RequestParam Long id, @RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser){
+        Pageable pageable = PageRequest.of(pagenumber, pagesize);
+        Optional<UserEntity> contact = userRepository.findById(id);
+        Slice<ChatEntity> messagesSlice = chatRepository.findBySenderOrRecipient(contact.get(), userRepository.findByUsername(loggedUser.getName()), pageable);
+        List<ChatEntity> messagesList = messagesSlice.getContent();
+        ZonedDateTime clientCurrentTime = ZonedDateTime.now(timezone.toZoneId());
+        ZonedDateTime today =  clientCurrentTime.minusDays(1);
+        ZonedDateTime yesterday =  clientCurrentTime.minusDays(2);
+        ZonedDateTime chatDateTime = null;
+        ZonedDateTime loggedUserDateTime = null;
+        for(ChatEntity chat: messagesSlice){
+            chatDateTime = chat.getDatetime();
+            loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
+            chat.setDatetime(loggedUserDateTime);
+        }
+        model.addAttribute("messages", messagesList);
+        model.addAttribute("hasNextMessages", messagesSlice.hasNext());
+        model.addAttribute("pagenumber", pagenumber);
+        model.addAttribute("contact", contact);
+        model.addAttribute("username", loggedUser.getName());
+        model.addAttribute("today", today);
+        model.addAttribute("yesterday", yesterday);
+        return "chat/components/messages";
+    }
+
+    @GetMapping("/chat/api/content")
+    public String contacts(@RequestParam Long id, Model model, Principal loggedUser){
+        Optional<UserEntity> contact = userRepository.findById(id);
+        model.addAttribute("chat", contact);
+        model.addAttribute("username", loggedUser.getName());
+        return "chat/components/content";
+    }
     // Mapped as /app/all
     @MessageMapping("/all")
     @SendTo("/topic/messages")
@@ -64,16 +121,9 @@ public class ChatController {
         if(sender != null & recipient != null){
             ZonedDateTime serverDateTime = ZonedDateTime.now();
             ZoneId clientTimeZone = ZoneId.of(message.getTimezone());
+            //System.out.println(clientTimeZone.toString());
             ZonedDateTime clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
-            LocalDate date = clientDateTime.toLocalDate();
-            Date sqlDate = Date.valueOf(date);
-            LocalTime time = clientDateTime.toLocalTime();
-            Time sqlTime = Time.valueOf(time);
-            LocalDateTime datetime = clientDateTime.toLocalDateTime();
-            Timestamp sqlDatetime = Timestamp.valueOf(datetime);
-            message.setDate(sqlDate.toString());
-            message.setTime(sqlTime.toString());
-            ChatEntity chat = new ChatEntity(null,sender, recipient, message.getText(), Status.SENT, sqlDate, sqlTime, sqlDatetime, message.getTimezone());
+            ChatEntity chat = new ChatEntity(null,sender, recipient, message.getText(), Status.SENT, clientDateTime);
             chat.setUsersid();
             chatRepository.save(chat);
             simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
