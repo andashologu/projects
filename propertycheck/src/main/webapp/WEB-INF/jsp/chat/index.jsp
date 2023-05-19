@@ -13,10 +13,6 @@
     <link href="/css/mobilelandscape.style.css" rel="stylesheet" type="text/css">
     <link href="/css/mobileportrait.style.css" rel="stylesheet" type="text/css">
     <style>
-        @import url("https://fonts.googleapis.com/css?family=Red+Hat+Display:400,500,900&display=swap");
-        body {
-            font-family: Red hat Display, sans-serif;
-        }
         .medium-text {
             letter-spacing: 0.5px;
         }
@@ -24,21 +20,21 @@
 </head>
 <body>
     <div class="container">
-        <div class="full_block grid_3">
+        <div style="background-color: #cacaca2a;" class="full_block grid_3">
             <div class="chat_item contacts">
-                <div class="chat_component">
-                    <div id="contacts" class="field-wrapper-2">
-                        <input id="contacts_button" onclick="loadContacts()" type="button" value="load contacts"/>
-                    </div>
-                    <div id="loader_contacts" class="loader"></div>
+                <input style="margin-left: 4em; margin-right: 15px;" class="search-field small-text dark medium-margin" type="text" placeholder="Search">
+                <div style="flex-grow: inherit;" id="contacts" class="field-wrapper-2"></div>
+                <input id="contacts_button" onclick="loadContacts()" type="button" value="load contacts"/>
+                <div id="loader_contacts" class="loader"></div>
+            </div>
+            <div class="chat_item content">
+                <div id="content" class="container">
+                    <div id="loader_messages-content" class="loader"></div>
                 </div>
             </div>
-            <div id="content" class="chat_item content">
-                <div id="loader_messages-content" class="loader"></div>
+            <div class="chat_item profile">
+                <!--iframe></iframe-->
             </div>
-            <!--div class="chat_item profile">
-                <iframe></iframe>
-            </div-->
         </div>
     </div>
     <script>

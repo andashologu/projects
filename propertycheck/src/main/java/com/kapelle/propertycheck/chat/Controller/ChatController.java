@@ -1,6 +1,7 @@
 package com.kapelle.propertycheck.Chat.Controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -55,9 +56,9 @@ public class ChatController {
         Slice<ChatEntity> contactsSlice = chatRepository.findContacts(userRepository.findByUsername(loggedUser.getName()), pageable);
         List<ChatEntity> contactsList = contactsSlice.getContent();
         //Would need List<ChatEntity> contactsList = new ArrayList<ChatEntity>();, contactsSlice.getContent() is not working with messagesList.sort(Comparator.comparing(ChatEntity::getDatetime).thenComparing(Comparator.comparingLong(ChatEntity::getId).reversed()));/* method to reverse List<Entity>*/
-        ZonedDateTime clientCurrentTime = ZonedDateTime.now(timezone.toZoneId());
-        ZonedDateTime today =  clientCurrentTime.minusDays(1);
-        ZonedDateTime yesterday =  clientCurrentTime.minusDays(2);
+        LocalDate clientCurrentTime = LocalDate.now();
+        ZonedDateTime today =  clientCurrentTime.atStartOfDay(timezone.toZoneId());
+        ZonedDateTime yesterday =  today.minusDays(1);
         ZonedDateTime chatDateTime = null;
         ZonedDateTime loggedUserDateTime = null;
         for(ChatEntity contact: contactsSlice){
@@ -79,9 +80,11 @@ public class ChatController {
         Optional<UserEntity> contact = userRepository.findById(id);
         Slice<ChatEntity> messagesSlice = chatRepository.findBySenderOrRecipient(contact.get(), userRepository.findByUsername(loggedUser.getName()), pageable);
         List<ChatEntity> messagesList = messagesSlice.getContent();
-        ZonedDateTime clientCurrentTime = ZonedDateTime.now(timezone.toZoneId());
-        ZonedDateTime today =  clientCurrentTime.minusDays(1);
-        ZonedDateTime yesterday =  clientCurrentTime.minusDays(2);
+        LocalDate clientCurrentTime = LocalDate.now();
+        ZonedDateTime today =  clientCurrentTime.atStartOfDay(timezone.toZoneId());
+        ZonedDateTime yesterday =  today.minusDays(1);
+        System.out.println("today: "+today);
+        System.out.println("yesterday: "+yesterday);
         ZonedDateTime chatDateTime = null;
         ZonedDateTime loggedUserDateTime = null;
         for(ChatEntity chat: messagesSlice){
@@ -94,8 +97,8 @@ public class ChatController {
         model.addAttribute("pagenumber", pagenumber);
         model.addAttribute("contact", contact);
         model.addAttribute("username", loggedUser.getName());
-        model.addAttribute("today", today);
-        model.addAttribute("yesterday", yesterday);
+        model.addAttribute("today", today.toLocalDate());/*must compare only date! not zone date */
+        model.addAttribute("yesterday", yesterday.toLocalDate());
         return "chat/components/messages";
     }
 
@@ -123,7 +126,7 @@ public class ChatController {
             ZoneId clientTimeZone = ZoneId.of(message.getTimezone());
             //System.out.println(clientTimeZone.toString());
             ZonedDateTime clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
-            ChatEntity chat = new ChatEntity(null,sender, recipient, message.getText(), Status.SENT, clientDateTime);
+            ChatEntity chat = new ChatEntity(null,sender, recipient, message.getText(), Status.sent, clientDateTime);
             chat.setUsersid();
             chatRepository.save(chat);
             simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);

@@ -12,7 +12,7 @@ body{
 .hidden{
     display: none;
 }
-input{
+input, textarea{
     border: none;
     font-family: Verdana;/*overriding default*/
 }
@@ -133,7 +133,6 @@ p{
     flex-grow: 1;
     flex-direction: column;
     align-items: stretch;
-    margin: auto 0;
 }
 .field-wrapper-2 .field-wrapper{
     column-gap: 115px;
@@ -154,6 +153,11 @@ p{
     border-bottom: 1px solid #cacaca;
     min-width: 0; /*avoid flex children (inputs have min width > 100) exceed parent wodth*/
     border-radius: 0;
+}
+.search-field{
+    padding: 10px 0 10px 25px;
+    background-color: #cacaca2a;
+    border-radius: 35px;
 }
 .field-wrapper .label-field{
     flex-grow: 1;
@@ -281,28 +285,30 @@ p{
 .chat_item.contacts{
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
+    align-items: stretch;
+    padding: 4em 0 4em 4em;
+    background-color: white;
 }
 .contact{
     cursor: pointer;
-    padding: 5px 10px;
     border-radius: 10px;
 }
 .chat_item.content{
+    padding: 0 0 0 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 15px;
 }
 .chat_item.profile{
     background-color: white;
 }
-.chat_component{
-    min-height: 80vh;
-    width: 80%;
-    background-color: white;
-    padding: 15px;
+.chat_item .container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 94vh;
+    background: white;
+    padding: 3vh;
+    flex-grow: 1;
 }
 .profile_pic{
     min-width: 4rem;
@@ -315,9 +321,12 @@ p{
     background-color: #cacaca;
 }
 .messages{
-    min-height: 80vh;
+    overflow-y: scroll;
     width: 80%;
     padding: 0 10%;
+}
+.message{
+    margin-top: 15px;
 }
 .short-text{
     display: -webkit-box;
@@ -339,4 +348,15 @@ p{
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+  .messages::-webkit-scrollbar{
+    width: 4px;
+    background-color: transparent;
+  }
+  .messages::-webkit-scrollbar-track{
+    background: transparent;
+  }
+  .messages::-webkit-scrollbar-thumb{
+    background: #cacaca;
+    border-radius: 35px;
   }
