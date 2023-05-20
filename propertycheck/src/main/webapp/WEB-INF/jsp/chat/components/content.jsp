@@ -9,16 +9,17 @@
     </div>
 </div>
 <!--div style="width: 90%; margin-left: 5%; margin-right: 5%;" class="horozontalline"></div-->
-<div style="height: 80vh" class="field-wrapper-2">
-    <div style="max-height: 90%" class="messages">
+<div class="flexi-content-wrapper">
+    <div class="flexi-content messages">
         <input style="margin-top: 15px" id="more_msgz" onclick="loadMessages()" type="button" value="load previous messages"/>
         <div style="margin: 0;" id="loader_messages-content" class="loader"></div>
         <div id="messages" class="field-wrapper-2">
             <input type="hidden" id="chat_id" value="${chat.get().getId()}"/>
         </div>
     </div>
-    <div style="margin-top: auto; height: 10%" class="row">
-        <textarea style="background-color: #cacaca2a;" class="text-field-2 small-text dark" type="text" placeholder="type message..."></textarea>
-        <!--input type="button" value="Send"-->
-    </div>
 </div>
+<div style="margin-top: auto;" class="row">
+    <textarea style="flex: 1;" class="text-field-2 small-text dark" type="text" placeholder="type message..."></textarea>
+    <!--input type="button" value="Send"-->
+</div>
+<div class="horozontalline"></div>

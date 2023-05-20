@@ -28,7 +28,7 @@
                 <div id="loader_contacts" class="loader"></div>
             </div>
             <div class="chat_item content">
-                <div id="content" class="container">
+                <div style="background-color: white;" id="content" class="content-wrapper-2">
                     <div id="loader_messages-content" class="loader"></div>
                 </div>
             </div>

@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 html, body{
     height: 100%;
 }
 body{
     font-size: 0.8333333333333334vw;
-    font-family: Verdana;
+    font-family: 'Ubuntu', sans-serif;;
     line-height: 20px;
     font-weight: 500;
     margin: 0; /*remove default*/
@@ -30,8 +31,16 @@ input[name="rememberMe"]{
     height: 15px;
 
 }
+label{
+    font-weight: 500;
+}
 p{
     margin: 0;
+    font-weight: 400;
+}
+.text{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 300;
 }
 .page-padding{
     position: relative;
@@ -137,6 +146,24 @@ p{
 .field-wrapper-2 .field-wrapper{
     column-gap: 115px;
 }
+.content-wrapper-2{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 15px 0 15px 15px;
+}
+.flexi-content-wrapper{/*set max height of child to parent size*/
+    position: relative;
+    flex: 1;
+}
+.flexi-content{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: scroll;
+}
 .small-margin{
     margin-bottom: 1em;
 }
@@ -171,17 +198,17 @@ p{
     padding: 15px;
 }
 .small-text{
-    font-size: 14px;
+    font-size: 15px;
 }
 .large-text{
     font-size: 18px;
 }
 .medium-text{
-    font-size: 16px;
+    font-size: 18px;
     letter-spacing: 1.15px;
 }
 .bold-text{
-    font-weight: bold;
+    font-weight: 700;
 }
 .large-heading{
     font-size: 48px;
@@ -286,7 +313,7 @@ p{
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding: 4em 0 4em 4em;
+    padding: 4em 0 4em 8em;
     background-color: white;
 }
 .contact{
@@ -294,21 +321,12 @@ p{
     border-radius: 10px;
 }
 .chat_item.content{
-    padding: 0 0 0 15px;
-    display: flex;
+    display: flex;/*solve: last chat of containers margin-top increase parent max-height*/
     flex-direction: column;
+    padding: 0 0 0 15px;
 }
 .chat_item.profile{
     background-color: white;
-}
-.chat_item .container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-height: 94vh;
-    background: white;
-    padding: 3vh;
-    flex-grow: 1;
 }
 .profile_pic{
     min-width: 4rem;
@@ -321,7 +339,6 @@ p{
     background-color: #cacaca;
 }
 .messages{
-    overflow-y: scroll;
     width: 80%;
     padding: 0 10%;
 }
@@ -349,14 +366,14 @@ p{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-  .messages::-webkit-scrollbar{
+  .flexi-content::-webkit-scrollbar, textarea::-webkit-scrollbar{
     width: 4px;
     background-color: transparent;
   }
-  .messages::-webkit-scrollbar-track{
+  .flexi-content::-webkit-scrollbar-track, textarea::-webkit-scrollbar-track{
     background: transparent;
   }
-  .messages::-webkit-scrollbar-thumb{
+  .flexi-content::-webkit-scrollbar-thumb, textarea::-webkit-scrollbar-thumb{
     background: #cacaca;
     border-radius: 35px;
   }

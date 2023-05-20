@@ -16,7 +16,7 @@
         var privateStompClient = null;
         var stompClientGroup = null;
 
-        var headerName = "${_csrf}";
+        var headerName = "${_csrf.headerName}";
         var token = "${_csrf.token}";
         console.log("token...:"+token)
 

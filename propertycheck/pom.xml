@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.6</version>
+		<version>3.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kapelle</groupId>
@@ -66,6 +66,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<dependency><!--do not remove, its needed for MessageMatcherDelegatingAuthorizationManager-->
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-messaging</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -82,7 +86,7 @@
 		<dependency><!--needed for spring tags-->
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
-            <version>6.0.2</version>
+            <version>6.1.0</version>
         </dependency>
 		<!--JSTL Tags-->
 		<dependency>
@@ -93,7 +97,7 @@
 		<dependency>
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
-			<version>3.0.0</version>
+			<version>3.0.1</version>
 		</dependency>
 		<!--Websocket-->
 		<dependency>

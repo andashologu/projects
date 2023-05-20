@@ -16,22 +16,22 @@
                     <input type="hidden" id="contact_id" value="${contact.getRecipient().getId()}"/> 
                 </div>
             </c:if>
-            <p style="margin-right: 15px;" class="small-text light short-text">${contact.getMessage()}</p>
+            <p style="margin-right: 15px;" class="small-text dark short-text">${contact.getMessage()}</p>
             <!--class="horozontalline"></div-->
             <c:choose>
                 <c:when test = "${contact.getDatetime().isAfter(today) || contact.getDatetime().equals(today)}">
-                    <label class="label-field small-text light">${contact.getDatetime().toLocalTime().truncatedTo(ChronoUnit.MINUTES)}</label>
+                    <label class="label-field text small-text light">${contact.getDatetime().toLocalTime().truncatedTo(ChronoUnit.MINUTES)}</label>
                 </c:when>
                 <c:when test = "${contact.getDatetime().isBefore(today) && (contact.getDatetime().isAfter(yesterday) || contact.getDatetime().equals(yesterday))}">
-                    <label class="label-field small-text light">yesterday</label>
+                    <label class="label-field text small-text light">yesterday</label>
                 </c:when>
                 <c:otherwise>
                     
                     <c:if test = "${contact.getDatetime().getYear() == today.getYear()}">
-                        <label class="label-field small-text light">${contact.getDatetime().getDayOfWeek()}, ${contact.getDatetime().getDayOfMonth()} ${contact.getDatetime().getMonth()}</label>
+                        <label class="label-field text small-text light">${contact.getDatetime().getDayOfWeek()}, ${contact.getDatetime().getDayOfMonth()} ${contact.getDatetime().getMonth()}</label>
                     </c:if>
                     <c:if test = "${contact.getDatetime().getYear() != today.getYear()}">
-                        <label class="label-field small-text light">${contact.getDatetime().getDayOfWeek()}, ${contact.getDatetime().getDayOfMonth()} ${contact.getDatetime().getMonth()} ${contact.getDatetime().getYear()}</label>
+                        <label class="label-field text small-text light">${contact.getDatetime().getDayOfWeek()}, ${contact.getDatetime().getDayOfMonth()} ${contact.getDatetime().getMonth()} ${contact.getDatetime().getYear()}</label>
                     </c:if>
                 </c:otherwise>
             </c:choose>

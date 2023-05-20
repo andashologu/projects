@@ -23,4 +23,13 @@
         width: 100%;
         max-width: none;
     }
+    .grid_3 {
+        grid-template-columns: 0.6fr 1.4fr;
+    }
+    .chat_item.contacts {
+        padding: 4em 0 4em 2em;
+    }
+    .chat_item.profile{
+        display: none;
+    }
 }

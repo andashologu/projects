@@ -47,7 +47,7 @@ public class ChatController {
     @GetMapping("/chat")
     public String index(Model model, Principal loggedUser){
         model.addAttribute("username", loggedUser.getName());
-        return "chat/index";
+        return "chat/justpage";
     }
 
     @GetMapping("/chat/api/contacts")
@@ -83,8 +83,6 @@ public class ChatController {
         LocalDate clientCurrentTime = LocalDate.now();
         ZonedDateTime today =  clientCurrentTime.atStartOfDay(timezone.toZoneId());
         ZonedDateTime yesterday =  today.minusDays(1);
-        System.out.println("today: "+today);
-        System.out.println("yesterday: "+yesterday);
         ZonedDateTime chatDateTime = null;
         ZonedDateTime loggedUserDateTime = null;
         for(ChatEntity chat: messagesSlice){
@@ -97,7 +95,7 @@ public class ChatController {
         model.addAttribute("pagenumber", pagenumber);
         model.addAttribute("contact", contact);
         model.addAttribute("username", loggedUser.getName());
-        model.addAttribute("today", today.toLocalDate());/*must compare only date! not zone date */
+        model.addAttribute("today", today.toLocalDate());/*must compare only date! not zone date, hence this conversion */
         model.addAttribute("yesterday", yesterday.toLocalDate());
         return "chat/components/messages";
     }

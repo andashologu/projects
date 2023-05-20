@@ -14,8 +14,6 @@ import org.springframework.security.web.context.DelegatingSecurityContextReposit
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,7 +22,6 @@ import com.kapelle.propertycheck.authentication.user.Service.UserInfoService;
 
 @Configuration 
 @EnableWebSecurity 
-//@EnableWebSocketSecurity //should be considered in future
 public class WebSecurityConfig{ 
     
     @Bean 
@@ -55,14 +52,14 @@ public class WebSecurityConfig{
 
     @Bean 
     public SecurityFilterChain filterChain(HttpSecurity http, SecurityContextRepository securityContextRepository) throws Exception {
-        
+    
         //spring security forms already take care of this...
-        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-        requestHandler.setCsrfRequestAttributeName("_csrf");
+        //CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+        //requestHandler.setCsrfRequestAttributeName("_csrf");
 
         http
             .authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")//user roles has not been configured corrctly so these urls will not work
                 .requestMatchers("/user/**").hasRole("USER") // url such as /user/add/post
                 .requestMatchers("/chat", "chat/**").authenticated()
                 .anyRequest().permitAll()
@@ -85,14 +82,14 @@ public class WebSecurityConfig{
             )
             .securityContext(context -> context
                 .securityContextRepository(securityContextRepository))
-            .headers(headers -> headers
-                .frameOptions()
-                .sameOrigin()
-            )
             //spring security forms already take care of this...
             .csrf((csrf) -> csrf
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .csrfTokenRequestHandler(requestHandler)
+                .ignoringRequestMatchers("/ws/**")
+                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                //.csrfTokenRequestHandler(requestHandler)
+            )
+            .headers((headers) -> headers
+                .frameOptions((frameOptions) -> frameOptions.sameOrigin())
             );
         return http.build();
     } 
