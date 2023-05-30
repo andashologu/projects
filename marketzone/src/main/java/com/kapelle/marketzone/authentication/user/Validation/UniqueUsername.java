@@ -27,6 +27,9 @@ public class UniqueUsername implements ConstraintValidator<UniqueUsernameConstra
             if(user != null){
                 return false;
             }
+            else if(username.equalsIgnoreCase("You")){//reserved username
+                return false;
+            }
             else{
                 return true;
             }

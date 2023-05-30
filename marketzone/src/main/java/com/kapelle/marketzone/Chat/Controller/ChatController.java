@@ -20,7 +20,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kapelle.marketzone.authentication.user.Model.UserEntity;
 import com.kapelle.marketzone.authentication.user.Model.UserRepository;
@@ -47,7 +49,7 @@ public class ChatController {
     @GetMapping("/chat")
     public String index(Model model, Principal loggedUser){
         model.addAttribute("username", loggedUser.getName());
-        return "chat/justpage";
+        return "chat/index";
     }
 
     @GetMapping("/chat/api/contacts")
@@ -65,6 +67,9 @@ public class ChatController {
             chatDateTime = contact.getDatetime();
             loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
             contact.setDatetime(loggedUserDateTime);
+            if(contact.getStatus() == Status.Sent){
+                //update all messages where recipient = this currently logged user to delivered
+            }
         }
         model.addAttribute("contacts", contactsList);
         model.addAttribute("hasNextContacts", contactsSlice.hasNext());
@@ -89,11 +94,14 @@ public class ChatController {
             chatDateTime = chat.getDatetime();
             loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
             chat.setDatetime(loggedUserDateTime);
+            if(chat.getStatus() == Status.Delivered){
+                //update this specific message to if recipient == this currently logged user
+            }
         }
         model.addAttribute("messages", messagesList);
         model.addAttribute("hasNextMessages", messagesSlice.hasNext());
         model.addAttribute("pagenumber", pagenumber);
-        model.addAttribute("contact", contact);
+        /*model.addAttribute("contact", contact);*/
         model.addAttribute("username", loggedUser.getName());
         model.addAttribute("today", today.toLocalDate());/*must compare only date! not zone date, hence this conversion */
         model.addAttribute("yesterday", yesterday.toLocalDate());
@@ -114,8 +122,30 @@ public class ChatController {
         return message;
     }
 
+    @PostMapping("/chat/sendmessage")
+    @ResponseBody //temporal... just to avoid jsp errors
+    public String sendToSpecificUser(@Payload ChatMessage message, Principal user) throws UsernameNotFoundException{
+        System.out.println("Message: "+message);
+        UserEntity sender = userRepository.findByUsernameIgnoreCase(user.getName());
+        UserEntity recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
+        if(sender != null & recipient != null){
+            ZonedDateTime serverDateTime = ZonedDateTime.now();
+            ZoneId clientTimeZone = ZoneId.of(message.getTimezone());
+            //System.out.println(clientTimeZone.toString());
+            ZonedDateTime clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
+            ChatEntity chat = new ChatEntity(null,sender, recipient, null, message.getText(), null, Status.Sent, clientDateTime);
+            chat.setUsersid();
+            chatRepository.save(chat);
+            simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
+        }
+        else{
+            throw new UsernameNotFoundException("Sender or Recipient could not be found !!!");
+        }
+        return "chat/components/messages";
+    }
+
     // Mapped as /app/specific
-    @MessageMapping("/specific")
+    /*@MessageMapping("/specific")
     public void sendToSpecificUser(@Payload ChatMessage message, Principal user) throws UsernameNotFoundException{
         UserEntity sender = userRepository.findByUsernameIgnoreCase(user.getName());
         UserEntity recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
@@ -124,7 +154,7 @@ public class ChatController {
             ZoneId clientTimeZone = ZoneId.of(message.getTimezone());
             //System.out.println(clientTimeZone.toString());
             ZonedDateTime clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
-            ChatEntity chat = new ChatEntity(null,sender, recipient, message.getText(), Status.sent, clientDateTime);
+            ChatEntity chat = new ChatEntity(null,sender, recipient, null, message.getText(), null, Status.sent, clientDateTime);
             chat.setUsersid();
             chatRepository.save(chat);
             simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
@@ -132,5 +162,5 @@ public class ChatController {
         else{
             throw new UsernameNotFoundException("Sender or Recipient could not be found !!!");
         }
-    }
+    }*/
 }

@@ -17,8 +17,11 @@
         var stompClientGroup = null;
 
         var headerName = "${_csrf.headerName}";
+        var parameterName = "${_csrf.parameterName}";
         var token = "${_csrf.token}";
-        console.log("token...:"+token)
+        console.log("headerName...:"+headerName);
+        console.log("parameterName...:"+parameterName);
+        console.log("token...:"+token);
 
         var headers = {};
         headers[headerName] = token;
@@ -95,6 +98,33 @@
             var text = document.getElementById('text').value;
             stompClient.send("/app/all", {}, JSON.stringify({'text':text}));
         }
+        /*$.ajaxSetup({//for Ajax & $.post
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(headerName,token);
+            }
+        });*/
+        function sendPrivateMessage() {
+            if (socket.readyState === 2 | socket.readyState === 3) {
+                connect();
+            }
+            var text = document.getElementById('privateText').value;
+            var to = document.getElementById('to').value;
+            $.ajax({
+                url: "/chat/sendmessage",
+                data: {'text':text, 'to':to, 'timezone': timezone},
+                type: "POST", 
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(headerName,token);
+                },
+                success: function(html){
+                    alert(html);
+                },
+                error: function(){
+                    alert("Could not send message due to an error");
+                }
+            });
+        }
+        /*
         function sendPrivateMessage() {
             if (socket.readyState === 2 | socket.readyState === 3) {
                 connect();
@@ -102,7 +132,7 @@
             var text = document.getElementById('privateText').value;
             var to = document.getElementById('to').value;
             stompClient.send("/app/specific", {}, JSON.stringify({'text':text, 'to':to, 'timezone': timezone}));
-        }
+        }*/
         function show(message) {
             var response = document.getElementById('messages');
             var p = document.createElement('p');

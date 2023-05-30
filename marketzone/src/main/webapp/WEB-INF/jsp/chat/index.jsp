@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messaging - PropertyCheck</title>
+    <title>Chat - MarketZone</title>
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript" ></script>
     <link href="/css/style.css" rel="stylesheet" type="text/css">
     <link href="/css/tablet.style.css" rel="stylesheet" type="text/css">
@@ -24,7 +24,7 @@
             <div class="chat_item contacts">
                 <input style="margin-left: 4em; margin-right: 15px;" class="search-field small-text dark medium-margin" type="text" placeholder="Search">
                 <div style="flex-grow: inherit;" id="contacts" class="field-wrapper-2"></div>
-                <input id="contacts_button" onclick="loadContacts()" type="button" value="load contacts"/>
+                <label style="margin-top: 15px; text-decoration: underline; cursor: pointer;" class="link-btn small-text dark" id="contacts_button" onclick="loadContacts()">load more contacts...</label>
                 <div id="loader_contacts" class="loader"></div>
             </div>
             <div class="chat_item content">
@@ -114,6 +114,10 @@
                     alert("could not load content");
                 }
             });
+        }
+        function replyMsg(element){
+            var id = element.id.replace(/[^\d]/g, '');
+            alert("id = "+id);
         }
     </script>
     <script>

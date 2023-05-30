@@ -3,6 +3,7 @@ package com.kapelle.marketzone.authentication.user.Model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.kapelle.marketzone.Chat.Model.ChatEntity;
 import com.kapelle.marketzone.authentication.user.Validation.UniqueEmailConstraint;
 import com.kapelle.marketzone.authentication.user.Validation.UniqueUsernameConstraint;
 
@@ -17,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -29,13 +31,20 @@ public class UserEntity{
     @GeneratedValue(strategy=GenerationType.AUTO)
     public Long id;
 
+    @OneToMany(mappedBy = "sender")
+    public Collection<ChatEntity> sentChats = new ArrayList<ChatEntity>();
+
+    @OneToMany(mappedBy = "recipient")
+    public Collection<ChatEntity> recievedChats = new ArrayList<ChatEntity>();;
+
     @Pattern(regexp = "^[a-zA-Z]*$", message="Only alphabets allowed in this field")
-    @Column(name = "firstname", columnDefinition = "varchar(100)")
     public String firstname;
     
     @Pattern(regexp = "^[a-zA-Z]*$", message="Only alphabets allowed in this field")
-    @Column(name = "lastname", columnDefinition = "varchar(100)")
     public String lastname;
+
+    @Column(name = "profileimage")
+    public String profileImg;
     
     @Embedded
     public Address address;
@@ -47,7 +56,6 @@ public class UserEntity{
         Here's a shortlist of some email addresses that will be invalid via this email validation: username.@domain.com, .user.name@domain.com, user-name@domain.com., username@.com*/
     @UniqueEmailConstraint
     @Size(max = 100, message = "Name too long")
-    @Column(name = "email", columnDefinition = "varchar(100)")
     public String email;
 
     @Size(max = 100, message = "Name too long")
@@ -58,12 +66,10 @@ public class UserEntity{
     @Pattern(regexp = "^[a-zA-Z]*$", message="Only alphabets allowed in this field")
     @UniqueUsernameConstraint
     @Size(max = 100, message = "Name too long")
-    @Column(name = "username", columnDefinition = "varchar(100)")
     public String username;
     
     @NotEmpty(message = "Compulsory field must not be empty")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,100}$", message="Incorrect password format. Password must be strong")
-    @Column(name = "password", columnDefinition = "varchar(100)")
     public String password;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -74,9 +80,10 @@ public class UserEntity{
 
     public UserEntity(){}
     
-    public UserEntity(String firstname, String lastname, Address address, String email, String company, String username, String password, Collection<RoleEntity> roles){
+    public UserEntity(String firstname, String lastname, String profileImg, Address address, String email, String company, String username, String password, Collection<RoleEntity> roles){
         this.firstname = firstname;
         this.lastname = lastname;
+        this.profileImg = profileImg;
         this.address = address;
         this.email = email;
         this.company = company;
@@ -92,6 +99,20 @@ public class UserEntity{
         this.id = id;
     }
 
+    public Collection<ChatEntity> getSentchats(){
+        return sentChats;
+    }
+    public void setSentchats(Collection<ChatEntity> sentChats){
+        this.sentChats = sentChats;
+    }
+
+    public Collection<ChatEntity> getRecievedchats(){
+        return recievedChats;
+    }
+    public void setRecievedchats(Collection<ChatEntity> recievedChats){
+        this.recievedChats = recievedChats;
+    }
+
     public String getFirstname() {
         return firstname;
     }
@@ -104,6 +125,13 @@ public class UserEntity{
     }
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getProfileimg(){
+        return profileImg;
+    }
+    public void setProfileimg(String profileImg){
+        this.profileImg = profileImg;
     }
 
     public String getEmail() {
@@ -152,8 +180,11 @@ public class UserEntity{
     public String toString() {
         return "User{" +
                 "id = " + id +
+                ", sentMessages"+ sentChats +
+                ", recievedMessages"+ recievedChats +
                 " , firstname = " + firstname +
                 " , lastname = " + lastname +
+                " , profileImgLink = " + profileImg +
                 " , address = " + address +
                 " , email = " + email +
                 " , company = " + company+

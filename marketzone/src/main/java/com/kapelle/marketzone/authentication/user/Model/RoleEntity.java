@@ -18,7 +18,6 @@ public class RoleEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     public Long id;
 
-    @Column(name = "name")
     public String name;
 
     @ManyToMany(mappedBy = "roles")

@@ -13,11 +13,14 @@
     </head>
     <body>
         <div id="modal" style="padding: 0" class="page-padding">
-            <div class="container">
+            <div class="container grid_2">
+                <div>
+                    
+                </div>
                 <div class="auth_form_wrapper large">
                     <div style="opacity: 0.1;" class="background_image_2"></div>
                     <div class="auth-component">
-                        <h1 class="small-heading dark small-margin">PropertyCheck</h1>
+                        <h1 class="small-heading dark small-margin">MarketZone</h1>
                         <p class="large-text dark medium-margin">Signup Form</p>
                         <!--img class="authlogo top" alt="logo" src="/images/authlogo.svg" hight="75" width="350"/-->
                         <div class="horozontalline-wrapper">
@@ -25,7 +28,7 @@
                         </div>
                     </div>
                     <form:form class="form-block" method="POST" action="/signup" modelAttribute="user">
-                            <p class="small-text small-margin dark">Please note compulsory fields are marked with<span class="error">*</span></p>
+                            <p class="small-text small-margin dark">Please note the following: Compulsory fields are marked with<span class="error">*</span></p>
                         <div class="field-wrapper-2 small-margin">
                             <label class="label-field small-text small-margin dark bold-text">Full name</label>
                             <div class="field-wrapper">
@@ -86,7 +89,7 @@
                                 <form:errors path="password" class="error small-text"/>
                             </div>
                         </div>
-                        <input class="submit-button medium-text medium-margin" type="submit" value="Submit"/>
+                        <input style="min-width: 280px; margin: 0 auto; border-radius: 5px;" class="button small-text" type="submit" value="Submit"/>
                         <div class="horozontalline"></div>
                         <!--Put more content here, such as our going back to the login if already have an account...-->
                     </form:form>
