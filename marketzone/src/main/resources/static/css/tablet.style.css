@@ -19,15 +19,15 @@
     .button.small-text, .button.small-text.dark{
         padding: 22px 15px;
     }
+    .button.small-text.dark {
+        border: 0.3px solid black;/*NB: desktop browsers dont support border width less than 1px*/
+    }
     .auth_form_wrapper.large {
         width: 100%;
         max-width: none;
     }
     .grid_3 {
         grid-template-columns: 0.6fr 1.4fr;
-    }
-    .chat_item.contacts {
-        padding: 4em 0 4em 2em;
     }
     .chat_item.profile{
         display: none;

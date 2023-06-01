@@ -19,6 +19,14 @@
             width: 120%;
             left: -10%;
         }
+        @media screen and (max-width: 478px){
+            body{
+                background-color: #cacaca2a;
+            }
+            .page-padding.full_centered{
+                min-height: auto;
+            }
+        }
     </style>
     <body>
         <div id="modal" class="page-padding full_centered">
@@ -28,13 +36,13 @@
                     <form:form id="login_form" class="form-block"  action="/login" method="POST">
                         <h1 style="margin-left: auto; margin-right: auto;" class="small-heading dark">MarketZone</h1>
                         <div class="field-wrapper-2 lgn medium-margin">
-                            <input class="text-field-2 large-text" type="text" placeholder="Username" name="username" value="${username}" minlength="3" maxlength="100"/>
-                            <div class="horozontalline"></div>
-                            <input  class="text-field-2 large-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
+                            <input class="text-field-2 small-text" type="text" placeholder="Username" name="username" value="${username}" minlength="3" maxlength="100"/>
+                            <div style="width: 200px;" class="horozontalline"></div>
+                            <input  class="text-field-2 small-text" type="password" placeholder="Password" name="password" value="${password}" minlength="8" maxlength="100"/>
                             <label id="error_label" class="error small-text">${message}</label>
                         </div>
                         <div style="max-width: max-content; margin: 0 auto; gap: 10px;" class="field-wrapper-2">
-                            <input class="button small-text" type="submit" value="Login"/>
+                            <input style="min-width: 170px;" class="button small-text" type="submit" value="Login"/>
                             <a style="margin-left: auto; margin-right: auto;" href="" class="button small-text dark small-margin">Forgot password ?</a>
                         </div>
                         <div style="flex-direction: row;" class="field-wrapper lgn small-margin">

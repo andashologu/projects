@@ -29,6 +29,8 @@
     }
     .page-padding.full_centered{
         background-color: #fff;
+        box-shadow: 3px 5px 2px #cacaca;
+        padding-bottom: 25px;
     }
     .text-field{
         background-color: #cacaca2a;
@@ -49,5 +51,8 @@
     .chat_item.content {
         height: 100%;
         padding: 0;
+    }
+    #mobile-back-arrow{
+        display: block;
     }
 }

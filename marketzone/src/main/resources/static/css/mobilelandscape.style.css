@@ -1,9 +1,12 @@
 @media screen and (max-width: 767px){
+    .small-text{
+        font-size: 22px;
+    }
+    .medium-text{
+        font-size: 24px;
+    }
     .large-text{
         font-size: 20px;
-    }
-    .small-text{
-        font-size: 18px;
     }
     .auth_form_wrapper{
         padding: 65px 40px 0px;
