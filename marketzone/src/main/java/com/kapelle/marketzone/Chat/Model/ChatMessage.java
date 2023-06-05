@@ -12,7 +12,7 @@ public class ChatMessage {
 
     private String timezone;
 
-    public ChatMessage(){}
+    public ChatMessage() {}
 
     public ChatMessage(String text, String to, String date, String time, String timezone) {
         this.text = text;
@@ -25,14 +25,14 @@ public class ChatMessage {
     public String getText(){
         return text;
     }
-    public void setText(String text){
+    public void setText(String text) {
         this.text = text;
     }
 
-    public String getTo(){
+    public String getTo() {
         return to;
     }
-    public void setTo(String to){
+    public void setTo(String to) {
         this.to = to;
     }
 

@@ -26,7 +26,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
-public class UserEntity{
+public class UserEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     public Long id;
@@ -78,9 +78,9 @@ public class UserEntity{
                 inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     public Collection<RoleEntity> roles = new ArrayList<RoleEntity>();
 
-    public UserEntity(){}
+    public UserEntity() {}
     
-    public UserEntity(String firstname, String lastname, String profileImg, Address address, String email, String company, String username, String password, Collection<RoleEntity> roles){
+    public UserEntity(String firstname, String lastname, String profileImg, Address address, String email, String company, String username, String password, Collection<RoleEntity> roles) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.profileImg = profileImg;
@@ -99,10 +99,10 @@ public class UserEntity{
         this.id = id;
     }
 
-    public Collection<ChatEntity> getSentchats(){
+    public Collection<ChatEntity> getSentchats() {
         return sentChats;
     }
-    public void setSentchats(Collection<ChatEntity> sentChats){
+    public void setSentchats(Collection<ChatEntity> sentChats) {
         this.sentChats = sentChats;
     }
 
@@ -127,10 +127,10 @@ public class UserEntity{
         this.lastname = lastname;
     }
 
-    public String getProfileimg(){
+    public String getProfileimg() {
         return profileImg;
     }
-    public void setProfileimg(String profileImg){
+    public void setProfileimg(String profileImg) {
         this.profileImg = profileImg;
     }
 

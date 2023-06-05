@@ -24,9 +24,9 @@ public class RoleEntity {
     @Column(name = "users")
     public Set<UserEntity> users;
 
-    public RoleEntity(){}
+    public RoleEntity() {}
 
-    public RoleEntity(String name){
+    public RoleEntity(String name) {
         this.name = name;
     }
 
@@ -37,17 +37,17 @@ public class RoleEntity {
         this.id = id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Set<UserEntity> getUsers(){
+    public Set<UserEntity> getUsers() {
         return users;
     }
-    public void setUsers(Set<UserEntity> users){
+    public void setUsers(Set<UserEntity> users) {
         this.users = users;
     }
     

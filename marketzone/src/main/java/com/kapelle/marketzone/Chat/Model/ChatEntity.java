@@ -25,7 +25,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "chats")
-public class ChatEntity{
+public class ChatEntity {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -62,7 +62,7 @@ public class ChatEntity{
     @TimeZoneStorage
     ZonedDateTime datetime;
 
-    public ChatEntity(){}
+    public ChatEntity() {}
 
     public ChatEntity(Long usersId, UserEntity sender, UserEntity recipient, ChatEntity replied, String message, String image, Status status, ZonedDateTime datetime){
         this.usersId = usersId;
@@ -103,17 +103,17 @@ public class ChatEntity{
         this.recipient = recipient;
     }
 
-    public ChatEntity getReplied(){
+    public ChatEntity getReplied() {
         return replied;
     }
-    public void setReplied(ChatEntity replied){
+    public void setReplied(ChatEntity replied) {
         this.replied = replied;
     }
 
-    public Collection<ChatEntity> getRepliedchats(){
+    public Collection<ChatEntity> getRepliedchats() {
         return repliedChats;
     }
-    public void setRepliedchats(Collection<ChatEntity> repliedChats){
+    public void setRepliedchats(Collection<ChatEntity> repliedChats) {
         this.repliedChats = repliedChats;
 
     }

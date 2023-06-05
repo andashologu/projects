@@ -7,8 +7,6 @@ import com.kapelle.marketzone.authentication.user.Model.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.TimeZone;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -30,7 +28,7 @@ public class Home {
         return "authentication/test";
     }
     @GetMapping("/test")
-    public String test(HttpServletRequest request, TimeZone timezone){
+    public String test(HttpServletRequest request){
         return "test";
     }
 } 

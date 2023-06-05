@@ -21,19 +21,17 @@ public class UniqueEmail implements ConstraintValidator<UniqueEmailConstraint, S
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext cxt) {
-        if(email == null){
+        if(email == null) {
             return false;
         }
         try{
             UserEntity user = userRespository.findByEmailIgnoreCase(email);
-            if(user != null){
+            if(user != null) {
                 return false;
-            }
-            else{
+            } else {
                 return true;
             }
-        }
-        catch(Exception e){
+        } catch(Exception e){
             return true;
         }
     }

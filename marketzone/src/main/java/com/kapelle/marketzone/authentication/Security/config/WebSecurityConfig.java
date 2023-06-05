@@ -22,7 +22,7 @@ import com.kapelle.marketzone.authentication.user.Service.UserInfoService;
 
 @Configuration 
 @EnableWebSecurity 
-public class WebSecurityConfig{ 
+public class WebSecurityConfig { 
     
     @Bean 
     public UserDetailsService userDetailsService() { 

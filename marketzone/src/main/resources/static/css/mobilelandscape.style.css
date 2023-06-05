@@ -1,6 +1,9 @@
 @media screen and (max-width: 767px){
+    .smaller-text{
+        font-size: 18px;
+    }
     .small-text{
-        font-size: 22px;
+        font-size: 20px;
     }
     .medium-text{
         font-size: 24px;
@@ -16,7 +19,7 @@
     .button, .submit-button {
         padding: 10px 35px;
     }
-    .button.small-text, .button.small-text.dark {
+    .button {
         padding: 16px 15px;
     }
     .field-wrapper .label-field {

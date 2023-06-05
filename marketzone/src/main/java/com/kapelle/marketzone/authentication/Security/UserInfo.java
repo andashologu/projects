@@ -11,12 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.kapelle.marketzone.authentication.user.Model.RoleEntity;
 import com.kapelle.marketzone.authentication.user.Model.UserEntity;
 
-public class UserInfo implements UserDetails{
+public class UserInfo implements UserDetails {
     
     private UserEntity user;
     
     
-	public UserInfo(UserEntity user){
+	public UserInfo(UserEntity user) {
         this.user = user;
     }
 

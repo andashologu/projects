@@ -4,7 +4,7 @@
     <div id="mobile-back-arrow" onclick="showContactsOnly()" class="back-arrow"></div>
     <div class="profile_pic"></div>
     <div class="field-wrapper-2 small-margin">
-         <label class="label-field small-text dark bold-text">${chat.get().getUsername()}</label>
+         <div class="label-field small-text dark bold-text">${chat.get().getUsername()}</div>
         <label class="label-field smaller-text light">Online status</label>
     </div>
 </div>

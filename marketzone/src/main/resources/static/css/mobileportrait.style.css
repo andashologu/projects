@@ -21,6 +21,9 @@
         display: inherit;
         flex-direction: column;
     }
+    .row{
+        column-gap: 1.7em;
+    }
     .link-field.small-margin{
         margin: 5px;
     }
@@ -29,7 +32,7 @@
     }
     .page-padding.full_centered{
         background-color: #fff;
-        box-shadow: 3px 5px 2px #cacaca;
+        /*box-shadow: 3px 5px 2px #cacaca;*/
         padding-bottom: 25px;
     }
     .text-field{
@@ -38,8 +41,8 @@
     .auth-component{
         padding: 0 40px 0px;
     }
-    .button.small-text, .button.small-text.dark {
-        padding: 12px 15px;
+    .button{
+        padding: 10px 15px;
     }
     .grid_3{
         display: flex;

@@ -20,7 +20,7 @@ public class WebSocketEventListener {
     @EventListener
     public void handleWebSocketConnectedListener(SessionConnectedEvent event) {
         Principal user = event.getUser();
-        if(user != null){
+        if(user != null) {
             String username = user.getName();
             ChatMessage message = new ChatMessage();
             message.setText(username+" connected");
@@ -31,7 +31,7 @@ public class WebSocketEventListener {
     @EventListener
     public void handleWebSocketDisconnectListener( SessionDisconnectEvent event) {
         Principal user = event.getUser();
-        if(user != null){
+        if(user != null) {
             String username = user.getName();
             ChatMessage message = new ChatMessage();
             message.setText(username+" disconnected");

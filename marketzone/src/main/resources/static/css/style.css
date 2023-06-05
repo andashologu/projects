@@ -16,8 +16,8 @@ body{
 }
 input, textarea{
     border: none;
-    /*font-family: Verdana;*/
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, serif;/*override default*/
+    letter-spacing: 1.13px;
 }
 input[type="text"]::placeholder, input[type="password"]::placeholder{
     color: rgb(119, 119, 119);
@@ -38,7 +38,13 @@ input[name="rememberMe"]{
 
 }
 p{
+    /*font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;*/
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: 0;
+    line-height: 1.2em;
+}
+label{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 h1{
     font-weight: 700;
@@ -102,7 +108,7 @@ h1{
     padding: 90px 80px 40px 80px;/*top , left&right, bottom*/
     width: 255px;
     min-height: 475px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     overflow: hidden;
     background-color: transparent;
     box-shadow: inset 0 1px 0px 1px rgb(202 202 202 / 50%);/*#cacaca80 same*/
@@ -140,7 +146,7 @@ h1{
 }
 .row{/*similar to field-wrapper, but does not change to column on mobile*/
     display: flex;
-    column-gap: 1.3em;
+    column-gap: 0.3em;
 }
 .field-wrapper-2{
     display: flex;
@@ -202,6 +208,9 @@ h1{
 .text-field{
     padding: 15px;
 }
+.smallest-text{
+    font-size: 13px;
+}
 .smaller-text{
     font-size: 16px;
 }
@@ -232,6 +241,9 @@ h1{
 .dark{
     color: black;
 }
+.italic{
+    font-style: italic;
+}
 .link-field{
     align-self: center;/* prevents equal height on children*/
     color: #357abe;
@@ -255,9 +267,12 @@ h1{
     height: 1px;
     width: 100%;
 }
-.button, .button-2{
+button, input[type="button"], input[type="submit"], .button, .button-2{
     font-family: 'Cormorant Garamond', serif;
+}
+.button, .button-2{
     font-weight: 700;
+    letter-spacing: 1.13px;
     flex-grow: 1;
     padding: 10px 15px;
     color: white;
@@ -265,24 +280,29 @@ h1{
     cursor: pointer;
     min-width: 100px;
     border: none;
+    border-radius: 0;
 }
 .button{
-    border-radius: 35px;
-    box-shadow: 1px 1px 9px 2px #cacaca;
+    /*border-radius: 35px;*/
+    box-shadow: 0 0 10px 0px #cacaca;
     font-weight: 600;
 }
 .button:hover{
     box-shadow: none;
     text-shadow: 1px 1px 3px white;
 }
-.button.small-text.dark {
+.button.dark {
+    font-family:  'Times New Roman', Times, serif;
+    letter-spacing: 0.7px;
+    font-weight: normal;
     background-color: transparent;
     color: black;
     align-self: stretch;
     text-align: center;
     text-decoration: none;
     padding: 8px 15px;
-    border: 1px solid #cacaca;/*NB: desktop browsers dont support border width less than 1px*/
+    /*border: 1px solid #cacaca;*//*NB: desktop browsers dont support border width less than 1px*/
+    border: none;
     box-shadow: none;
 }
 .bottom{/*parent must be set relative with reasonable height, should not display flex*/
@@ -349,6 +369,7 @@ h1{
 .contact{
     cursor: pointer;
     border-radius: 10px;
+    align-items: center;
 }
 .chat_item.content{
     display: flex;/*solve: last chat of containers margin-top increase parent max-height*/
@@ -370,10 +391,6 @@ h1{
 }
 .contact .message{
     margin-top: 0;
-}
-
-#messages label{
-    text-align: center;
 }
 .short-text{
     display: -webkit-box;

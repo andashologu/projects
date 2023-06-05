@@ -19,22 +19,19 @@ public class UniqueUsername implements ConstraintValidator<UniqueUsernameConstra
 
     @Override
     public boolean isValid(String username, ConstraintValidatorContext cxt) {
-        if(username == null){
+        if(username == null) {
             return false;
         }
-        try{
+        try {
             UserEntity user = userRespository.findByUsernameIgnoreCase(username);
-            if(user != null){
+            if(user != null) {
                 return false;
-            }
-            else if(username.equalsIgnoreCase("You")){//reserved username
+            } else if(username.equalsIgnoreCase("You")) {//reserved username
                 return false;
-            }
-            else{
+            } else {
                 return true;
             }
-        }
-        catch(Exception e){
+        } catch(Exception e) {
             return true;
         }
     }

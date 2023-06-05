@@ -16,11 +16,8 @@
     .button, .submit-button {
         padding: 12px 35px;
     }
-    .button.small-text, .button.small-text.dark{
+    .button, .button.dark{
         padding: 22px 15px;
-    }
-    .button.small-text.dark {
-        border: 0.3px solid black;/*NB: desktop browsers dont support border width less than 1px*/
     }
     .auth_form_wrapper.large {
         width: 100%;

@@ -20,9 +20,8 @@ public class Address {
     @Column(name="zipcode")
     private String zip;
 
-    public Address(){
-    }
-    public Address(String street, String city, String country, String zip){
+    public Address() {}
+    public Address(String street, String city, String country, String zip) {
         this.street = street;
         this.city = city;
         this.country = country;

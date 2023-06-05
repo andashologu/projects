@@ -15,10 +15,11 @@ public class LoginController {
 		return "authentication/login";
 	}
     @PostMapping("/login_failure_handler")
-	public String loginFailureHandler(Model model, HttpServletResponse response, HttpServletRequest request){
+	public String loginFailureHandler(Model model, HttpServletResponse response, HttpServletRequest request) {
         model.addAttribute("username", request.getParameter("username"));
         model.addAttribute("password", request.getParameter("password"));
-        model.addAttribute("message", "Incorrect username or password");
+        //model.addAttribute("message", "Incorrect username or password");
+        model.addAttribute("message", request.getParameter("message"));
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         return "authentication/login";
 	}

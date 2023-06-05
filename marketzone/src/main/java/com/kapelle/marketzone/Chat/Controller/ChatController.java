@@ -54,9 +54,10 @@ public class ChatController {
         LocalDate clientCurrentTime = LocalDate.now();
         ZonedDateTime today =  clientCurrentTime.atStartOfDay(timezone.toZoneId());
         ZonedDateTime yesterday =  today.minusDays(1);
+        ZonedDateTime thisweek =  today.minusDays(7);
         ZonedDateTime chatDateTime = null;
         ZonedDateTime loggedUserDateTime = null;
-        for(ChatEntity contact: contactsSlice){
+        for(ChatEntity contact: contactsSlice) {
             chatDateTime = contact.getDatetime();
             loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
             contact.setDatetime(loggedUserDateTime);
@@ -70,10 +71,11 @@ public class ChatController {
         model.addAttribute("username", loggedUser.getName());
         model.addAttribute("today", today);
         model.addAttribute("yesterday", yesterday);
+        model.addAttribute("thisweek", thisweek);
         return "chat/components/contacts";
     }
     @GetMapping("/chat/api/messages")
-    public String messages(@RequestParam Long id, @RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser){
+    public String messages(@RequestParam Long id, @RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser) {
         Pageable pageable = PageRequest.of(pagenumber, pagesize);
         Optional<UserEntity> contact = userRepository.findById(id);
         Slice<ChatEntity> messagesSlice = chatRepository.findBySenderOrRecipient(contact.get(), userRepository.findByUsername(loggedUser.getName()), pageable);
@@ -81,13 +83,14 @@ public class ChatController {
         LocalDate clientCurrentTime = LocalDate.now();
         ZonedDateTime today =  clientCurrentTime.atStartOfDay(timezone.toZoneId());
         ZonedDateTime yesterday =  today.minusDays(1);
+        ZonedDateTime thisweek =  today.minusDays(7);
         ZonedDateTime chatDateTime = null;
         ZonedDateTime loggedUserDateTime = null;
-        for(ChatEntity chat: messagesSlice){
+        for(ChatEntity chat: messagesSlice) {
             chatDateTime = chat.getDatetime();
             loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
             chat.setDatetime(loggedUserDateTime);
-            if(chat.getStatus() == Status.Delivered){
+            if(chat.getStatus() == Status.Delivered) {
                 //update this specific message to if recipient == this currently logged user
             }
         }
@@ -98,6 +101,7 @@ public class ChatController {
         model.addAttribute("username", loggedUser.getName());
         model.addAttribute("today", today.toLocalDate());/*must compare only date! not zone date, hence this conversion */
         model.addAttribute("yesterday", yesterday.toLocalDate());
+        model.addAttribute("thisweek", thisweek.toLocalDate());
         return "chat/components/messages";
     }
 

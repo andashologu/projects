@@ -119,8 +119,8 @@
                 success: function(html){
                     alert(html);
                 },
-                error: function(){
-                    alert("Could not send message due to an error");
+                error: function(error, xhr){
+                    alert("Could not send message due to an error:");
                 }
             });
         }

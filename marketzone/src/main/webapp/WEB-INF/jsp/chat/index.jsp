@@ -13,18 +13,13 @@
     <link href="/css/mobilelandscape.style.css" rel="stylesheet" type="text/css">
     <link href="/css/mobileportrait.style.css" rel="stylesheet" type="text/css">
     <style>
-        .medium-text {
-            letter-spacing: 0.5px;
-        }
-    </style>
-    <style>
         .load-more {
             position: relative;
             display: block;
             cursor: pointer;
             width: 20px; 
             height: 20px;
-            margin-top: 20px;
+            margin: 20px 0;
             left: 50%;
         }
         .load-more:before, .load-more:after {
@@ -71,17 +66,23 @@
         }
     </style>
     <style>
-        .sender{
+        .message.sender{
             box-shadow: 1px 1px 3px 0 #cacaca;
+            padding-left: 15px;
             align-self: flex-end;
         }
-        .recipient{
-            border: 1px solid #cacaca;
+        .message-wrapper.sender{
+            align-self: flex-end;
         }
-        @media screen and (max-width: 478px){
-            .recipient{
-                border: 0.3px solid black;
-            }
+        .message-wrapper.sender .reply-icon{
+            order: -1; /*make last child first*/
+        }
+        .message-wrapper.sender .msg-status{
+            text-align: right;
+        }
+        .message.recipient{
+            border: 1px solid #cacaca;
+            padding-right: 15px;
         }
         .messages{
             width: 95%;
@@ -92,25 +93,43 @@
             width: max-content;
             max-width: 300px;
             padding: 10px 7px;
-            margin: 10px;
             background-color: white;
         }
         .recipient-wrapper, .sender-wrapper{
             display: flex;
             flex-direction: column;
+            margin-bottom: 1.7em;
         }
         
-        .recipient-wrapper > :first-child{
+        .recipient-wrapper > :first-child .message{
             border-radius:  15px 15px 15px 0;
         }
-        .sender-wrapper > :last-child{
+        .sender-wrapper > :last-child .message{
             border-radius:  15px 0 15px 15px;
         }
-        .sender-wrapper > :first-child{/*must override last-child of sender*/
+        .sender-wrapper > :first-child .message{/*must override last-child of sender*/
             border-radius:  15px 15px 0 15px;
         }
-        .recipient-wrapper > :last-child{
+        .recipient-wrapper > :last-child .message{
             border-radius:  0 15px 15px 15px;
+        }
+        .message.sender .time{
+            text-align: right;
+        }
+        #messages .date{
+            text-align: center;
+        }
+        .msg-status{
+            display: none;
+        }
+        #messages > :last-child:not(.recipient-wrapper) > :last-child .msg-status{
+            display: block;
+        }
+        @media screen and (max-width: 478px){/*must always be at the end to override above styles*/
+                .message.recipient {
+                border: none;
+                background-color: #cacaca2a;
+            }
         }
     </style>
 </head>
@@ -176,53 +195,75 @@
                     newElement = document.createElement('div');
                     newElement.innerHTML = html;
                     var count = 0;
-                    var size = newElement.getElementsByClassName('message').length; //initial or before prepend
-                    while(newElement.getElementsByClassName('message').length > 0 ){//must not use for loop. as the newElement length keeps changing when prepending elements
+                    var size = newElement.getElementsByClassName('message-wrapper').length; //initial or before prepend
+                    var sender_wrapper_count = 0;
+                    var recipient_wrapper_count = 0;
+                    var msg_status = null;
+                    while(newElement.getElementsByClassName('message-wrapper').length > 0 ){//must not use for loop. as the newElement length keeps changing when prepending elements
                         count++;
                         if(count > size){
                             alert("Messages could not be loaded because internal error occured.");
                             break;//avoid looping while loop forever in case of an error
                         }
                         var first_child = document.getElementById("messages").firstChild;//there must be no space inside this element in order firstchild to return null if empty
+                        if(sender_wrapper_count === 1 && recipient_wrapper_count === 0){//check last sender_wrapper that has more than one message with different msq_status
+                            if(first_child.querySelector(".msg-status")){
+                                new_msg_status = first_child.querySelector(".msg-status").innerHTML;
+                                if(msg_status !== null && new_msg_status !== msg_status){
+                                    first_child.querySelector(".msg-status").style.display = "block";
+                                    msg_status = new_msg_status;
+                                }
+                                else{
+                                    msg_status = new_msg_status;
+                                }
+                            }
+                        }
                         if(first_child !== null){
-                            if(first_child.classList.contains("sender-wrapper") && newElement.getElementsByClassName('message')[0].classList.contains("sender")){
-                                first_child.prepend(newElement.getElementsByClassName('message')[0]);
+                            if(first_child.classList.contains("sender-wrapper") && newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
+                                first_child.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
                             }
-                            else if(first_child.classList.contains("recipient-wrapper") && newElement.getElementsByClassName('message')[0].classList.contains("recipient")){
-                                first_child.prepend(newElement.getElementsByClassName('message')[0]);
+                            else if(first_child.classList.contains("recipient-wrapper") && newElement.getElementsByClassName('message-wrapper')[0].classList.contains("recipient")){
+                                first_child.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
                             }
-                            else if(newElement.getElementsByClassName('message')[0].classList.contains("label-field")){
-                                $("#messages").prepend(newElement.getElementsByClassName('message')[0]);
+                            else if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("label-field")){
+                                $("#messages").prepend(newElement.getElementsByClassName('message-wrapper')[0]);
                             }
                             else{
-                                if(newElement.getElementsByClassName('message')[0].classList.contains("sender")){
+                                if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
                                     var elSender = document.createElement('div');//must be recreated as new element
                                     elSender.classList.add('sender-wrapper');
-                                    elSender.prepend(newElement.getElementsByClassName('message')[0]);
+                                    elSender.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
                                     $("#messages").prepend(elSender);
+                                    sender_wrapper_count++;
                                 }
-                                else if(newElement.getElementsByClassName('message')[0].classList.contains("recipient")){
+                                else if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("recipient")){
                                     var elRecipent = document.createElement('div');//must be recreated as new element
                                     elRecipent.classList.add('recipient-wrapper');
-                                    elRecipent.prepend(newElement.getElementsByClassName('message')[0]);
+                                    elRecipent.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
                                     $("#messages").prepend(elRecipent);
+                                    recipient_wrapper_count++;
                                 }
                                 else{//nothing to add
                                 }
                             }
                         }
                         else{
-                            if(newElement.getElementsByClassName('message')[0].classList.contains("sender")){
+                            if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
                                 var elSender = document.createElement('div');//must be recreated as new element
                                 elSender.classList.add('sender-wrapper');
-                                elSender.prepend(newElement.getElementsByClassName('message')[0]);
+                                elSender.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
                                 $("#messages").prepend(elSender);
+                                sender_wrapper_count++;
                             }
-                            if(newElement.getElementsByClassName('message')[0].classList.contains("recipient")){
+                            else if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("recipient")){
                                 var elRecipent = document.createElement('div');//must be recreated as new element
                                 elRecipent.classList.add('recipient-wrapper');
-                                elRecipent.prepend(newElement.getElementsByClassName('message')[0]);
+                                elRecipent.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
                                 $("#messages").prepend(elRecipent);
+                                recipient_wrapper_count++;
+                            }
+                            else{
+                                console.log("no match")
                             }
                         }
                     }
@@ -265,7 +306,6 @@
         function loadContent(element){
             if(mobileMediaQuery.matches){
                 document.getElementById("chat_contacts").style.display = "none";
-                document.getElementById("chat_content").style.display = "flex";
             }
             page_number = 0;
             chat_id = element.id.replace(/[^\d]/g, '');
@@ -277,6 +317,9 @@
                 success: function(html){
                     document.getElementById("loader_messages-content").style.display = "none";
                     document.getElementById("content").innerHTML = html;
+                    if(mobileMediaQuery.matches){
+                        document.getElementById("chat_content").style.display = "flex";
+                    }
                     loadMessages();
                 },
                 error: function(){

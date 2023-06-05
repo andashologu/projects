@@ -63,18 +63,16 @@ public class RegistrationController {
         autoLogin(user,request, response);
 		return "redirect:/";
 	}
-    private void autoLogin(UserEntity user, HttpServletRequest request, HttpServletResponse response){
+    private void autoLogin(UserEntity user, HttpServletRequest request, HttpServletResponse response) {
         SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
         try {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), request.getParameter("password"));
             token.setDetails(new WebAuthenticationDetails(request));
             Authentication authentication = this.authenticationProvider.authenticate(token);
             SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder.getContextHolderStrategy();
-
             SecurityContext context = securityContextHolderStrategy.createEmptyContext();
             context.setAuthentication(authentication);
             securityContextHolderStrategy.setContext(context);
-
             securityContextRepository.saveContext(context, request, response);
         } catch (Exception e) {
             SecurityContextHolder.getContext().setAuthentication(null);
