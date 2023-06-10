@@ -1,0 +1,26 @@
+@media screen and (max-width: 991px){
+    .form-block{
+        row-gap: 15px;
+    }
+    .large-text{
+        font-size: 26px;
+    }
+    .small-text{
+        font-size: 20px;
+    }
+    .auth_form_wrapper{
+        padding: 155px 90px 0 90px;
+        width: 400px;
+        min-height: 650px;
+    }
+    .auth_form_wrapper.large {
+        width: 100%;
+        max-width: none;
+    }
+    .grid_3 {
+        grid-template-columns: 0.6fr 1.4fr;
+    }
+    .chat_item.profile{
+        display: none;
+    }
+}

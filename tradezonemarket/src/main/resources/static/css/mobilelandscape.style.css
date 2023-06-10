@@ -1,0 +1,22 @@
+@media screen and (max-width: 767px){
+    .smaller-text{
+        font-size: 18px;
+    }
+    .small-text{
+        font-size: 20px;
+    }
+    .medium-text{
+        font-size: 24px;
+    }
+    .large-text{
+        font-size: 20px;
+    }
+    .auth_form_wrapper{
+        padding: 65px 40px 0px;
+        width: 350px;
+        min-height: 500px;
+    }
+    .field-wrapper .label-field {
+        align-self: flex-start;
+    }
+}
