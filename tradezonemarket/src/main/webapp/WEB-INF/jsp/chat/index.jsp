@@ -51,6 +51,11 @@
             animation:
                 .8s rotate2 .4s linear forwards infinite;
         }
+        @media screen and (max-width: 478px){
+            #loader_messages-content{
+                display: none;
+            }
+        }
         @keyframes rotate {
             to {
                 transform: translate(-50%, -50%) rotate(405deg);
@@ -62,7 +67,7 @@
             }
         }
         .load-more.disabled:before, .load-more.disabled:after {
-        margin-top: 0;
+            margin-top: 0;
             transform: translate(-50%, -50%) rotate(135deg) rotateY(180deg);
         }
     </style>
@@ -168,8 +173,8 @@
                 </div>
             </div>
         </div>
-        <div style="position: absolute; margin: 20px auto; left: 50%; transform: translate(-50%, 0); width: max-content; background-color: black; border-radius: 50%;">
-            <div style="margin: 5px;" id="loader_messages-content" class="load-more"></div>
+        <div id="loader_messages-content" style="position: absolute; margin: 20px auto; left: 50%; transform: translate(-50%, 0); width: max-content; background-color: black; border-radius: 50%;">
+            <div style="margin: 5px;" class="load-more"></div>
         </div>
         <div id="chat_content" class="chat_item content">
             <div style="background-color: white; padding-bottom: 15px" id="content" class="content-wrapper-2"></div>
@@ -178,14 +183,13 @@
             <!--iframe></iframe-->
         </div>
     </div>
-    <script>
+    <script type="text/javascript">
         //script for loading contacts and messages
         var pagenumber = 0;
         var page_number = 0;
         var pagesize = 1;
         var page_size = 3;
         var chat_id = null;
-        window.onload = loadContacts();
         function loadContacts(){
             $("#contacts_loader").addClass("active");
             $("#contacts_loader").css('pointer-events', 'none');
@@ -195,9 +199,8 @@
                     newElement = document.createElement('div');
                     newElement.innerHTML = html;
                     while(newElement.getElementsByClassName('contact').length > 0 ){//must not use for loop. as the newElement length keeps changing when prepending elements
+                        subscribeToUser(newElement.getElementsByClassName('contact')[0].getAttribute("id"));//must come before append. Append will remove the element; //must wait for stomp connection to be establised
                         $("#contacts").append(newElement.getElementsByClassName('contact')[0]);
-                        //subscribeToUser();
-                        alert(newElement.getElementsByClassName('contact')[0].querySelector('#username').innerHTML);
                     }
                     $("#contacts").append(newElement);//for script variables; hasNextMessages
                     if(hasNextContacts === 'false'){
@@ -340,12 +343,13 @@
         }
         
     </script>
-    <script>
+    <script type="text/javascript">
         //basic script
         var repliedMsg = null;
         var repliedMsgId = null;
         function showContactsOnly(){
             document.getElementById("chat_content").style.display = "none";
+            document.getElementById("loader_messages-content").style.display = "none";
             document.getElementById("chat_contacts").style.display = "flex";
         }
         let mobileMediaQuery = window.matchMedia('(max-width: 478px)');
@@ -353,6 +357,9 @@
             if(!mobileMediaQuery.matches){
                 document.getElementById("chat_contacts").style.display = "flex";
                 document.getElementById("chat_content").style.display = "flex";
+                if(chat_id === null){
+                    document.getElementById("loader_messages-content").style.display = "block";
+                }
             }
             else{
                 if(chat_id === null){
@@ -363,6 +370,7 @@
                     document.getElementById("chat_contacts").style.display = "none";
                     document.getElementById("chat_content").style.display = "flex";
                 }
+                document.getElementById("loader_messages-content").style.display = "none";
             }
         }
         function openReply(element){
@@ -388,125 +396,81 @@
     </script>
     <script type="text/javascript">
         //websocket
-        console.log("timezone: "+timezone);
-          var stompClient = null;
-          var privateStompClient = null;
-          var stompClientGroup = null;
-  
-          var headerName = "${_csrf.headerName}";
-          var parameterName = "${_csrf.parameterName}";
-          var token = "${_csrf.token}";
-  
-          var headers = {};
-          headers[headerName] = token;
-  
-          var socket = null;
-          function connect(){
-              socket = new SockJS('/ws');
-              privateStompClient = Stomp.over(socket);
-              privateStompClient.connect(headers, function(frame) {
-                  privateStompClient.subscribe('/user/queue/reply', function(result) {
-                      show(JSON.parse(result.body));
-                  });
-              });
-              socket = new SockJS('/ws');
-              stompClientGroup = Stomp.over(socket);
-              stompClientGroup.connect(headers, function(frame) {
-                  stompClientGroup.subscribe('/topic/friend/Anda', function(result) {
-                      show(JSON.parse(result.body));
-                  });
-              });
-          }
-          connect();
-          window.addEventListener('visibilitychange', () => {
-              /*Problem !!!
-                  Page visibilty only detects tab focus/when switching tabs, and not background/foreground status of the broswer.
-                  When app/browser is pushed to the background, websocket is closed. 
-                  And so, we cannot detect when user push app/browser to the backdround to perform unsubscribe and disconnect events.
-                  The Solution for now is - onclose websocket -blur event must be forced to trigger.
-              */
-              if (socket.readyState === 2 | socket.readyState === 3) {
-                  connect();
-              }
-          });
-          window.addEventListener('visibilitychange', () => {
-              /*Problem !!!
-                  Page visibilty only detects tab focus/when switching tabs, and not background/foreground status of the broswer.
-                  When app/browser is pushed to the background, websocket is closed. 
-                  And so, we cannot detect when user push app/browser to the backdround to perform unsubscribe and disconnect events.
-                  The Solution for now is - onclose websocket -blur event must be forced to trigger.
-              */
-              if (socket.readyState === 2 | socket.readyState === 3) {
-                  connect();
-              }
-          });
-          window.addEventListener('resume', () => {
-              alert("resumimg!!!");
-          });
-          
-          socket.onclose =function(event){
-              console.log("websocket closed");
-              stompClient.unsubscribe();
-              privateStompClient.unsubscribe();
-              stompClientGroup.unsubscribe();
-              stompClient.disconnect();
-              privateStompClient.disconnect();
-              stompClientGroup.disconnect();
-              window.trigger("blur"); /*
-              this forces visibilty change to be triggered when browser push to background.
-              when the user clicks back or comes back to the window, the focus event will be force to trigger
-              whenever the user start interacting with the app*/
-          }
-  
-          function sendMessage() {
-              if (socket.readyState === 2 | socket.readyState === 3) {
-                  connect();
-              }
-              var text = document.getElementById('text').value;
-              stompClient.send("/app/all", {}, JSON.stringify({'text':text}));
-          }
-          /*$.ajaxSetup({//for Ajax & $.post
-              beforeSend: function(xhr){
-                  xhr.setRequestHeader(headerName,token);
-              }
-          });*/
-          function sendPrivateMessage() {
-              if (socket.readyState === 2 | socket.readyState === 3) {
-                  connect();
-              }
-              var text = document.getElementById('privateText').value;
-              var to = document.getElementById('to').value;
-              $.ajax({
-                  url: "/chat/sendmessage",
-                  data: {'text':text, 'to':to, 'timezone': timezone},
-                  type: "POST", 
-                  beforeSend: function(xhr){
-                      xhr.setRequestHeader(headerName,token);
-                  },
-                  success: function(html){
-                      alert(html);
-                  },
-                  error: function(error, xhr){
-                      alert("Could not send message due to an error:");
-                  }
-              });
-          }
-          /*
-          function sendPrivateMessage() {
-              if (socket.readyState === 2 | socket.readyState === 3) {
-                  connect();
-              }
-              var text = document.getElementById('privateText').value;
-              var to = document.getElementById('to').value;
-              stompClient.send("/app/specific", {}, JSON.stringify({'text':text, 'to':to, 'timezone': timezone}));
-          }*/
-          function show(message) {
-              var response = document.getElementById('messages');
-              var p = document.createElement('p');
-              p.innerHTML= "message: "  + message.text;
-              console.log(message.text);
-              response.appendChild(p);
-          }
-      </script>
+        var headerName = "${_csrf.headerName}";
+        var parameterName = "${_csrf.parameterName}";
+        var token = "${_csrf.token}";
+
+        var headers = {};
+        headers[headerName] = token;
+
+        var stomp = null;
+        var socket = null;
+        function connect(){
+            socket = new SockJS('/ws');
+            stomp = Stomp.over(socket);
+            stomp.connect(headers, function(frame) {
+                window.onload = loadContacts();//must subscribe each contact when stomp connection has been established
+                stomp.subscribe('/user/queue/typingstatus', function(result) {
+                    //
+                });
+                stomp.subscribe('/user/queue/reply', function(result) {
+                    //
+                });
+            });
+        }
+        function subscribeToUser(userId){
+            userId = userId.replace(/[^\d]/g, '');
+            stomp.subscribe('/topic/friend/' + userId, function(result) {
+                //show online
+            },
+            {id: userId});
+        }
+        function unsubscribeFromUser(userId){
+            stomp.unsubscribe(userId);
+        }
+        function sendTypingStatus(status) {
+            var isTyping = status;//true or false
+            var username = ""; //dont use chat_id to avoid querying database everytime for username
+            stompClient.send("/app/specific/typingstatus", {}, JSON.stringify({'isTyping':isTyping, 'to': username}));
+        }
+        connect();
+        window.addEventListener('visibilitychange', () => {
+            /*Problem !!!
+                Page visibilty only detects tab focus , or in other words it detects switching of tabs, and not background/foreground status of the broswer.
+                And, when app/browser is pushed to the background, websocket is closed. So, there is no way to perform reconnect when the user pull back the app.
+                The slight solution for now is put a button label reconned after websocket is closed.
+            */
+            if (socket.readyState === 2 | socket.readyState === 3) {
+                connect();//reconnect
+            }
+        });
+        
+        socket.onclose =function(event){
+            console.log("websocket closed");
+            stomp.unsubscribe();
+            socket.disconnect();
+            //then show reconnect button
+            //also disable send message button
+        }
+        
+        function sendPrivateMessage() {
+            var text = document.getElementById('privateText').value;
+            var to = document.getElementById('to').value;
+            $.ajax({
+                url: "/chat/sendmessage",
+                data: {'text':text, 'to':to},
+                type: "POST", 
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(headerName, token);
+                },
+                success: function(html){
+                    alert(html);
+                },
+                error: function(error, xhr){
+                    alert("Error !! Could not send message !");
+                }
+            });
+        }
+    </script>
 </body>
 </html>

@@ -49,8 +49,7 @@ public class WebSocketController {
         UserEntity recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
         if(sender != null & recipient != null) {
             ZonedDateTime serverDateTime = ZonedDateTime.now();
-            ZoneId clientTimeZone = ZoneId.of(message.getTimezone());
-            //System.out.println(clientTimeZone.toString());
+            ZoneId clientTimeZone = timezone.toZoneId();
             ZonedDateTime clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
             ChatEntity chat = new ChatEntity(null,sender, recipient, null, message.getText(), null, Status.Sent, clientDateTime);
             chat.setUsersid();
@@ -60,6 +59,12 @@ public class WebSocketController {
             throw new UsernameNotFoundException("Sender or Recipient could not be found !!!");
         }
         return "chat/components/messages";
+    }
+
+    // Mapped as /app/specific/typingstatus
+    @MessageMapping("/specific/typingstatus")
+    public void sendTypingStatus(@Payload ChatMessage message) {
+        simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/typingstatus", message);
     }
 
     // Mapped as /app/specific

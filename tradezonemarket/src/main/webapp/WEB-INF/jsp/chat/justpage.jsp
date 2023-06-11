@@ -34,11 +34,14 @@
                 });
             });
         }
-        function subscribeToUser(){
-            console.log("subscribing to Anda");
-            stomp.subscribe('/topic/friend/Anda', function(result) {
+        function subscribeToUser(user){
+            stomp.subscribe('/topic/friend/' + user, function(result) {
                 show(JSON.parse(result.body));
-            });
+            },
+            {id: user});
+        }
+        function unsubscribeFromUser(user){
+            stomp.unsubscribe(user);
         }
         connect();
         window.addEventListener('visibilitychange', () => {
@@ -52,34 +55,11 @@
                 connect();
             }
         });
-        window.addEventListener('visibilitychange', () => {
-            /*Problem !!!
-                Page visibilty only detects tab focus/when switching tabs, and not background/foreground status of the broswer.
-                When app/browser is pushed to the background, websocket is closed. 
-                And so, we cannot detect when user push app/browser to the backdround to perform unsubscribe and disconnect events.
-                The Solution for now is - onclose websocket -blur event must be forced to trigger.
-            */
-            if (socket.readyState === 2 | socket.readyState === 3) {
-                connect();
-            }
-        });
-        window.addEventListener('resume', () => {
-            alert("resumimg!!!");
-        });
         
         socket.onclose =function(event){
-           /* console.log("websocket closed");
-            stompClient.unsubscribe();
-            privateStompClient.unsubscribe();
-            stompClientGroup.unsubscribe();
-            stompClient.disconnect();
-            privateStompClient.disconnect();
-            stompClientGroup.disconnect();
-            window.trigger("blur");*/
-             /*
-            this forces visibilty change to be triggered when browser push to background.
-            when the user clicks back or comes back to the window, the focus event will be force to trigger
-            whenever the user start interacting with the app*/
+            console.log("websocket closed");
+            stomp.unsubscribe();
+            socket.disconnect();
         }
 
         function sendMessage() {
@@ -135,7 +115,8 @@
 </head>
 <body>
     <div>
-        <button onclick="subscribeToUser();">subscribe to Anda</button>
+        <button onclick="subscribeToUser('Anda');">subscribe to Anda</button>
+        <button onclick="unsubscribeFromUser('Anda');">unsubscribe from Anda</button>
         <div>
             <button id="sendMessage" onclick="sendMessage();">Send</button>
             <input type="text" id="text" placeholder="Text"/>

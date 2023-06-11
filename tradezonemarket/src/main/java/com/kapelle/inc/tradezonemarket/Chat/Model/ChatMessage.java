@@ -6,20 +6,14 @@ public class ChatMessage {
 
     private String to;
 
-    private String date;
-
-    private String time;
-
-    private String timezone;
+    private Boolean isTyping;
 
     public ChatMessage() {}
 
-    public ChatMessage(String text, String to, String date, String time, String timezone) {
+    public ChatMessage(String text, String to, Boolean isTyping) {
         this.text = text;
         this.to = to;
-        this.date = date;
-        this.time = time;
-        this.timezone = timezone;
+        this.isTyping = isTyping;
     }
 
     public String getText(){
@@ -36,25 +30,11 @@ public class ChatMessage {
         this.to = to;
     }
 
-    public String getDate() {
-        return date;
+    public Boolean isTyping() {
+        return isTyping;
     }
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getTimezone() {
-        return timezone;
-    }
-    public void setTimezone(String timezone) {
-        this.timezone = timezone;
+    public void setTyping(Boolean isTyping) {
+        this.isTyping = isTyping;
     }
 
     @Override
@@ -62,9 +42,7 @@ public class ChatMessage {
         return "Chat{" +
                 "text='" + text +
                 "', to='" + to +
-                "', date='" + date +
-                "', time='" + time +
-                "', timezone='" + timezone +
+                "', isTyping='"+ isTyping +
                 "'}";
     }
 }

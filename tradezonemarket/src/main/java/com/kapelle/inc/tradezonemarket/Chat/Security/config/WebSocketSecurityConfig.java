@@ -18,7 +18,7 @@ public class WebSocketSecurityConfig {
                 .simpSubscribeDestMatchers("/user/queue/errors").permitAll()
                 .simpDestMatchers("/app/**").hasRole("USER")
                 .simpSubscribeDestMatchers("/user/**", "/topic/messages", "/topic/friend/*").hasRole("USER")
-                .simpTypeMatchers(SimpMessageType.MESSAGE, SimpMessageType.SUBSCRIBE).denyAll()
+                .simpTypeMatchers(SimpMessageType.MESSAGE, SimpMessageType.SUBSCRIBE, SimpMessageType.UNSUBSCRIBE).denyAll()
                 .anyMessage().denyAll();
         return messages.build();
     }

@@ -13,10 +13,10 @@
             <div class="row">
                 <c:choose>
                     <c:when test = "${contact.getSender().getUsername() != username}">
-                        <div id="username" class="label-field smaller-text light bold-text">${contact.getSender().getUsername()}</div><!--label tag does not inherit cursor-->
+                        <div class="label-field smaller-text light bold-text">${contact.getSender().getUsername()}</div><!--label tag does not inherit cursor-->
                     </c:when>
                     <c:otherwise>
-                        <div id="username" class="label-field smaller-text light bold-text">${contact.getRecipient().getUsername()}</div><!--label tag does not inherit cursor-->
+                        <div class="label-field smaller-text light bold-text">${contact.getRecipient().getUsername()}</div><!--label tag does not inherit cursor-->
                     </c:otherwise>
                 </c:choose>
                 <c:set var="date" scope="request" value="${contact.getDatetime()}"/>
