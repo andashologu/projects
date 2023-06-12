@@ -25,6 +25,7 @@ public class WebSocketEventListener {
             ChatMessage message = new ChatMessage();
             message.setText(username+" connected");
             messagingTemplate.convertAndSend("/topic/friend/"+username, message);
+            messagingTemplate.convertAndSend("/topic/friend/test"+username, message);
             System.out.println(username+" connected");
         }
     }
@@ -37,6 +38,7 @@ public class WebSocketEventListener {
             ChatMessage message = new ChatMessage();
             message.setText(username+" disconnected");
             messagingTemplate.convertAndSend("/topic/friend/"+username, message);
+            messagingTemplate.convertAndSend("/topic/friend/test"+username, message);
         }
     }
     

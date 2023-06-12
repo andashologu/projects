@@ -26,16 +26,16 @@
             socket = new SockJS('/ws');
             stomp = Stomp.over(socket);
             stomp.connect(headers, function(frame) {
-                stomp.subscribe('/topic/messages', function(result) {
+                stomp.subscribe('/topic/messages/test', function(result) {
                     show(JSON.parse(result.body));
                 });
-                stomp.subscribe('/user/queue/reply', function(result) {
+                stomp.subscribe('/user/queue/reply/test', function(result) {
                     show(JSON.parse(result.body));
                 });
             });
         }
         function subscribeToUser(user){
-            stomp.subscribe('/topic/friend/' + user, function(result) {
+            stomp.subscribe('/topic/friend/test' + user, function(result) {
                 show(JSON.parse(result.body));
             },
             {id: user});
@@ -67,7 +67,7 @@
                 connect();
             }
             var text = document.getElementById('text').value;
-            stompClient.send("/app/all", {}, JSON.stringify({'text':text}));
+            stompClient.send("/app/all/test", {}, JSON.stringify({'text':text}));
         }
         /*$.ajaxSetup({//for Ajax & $.post
             beforeSend: function(xhr){
@@ -81,7 +81,7 @@
             var text = document.getElementById('privateText').value;
             var to = document.getElementById('to').value;
             $.ajax({
-                url: "/chat/sendmessage",
+                url: "/chat/sendmessage/test",
                 data: {'text':text, 'to':to, 'timezone': timezone},
                 type: "POST", 
                 beforeSend: function(xhr){
@@ -102,7 +102,7 @@
             }
             var text = document.getElementById('privateText').value;
             var to = document.getElementById('to').value;
-            stompClient.send("/app/specific", {}, JSON.stringify({'text':text, 'to':to, 'timezone': timezone}));
+            stompClient.send("/app/specific/test", {}, JSON.stringify({'text':text, 'to':to, 'timezone': timezone}));
         }*/
         function show(message) {
             var response = document.getElementById('messages');

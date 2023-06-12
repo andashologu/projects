@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kapelle.inc.tradezonemarket.Chat.Model.ChatEntity;
 import com.kapelle.inc.tradezonemarket.Chat.Model.ChatMessage;
@@ -36,7 +37,7 @@ public class WebSocketController {
     UserRepository userRepository;
 
     @PostMapping("/chat/sendmessage")
-    public String sendToSpecificUser(@Payload ChatMessage message, Principal user, TimeZone timezone, Model model, Principal loggedUser) throws UsernameNotFoundException {
+    public String sendToSpecificUser(@RequestParam Boolean insert, @Payload ChatMessage message, Principal user, TimeZone timezone, Model model, Principal loggedUser) throws UsernameNotFoundException {
         UserEntity sender = userRepository.findByUsernameIgnoreCase(user.getName());
         UserEntity recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
         ZonedDateTime clientDateTime = null;
@@ -52,9 +53,11 @@ public class WebSocketController {
             ZoneId clientTimeZone = timezone.toZoneId();
             clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
             chat = new ChatEntity(null,sender, recipient, null, message.getText(), null, Status.Sent, clientDateTime);
-            chat.setUsersid();
-            chatRepository.save(chat);
-            simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
+            if(insert){
+                chat.setUsersid();
+                chatRepository.save(chat);
+                simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
+            }
         } 
         else {
             throw new UsernameNotFoundException("Sender or Recipient could not be found !!!");

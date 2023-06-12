@@ -60,7 +60,7 @@ public class WebSocketControllerTest {
             ChatEntity chat = new ChatEntity(null,sender, recipient, null, message.getText(), null, Status.Sent, clientDateTime);
             chat.setUsersid();
             chatRepository.save(chat);
-            simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
+            simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply/test", message);
         } else {
             throw new UsernameNotFoundException("Sender or Recipient could not be found !!!");
         }

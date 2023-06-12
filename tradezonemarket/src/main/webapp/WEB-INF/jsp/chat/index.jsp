@@ -220,6 +220,8 @@
                 });
             }
         }
+        var recipient_wrapper_count = null;
+        var sender_wrapper_count = null;
         function loadMessages(){
             $("#messages_loader").addClass("active");
             $("#messages_loader").css('pointer-events', 'none');
@@ -230,8 +232,8 @@
                     newElement.innerHTML = html;
                     var count = 0;
                     var size = newElement.getElementsByClassName('message-wrapper').length; //initial or before prepend
-                    var sender_wrapper_count = 0;
-                    var recipient_wrapper_count = 0;
+                    sender_wrapper_count = 0;
+                    recipient_wrapper_count = 0;
                     var msg_status = null;
                     while(newElement.getElementsByClassName('message-wrapper').length > 0 ){//must not use for loop. as the newElement length keeps changing when prepending elements
                         count++;
@@ -421,7 +423,36 @@
                     //
                 });
                 stomp.subscribe('/user/queue/reply', function(result) {
-                    //
+                    alert("recieved message !!!");
+                    var text = "example text....";
+                    $.ajax({
+                        url: "/chat/sendmessage?insert=false",
+                        data: {'recipientId':chat_id, 'text':text, 'to':chat_username},
+                        type: "POST", 
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader(headerName, token);
+                        },
+                        success: function(html){
+                            console.log(html);
+                            newElement = document.createElement('div');
+                            newElement.innerHTML = html;
+                            last_child = document.getElementById("messages").lastChild;
+                            if(last_child !==null){
+                                if(last_child.classList.contains("recipient-wrapper") && newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
+                                    last_child.append(newElement.getElementsByClassName('message-wrapper')[0]);
+                                }
+                                else{
+                                    addNewMessage(newElement);
+                                }
+                            }
+                            else{
+                                addNewMessage(newElement);
+                            }
+                        },
+                        error: function(error, xhr){
+                            alert("Error !! Could not send message !");
+                        }
+                    });
                 });
             });
         }
@@ -464,18 +495,22 @@
         function sendPrivateMessage() {
             text = document.getElementById('privateText').value;
             $.ajax({
-                url: "/chat/sendmessage",
+                url: "/chat/sendmessage?insert=true",
                 data: {'recipientId':chat_id, 'text':text, 'to':chat_username},
                 type: "POST", 
                 beforeSend: function(xhr){
                     xhr.setRequestHeader(headerName, token);
                 },
                 success: function(html){
+                    newElement = document.createElement('div');
                     newElement.innerHTML = html;
                     last_child = document.getElementById("messages").lastChild;
                     if(last_child !==null){
                         if(last_child.classList.contains("sender-wrapper") && newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
                             last_child.append(newElement.getElementsByClassName('message-wrapper')[0]);
+                        }
+                        else{
+                            addNewMessage(newElement);
                         }
                     }
                     else{
