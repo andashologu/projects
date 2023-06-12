@@ -3,10 +3,10 @@
 <%@ page import="java.time.temporal.ChronoUnit"%>
 <c:forEach var="contact" items="${contacts}">
     <c:if test = "${contact.getSender().getUsername() != username}">
-        <div id="ct_${contact.getSender().getId()}" onclick="loadContent(this)" class="contact row small-margin">
+        <div id="ct_${contact.getSender().getId()}" data-id="${contact.getSender().getUsername()}" onclick="loadContent(this)" class="contact row small-margin">
     </c:if>
     <c:if test = "${contact.getRecipient().getUsername() != username}">
-        <div id="ct_${contact.getRecipient().getId()}" onclick="loadContent(this)" class="contact row small-margin">
+        <div id="ct_${contact.getRecipient().getId()}" data-id="${contact.getRecipient().getUsername()}" onclick="loadContent(this)" class="contact row small-margin">
     </c:if>
         <div class="profile_pic"></div>
         <div class="field-wrapper-2">

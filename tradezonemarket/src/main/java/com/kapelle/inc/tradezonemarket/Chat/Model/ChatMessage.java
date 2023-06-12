@@ -1,6 +1,8 @@
 package com.kapelle.inc.tradezonemarket.Chat.Model;
 
 public class ChatMessage {
+
+    private Long recipientId;
     
     private String text;
 
@@ -10,10 +12,18 @@ public class ChatMessage {
 
     public ChatMessage() {}
 
-    public ChatMessage(String text, String to, Boolean isTyping) {
+    public ChatMessage(Long recipientId, String text, String to, Boolean isTyping) {
+        this.recipientId = recipientId;
         this.text = text;
         this.to = to;
         this.isTyping = isTyping;
+    }
+
+    public Long getRecipientId(){
+        return recipientId;
+    }
+    public void setRecipientId(Long recipientId) {
+        this.recipientId = recipientId;
     }
 
     public String getText(){
@@ -40,7 +50,8 @@ public class ChatMessage {
     @Override
     public String toString() {
         return "Chat{" +
-                "text='" + text +
+                "recipientId'"+ recipientId+
+                "', text='" + text +
                 "', to='" + to +
                 "', isTyping='"+ isTyping +
                 "'}";

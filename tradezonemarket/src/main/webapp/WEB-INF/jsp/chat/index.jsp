@@ -6,11 +6,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat - MarketZone</title>
+    <title>Chat - TZM</title>
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-
     <link href="/css/style.css" rel="stylesheet" type="text/css">
     <link href="/css/tablet.style.css" rel="stylesheet" type="text/css">
     <link href="/css/mobilelandscape.style.css" rel="stylesheet" type="text/css">
@@ -147,11 +146,13 @@
         @media screen and (max-width: 478px){/*must always be at the end to override above styles*/
             .message.recipient {
                 border: none;
-                background-color: #cacaca2a;
             }
             .message.sender {
                 box-shadow: none;
+            }
+            .message.recipient, .message.sender{
                 background-color: #cacaca2a;
+                box-shadow: inset 0px 0px 3px 0px #cacaca4a;
             }
         }
     </style>
@@ -160,7 +161,7 @@
     <div style="background-color: #cacaca2a;" class="full_block grid_3">
         <div id="chat_contacts" class="chat_item contacts">
             <div style="flex-grow: 0; justify-content: center; background-color: white; padding: 20px"class="field-wrapper-2">
-                <svg style="position: absolute; padding-left: 10px; cursor:pointer; " xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" width="25"><path fill="#cacaca" d="M796-121 533-384q-30 26-69.959 40.5T378-329q-108.162 0-183.081-75Q120-479 120-585t75-181q75-75 181.5-75t181 75Q632-691 632-584.85 632-542 618-502q-14 40-42 75l264 262-44 44ZM377-389q81.25 0 138.125-57.5T572-585q0-81-56.875-138.5T377-781q-82.083 0-139.542 57.5Q180-666 180-585t57.458 138.5Q294.917-389 377-389Z"/></svg>
+                <svg style="position: absolute; padding-left: 10px; cursor:pointer;" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path fill="gray" d="M372-312q-115.162 0-195.081-80Q97-472 97-585t80-193q80-80 193.5-80t193 80Q643-698 643-584.85q0 44.85-12.5 83.35Q618-463 593-429l236 234q14 14.556 14 34.278T829-127q-14.533 15-34.489 15-19.955 0-33.511-15L526-361q-29 22.923-68.459 35.962Q418.082-312 372-312Zm-.647-94q74.897 0 126.272-52.25T549-585q0-74.5-51.522-126.75T371.353-764q-75.436 0-127.895 52.25Q191-659.5 191-585t52.311 126.75Q295.623-406 371.353-406Z"/></svg>
                 <input style="padding-left: 35px" class="search-field smaller-text dark" type="text" placeholder="Search">
             </div>
             <div style="background-color:transparent" class="horozontalline"></div>
@@ -190,6 +191,7 @@
         var pagesize = 1;
         var page_size = 3;
         var chat_id = null;
+        var chat_username = null;
         function loadContacts(){
             $("#contacts_loader").addClass("active");
             $("#contacts_loader").css('pointer-events', 'none');
@@ -223,7 +225,7 @@
             $("#messages_loader").css('pointer-events', 'none');
             if(document.getElementById("messages")){
                 var newElement = null;
-                $.get("/chat/api/messages?id="+chat_id+"&pagenumber="+page_number+"&pagesize="+page_size, function(html){
+                $.get("/chat/api/messages?username="+chat_username+"&id="+chat_id+"&pagenumber="+page_number+"&pagesize="+page_size, function(html){
                     newElement = document.createElement('div');
                     newElement.innerHTML = html;
                     var count = 0;
@@ -280,23 +282,7 @@
                             }
                         }
                         else{
-                            if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
-                                var elSender = document.createElement('div');//must be recreated as new element
-                                elSender.classList.add('sender-wrapper');
-                                elSender.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
-                                $("#messages").prepend(elSender);
-                                sender_wrapper_count++;
-                            }
-                            else if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("recipient")){
-                                var elRecipent = document.createElement('div');//must be recreated as new element
-                                elRecipent.classList.add('recipient-wrapper');
-                                elRecipent.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
-                                $("#messages").prepend(elRecipent);
-                                recipient_wrapper_count++;
-                            }
-                            else{
-                                console.log("no match")
-                            }
+                            addNewMessage(newElement);
                         }
                     }
                     $("#messages").append(newElement);//for script variables; hasNextMessages
@@ -315,6 +301,25 @@
                 });
             }
         }
+        function addNewMessage(newElement){
+            if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
+                var elSender = document.createElement('div');//must be recreated as new element
+                elSender.classList.add('sender-wrapper');
+                elSender.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
+                $("#messages").prepend(elSender);
+                sender_wrapper_count++;
+            }
+            else if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("recipient")){
+                var elRecipent = document.createElement('div');//must be recreated as new element
+                elRecipent.classList.add('recipient-wrapper');
+                elRecipent.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
+                $("#messages").prepend(elRecipent);
+                recipient_wrapper_count++;
+            }
+            else{
+                console.log("no match")
+            }
+        }
         
         function loadContent(element){
             if(mobileMediaQuery.matches){
@@ -322,10 +327,12 @@
             }
             page_number = 0;
             chat_id = element.id.replace(/[^\d]/g, '');
+            chat_username = $(element).data("id");
+            console.log("chat_username: "+chat_username);
             document.getElementById("loader_messages-content").style.display = "block";
-            $("#loader_messages-content").addClass("active");
+            $("#loader_messages-content .load-more").addClass("active");
             $.ajax({
-                url: "/chat/api/content?id="+chat_id,
+                url: "/chat/api/content?username="+chat_username+"&id="+chat_id,
                 type: "GET", 
                 success: function(html){
                     document.getElementById("loader_messages-content").style.display = "none";
@@ -431,7 +438,7 @@
         function sendTypingStatus(status) {
             var isTyping = status;//true or false
             var username = ""; //dont use chat_id to avoid querying database everytime for username
-            stompClient.send("/app/specific/typingstatus", {}, JSON.stringify({'isTyping':isTyping, 'to': username}));
+            stomp.send("/app/specific/typingstatus", {}, JSON.stringify({'isTyping':isTyping, 'to': chat_username}));
         }
         connect();
         window.addEventListener('visibilitychange', () => {
@@ -452,19 +459,28 @@
             //then show reconnect button
             //also disable send message button
         }
-        
+        var text = null;
+        var last_child = null;
         function sendPrivateMessage() {
-            var text = document.getElementById('privateText').value;
-            var to = document.getElementById('to').value;
+            text = document.getElementById('privateText').value;
             $.ajax({
                 url: "/chat/sendmessage",
-                data: {'text':text, 'to':to},
+                data: {'recipientId':chat_id, 'text':text, 'to':chat_username},
                 type: "POST", 
                 beforeSend: function(xhr){
                     xhr.setRequestHeader(headerName, token);
                 },
                 success: function(html){
-                    alert(html);
+                    newElement.innerHTML = html;
+                    last_child = document.getElementById("messages").lastChild;
+                    if(last_child !==null){
+                        if(last_child.classList.contains("sender-wrapper") && newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
+                            last_child.append(newElement.getElementsByClassName('message-wrapper')[0]);
+                        }
+                    }
+                    else{
+                        addNewMessage(newElement);
+                    }
                 },
                 error: function(error, xhr){
                     alert("Error !! Could not send message !");

@@ -430,12 +430,5 @@ button, input[type="button"], input[type="submit"], .button{
     display: none;
 }
 .back-arrow{
-    border-bottom: 2px solid #cacaca;
-    border-right: 2px solid #cacaca;
-    width: 15px;
-    height: 15px;
-    margin-left: 10px;
-    margin-right: 15px;
-    transform: rotate(135deg);
     cursor: pointer;
 }

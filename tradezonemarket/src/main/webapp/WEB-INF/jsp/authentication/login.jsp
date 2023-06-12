@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
+        <title>Login - TZM</title>
         <link href="/css/style.css" rel="stylesheet" type="text/css">
         <link href="/css/tablet.style.css" rel="stylesheet" type="text/css">
         <link href="/css/mobilelandscape.style.css" rel="stylesheet" type="text/css">
@@ -40,7 +40,7 @@
                 <div class="auth_form_wrapper">
                     <button id="close_button" class="hidden">Close</button>
                     <form:form id="login_form" class="form-block"  action="/login" method="POST">
-                        <h1 style="text-align: left;" class="small-heading dark">TradeZoneMarket</h1>
+                        <h1 style="text-align: left;" class="small-heading dark">TZM</h1>
                         <div class="field-wrapper-2 medium-margin">
                             <input class="text-field-2 small-text" type="text" placeholder="Username" name="username" value="${username}" minlength="3" maxlength="100"/>
                             <div style="width: 200px;" class="horozontalline"></div>

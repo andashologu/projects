@@ -38,12 +38,6 @@ public class ChatController {
         model.addAttribute("username", loggedUser.getName());
         return "chat/index";
     }
-
-    @GetMapping("/chat/test")
-    public String test(){
-        return "chat/justpage";
-    }
-
     @GetMapping("/chat/api/contacts")
     public String contacts(@RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser, HttpSession session){
         Pageable pageable = PageRequest.of(pagenumber, pagesize);
@@ -96,7 +90,6 @@ public class ChatController {
         model.addAttribute("messages", messagesList);
         model.addAttribute("hasNextMessages", messagesSlice.hasNext());
         model.addAttribute("pagenumber", pagenumber);
-        /*model.addAttribute("contact", contact);*/
         model.addAttribute("username", loggedUser.getName());
         model.addAttribute("today", today.toLocalDate());/*must compare only date! not zone date, hence this conversion */
         model.addAttribute("yesterday", yesterday.toLocalDate());
