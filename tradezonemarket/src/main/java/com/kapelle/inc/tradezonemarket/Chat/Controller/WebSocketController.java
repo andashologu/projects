@@ -38,8 +38,16 @@ public class WebSocketController {
 
     @PostMapping("/chat/sendmessage")
     public String sendToSpecificUser(@RequestParam Boolean insert, @Payload ChatMessage message, Principal user, TimeZone timezone, Model model, Principal loggedUser) throws UsernameNotFoundException {
-        UserEntity sender = userRepository.findByUsernameIgnoreCase(user.getName());
-        UserEntity recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
+        UserEntity sender = null;
+        UserEntity recipient = null;
+        if(insert){
+            sender = userRepository.findByUsernameIgnoreCase(user.getName());
+            recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
+        }
+        else{
+            sender = userRepository.findByUsernameIgnoreCase(message.getTo());
+            recipient = userRepository.findByUsernameIgnoreCase(user.getName());
+        }
         ZonedDateTime clientDateTime = null;
         ChatEntity chat = null;
         if(sender != null | recipient != null) {

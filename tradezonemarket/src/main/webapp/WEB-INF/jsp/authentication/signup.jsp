@@ -20,7 +20,7 @@
                 <div class="auth_form_wrapper large">
                     <div style="opacity: 0.1;" class="background_image_2"></div>
                     <div class="auth-component">
-                        <h1 class="small-heading dark small-margin">TradeZoneMarket</h1>
+                        <h1 class="small-heading dark small-margin">TZM</h1>
                         <p class="large-text dark medium-margin">Signup Form</p>
                         <!--img class="authlogo top" alt="logo" src="/images/authlogo.svg" hight="75" width="350"/-->
                         <div class="horozontalline-wrapper">

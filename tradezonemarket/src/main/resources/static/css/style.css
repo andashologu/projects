@@ -189,8 +189,7 @@ h1{
 }
 .text-field{
     background-color: transparent;
-    padding: 12px 0;
-    border-bottom: 1px solid #cacaca;
+    padding: 12px;
     min-width: 0; /*avoid flex children (inputs have min width > 100) exceed parent wodth*/
     border-radius: 0;
 }
@@ -201,13 +200,6 @@ h1{
 .field-wrapper .label-field{
     flex-grow: 1;
     align-self: center;
-}
-.text-field {
-    border-bottom: none;
-    padding: 12px;
-}
-.text-field{
-    padding: 15px;
 }
 .smallest-text{
     font-size: 13px;

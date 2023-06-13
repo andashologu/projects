@@ -284,7 +284,7 @@
                             }
                         }
                         else{
-                            addNewMessage(newElement);
+                            addNewMessage(newElement, false);
                         }
                     }
                     $("#messages").append(newElement);//for script variables; hasNextMessages
@@ -303,19 +303,29 @@
                 });
             }
         }
-        function addNewMessage(newElement){
+        function addNewMessage(newElement, isNew){
             if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
                 var elSender = document.createElement('div');//must be recreated as new element
                 elSender.classList.add('sender-wrapper');
                 elSender.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
-                $("#messages").prepend(elSender);
+                if(!isNew){
+                    $("#messages").prepend(elSender);
+                }
+                else{
+                    $("#messages").append(elSender);
+                }
                 sender_wrapper_count++;
             }
             else if(newElement.getElementsByClassName('message-wrapper')[0].classList.contains("recipient")){
                 var elRecipent = document.createElement('div');//must be recreated as new element
                 elRecipent.classList.add('recipient-wrapper');
                 elRecipent.prepend(newElement.getElementsByClassName('message-wrapper')[0]);
-                $("#messages").prepend(elRecipent);
+                if(!isNew){
+                    $("#messages").prepend(elRecipent);
+                }
+                else{
+                    $("#messages").append(elRecipent);
+                }
                 recipient_wrapper_count++;
             }
             else{
@@ -423,8 +433,7 @@
                     //
                 });
                 stomp.subscribe('/user/queue/reply', function(result) {
-                    alert("recieved message !!!");
-                    var text = "example text....";
+                    var text = JSON.parse(result.body).text;
                     $.ajax({
                         url: "/chat/sendmessage?insert=false",
                         data: {'recipientId':chat_id, 'text':text, 'to':chat_username},
@@ -438,15 +447,15 @@
                             newElement.innerHTML = html;
                             last_child = document.getElementById("messages").lastChild;
                             if(last_child !==null){
-                                if(last_child.classList.contains("recipient-wrapper") && newElement.getElementsByClassName('message-wrapper')[0].classList.contains("sender")){
+                                if(last_child.classList.contains("recipient-wrapper") && newElement.getElementsByClassName('message-wrapper')[0].classList.contains("recipient")){
                                     last_child.append(newElement.getElementsByClassName('message-wrapper')[0]);
                                 }
                                 else{
-                                    addNewMessage(newElement);
+                                    addNewMessage(newElement, true);
                                 }
                             }
                             else{
-                                addNewMessage(newElement);
+                                addNewMessage(newElement, true);
                             }
                         },
                         error: function(error, xhr){
@@ -494,6 +503,7 @@
         var last_child = null;
         function sendPrivateMessage() {
             text = document.getElementById('privateText').value;
+            document.getElementById('privateText').value = "";
             $.ajax({
                 url: "/chat/sendmessage?insert=true",
                 data: {'recipientId':chat_id, 'text':text, 'to':chat_username},
@@ -510,11 +520,11 @@
                             last_child.append(newElement.getElementsByClassName('message-wrapper')[0]);
                         }
                         else{
-                            addNewMessage(newElement);
+                            addNewMessage(newElement, true);
                         }
                     }
                     else{
-                        addNewMessage(newElement);
+                        addNewMessage(newElement, true);
                     }
                 },
                 error: function(error, xhr){
