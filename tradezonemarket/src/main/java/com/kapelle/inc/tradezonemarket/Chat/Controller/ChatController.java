@@ -5,18 +5,23 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUser;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kapelle.inc.tradezonemarket.Chat.Model.ChatEntity;
+import com.kapelle.inc.tradezonemarket.Chat.Model.ChatMessage;
 import com.kapelle.inc.tradezonemarket.Chat.Model.ChatRepository;
 import com.kapelle.inc.tradezonemarket.Chat.Model.Status;
 import com.kapelle.inc.tradezonemarket.authentication.user.Model.UserEntity;
@@ -27,19 +32,25 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class ChatController {
 
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
+
     @Autowired 
     ChatRepository chatRepository;
 
     @Autowired 
     UserRepository userRepository;
 
+    @Autowired 
+    SimpUserRegistry simpUserRegistry;//work with stomp
+
     @GetMapping("/chat")
-    public String index(Model model, Principal loggedUser){
+    public String index(Model model, Principal loggedUser) {
         model.addAttribute("username", loggedUser.getName());
         return "chat/index";
     }
     @GetMapping("/chat/api/contacts")
-    public String contacts(@RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser, HttpSession session){
+    public String contacts(@RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser, HttpSession session) {
         Pageable pageable = PageRequest.of(pagenumber, pagesize);
         Slice<ChatEntity> contactsSlice = chatRepository.findContacts(userRepository.findByUsername(loggedUser.getName()), pageable);
         List<ChatEntity> contactsList = contactsSlice.getContent();
@@ -54,9 +65,6 @@ public class ChatController {
             chatDateTime = contact.getDatetime();
             loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
             contact.setDatetime(loggedUserDateTime);
-            if(contact.getStatus() == Status.Sent){
-                //update all messages where recipient = this currently logged user to delivered
-            }
         }
         model.addAttribute("contacts", contactsList);
         model.addAttribute("hasNextContacts", contactsSlice.hasNext());
@@ -68,10 +76,16 @@ public class ChatController {
         return "chat/components/contacts";
     }
     @GetMapping("/chat/api/messages")
-    public String messages(@RequestParam Long id, @RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser) {
+    public String messages(@RequestParam Long initialId, @RequestParam Long id, @RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser) {
         Pageable pageable = PageRequest.of(pagenumber, pagesize);
         Optional<UserEntity> contact = userRepository.findById(id);
-        Slice<ChatEntity> messagesSlice = chatRepository.findBySenderOrRecipient(contact.get(), userRepository.findByUsername(loggedUser.getName()), pageable);
+        UserEntity user = userRepository.findByUsername(loggedUser.getName());
+        Slice<ChatEntity> messagesSlice = null;
+        if(initialId == 0) {//pagination offset
+            messagesSlice = chatRepository.findBySenderOrRecipient(contact.get(), user, pageable);
+        } else {
+            messagesSlice = chatRepository.findBySenderOrRecipient(initialId, contact.get(), userRepository.findByUsername(loggedUser.getName()), pageable);
+        }
         List<ChatEntity> messagesList = messagesSlice.getContent();
         LocalDate clientCurrentTime = LocalDate.now();
         ZonedDateTime today =  clientCurrentTime.atStartOfDay(timezone.toZoneId());
@@ -83,9 +97,12 @@ public class ChatController {
             chatDateTime = chat.getDatetime();
             loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
             chat.setDatetime(loggedUserDateTime);
-            if(chat.getStatus() == Status.Delivered) {
-                //update this specific message to if recipient == this currently logged user
-            }
+            if(chat.getStatus() != Status.Message.Seen && user == chat.getRecipient()) {
+                    chat.setStatus(Status.Message.Seen);
+                    chatRepository.save(chat);
+                    simpMessagingTemplate.convertAndSendToUser(chat.getSender().getUsername(), "/queue/messagestatus", new ChatMessage(chat.getId(), null, chat.getRecipient().getId(), null, null, Status.Message.Seen, null));
+                    //message can be updated as seen on the client side with javascript using message Id
+                }
         }
         model.addAttribute("messages", messagesList);
         model.addAttribute("hasNextMessages", messagesSlice.hasNext());
@@ -98,10 +115,20 @@ public class ChatController {
     }
 
     @GetMapping("/chat/api/content")
-    public String contacts(@RequestParam Long id, Model model, Principal loggedUser){
+    public String contacts(@RequestParam Long id, Model model, Principal loggedUser) {
         Optional<UserEntity> contact = userRepository.findById(id);
+        String chat_username = contact.get().getUsername();
+        Boolean isActive = false;
         model.addAttribute("chat", contact);
         model.addAttribute("username", loggedUser.getName());
+        Set<SimpUser> loggedUsers = simpUserRegistry.getUsers();
+        for(SimpUser simpUser: loggedUsers){
+            if(simpUser.getName().equals(chat_username)) {//if recipient is logged to websocket, set message status to delivered
+                isActive = true;
+                break;
+            }
+        }
+        model.addAttribute("isActive", isActive);
         return "chat/components/content";
     }
 }

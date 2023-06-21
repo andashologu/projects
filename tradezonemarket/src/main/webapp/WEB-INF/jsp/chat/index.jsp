@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat - TZM</title>
+    <title>Chat &#8212; TZM</title>
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
@@ -160,9 +160,12 @@
 <body>
     <div style="background-color: #cacaca2a;" class="full_block grid_3">
         <div id="chat_contacts" class="chat_item contacts">
-            <div style="flex-grow: 0; justify-content: center; background-color: white; padding: 20px"class="field-wrapper-2">
-                <svg style="position: absolute; padding-left: 10px; cursor:pointer;" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path fill="gray" d="M372-312q-115.162 0-195.081-80Q97-472 97-585t80-193q80-80 193.5-80t193 80Q643-698 643-584.85q0 44.85-12.5 83.35Q618-463 593-429l236 234q14 14.556 14 34.278T829-127q-14.533 15-34.489 15-19.955 0-33.511-15L526-361q-29 22.923-68.459 35.962Q418.082-312 372-312Zm-.647-94q74.897 0 126.272-52.25T549-585q0-74.5-51.522-126.75T371.353-764q-75.436 0-127.895 52.25Q191-659.5 191-585t52.311 126.75Q295.623-406 371.353-406Z"/></svg>
-                <input style="padding-left: 35px" class="search-field smaller-text dark" type="text" placeholder="Search">
+            <div style="padding: 20px; background-color: white;" class="search-wrapper row">
+                <div style="flex-grow: 1; box-shadow: 0px 0px 2px 0 #cacaca; border-radius: 35px; padding: 0 10px;" class="row">
+                    <svg style="cursor:pointer; margin: auto 0;" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path fill="gray" d="M372-312q-115.162 0-195.081-80Q97-472 97-585t80-193q80-80 193.5-80t193 80Q643-698 643-584.85q0 44.85-12.5 83.35Q618-463 593-429l236 234q14 14.556 14 34.278T829-127q-14.533 15-34.489 15-19.955 0-33.511-15L526-361q-29 22.923-68.459 35.962Q418.082-312 372-312Zm-.647-94q74.897 0 126.272-52.25T549-585q0-74.5-51.522-126.75T371.353-764q-75.436 0-127.895 52.25Q191-659.5 191-585t52.311 126.75Q295.623-406 371.353-406Z"/></svg>
+                    <input  style="padding-left: 0; flex-grow: 1;" class="search-field smaller-text dark" type="text" placeholder="Search for contacts">
+                    <label style="border-left: 1px solid #cacaca; margin: auto 0; padding-left: 5px;" class="label-field light">SEARCH</label>
+                </div>
             </div>
             <div style="background-color:transparent" class="horozontalline"></div>
             <div style="background-color: white;" class="flexi-content-wrapper">
@@ -222,12 +225,13 @@
         }
         var recipient_wrapper_count = null;
         var sender_wrapper_count = null;
+        var initialId = 0; //0 instead of null wont covert to Long
         function loadMessages(){
             $("#messages_loader").addClass("active");
             $("#messages_loader").css('pointer-events', 'none');
             if(document.getElementById("messages")){
                 var newElement = null;
-                $.get("/chat/api/messages?username="+chat_username+"&id="+chat_id+"&pagenumber="+page_number+"&pagesize="+page_size, function(html){
+                $.get("/chat/api/messages?initialId="+initialId+"&username="+chat_username+"&id="+chat_id+"&pagenumber="+page_number+"&pagesize="+page_size, function(html){
                     newElement = document.createElement('div');
                     newElement.innerHTML = html;
                     var count = 0;
@@ -236,6 +240,11 @@
                     recipient_wrapper_count = 0;
                     var msg_status = null;
                     while(newElement.getElementsByClassName('message-wrapper').length > 0 ){//must not use for loop. as the newElement length keeps changing when prepending elements
+                        if(initialId === 0){
+                            if(newElement.getElementsByClassName('message-wrapper').length = 1){
+                                initialId = newElement.getElementsByClassName('message-wrapper')[0].getAttribute("id").replace(/[^\d]/g, '');
+                            }
+                        }
                         count++;
                         if(count > size){
                             alert("Messages could not be loaded because internal error occured.");
@@ -332,8 +341,8 @@
                 console.log("no match")
             }
         }
-        
         function loadContent(element){
+            initialId = 0;
             if(mobileMediaQuery.matches){
                 document.getElementById("chat_contacts").style.display = "none";
             }
@@ -348,6 +357,7 @@
                 type: "GET", 
                 success: function(html){
                     document.getElementById("loader_messages-content").style.display = "none";
+                    $("#loader_messages-content .load-more").removeClass("active");
                     document.getElementById("content").innerHTML = html;
                     if(mobileMediaQuery.matches){
                         document.getElementById("chat_content").style.display = "flex";
@@ -356,6 +366,7 @@
                 },
                 error: function(){
                     document.getElementById("loader_messages-content").style.display = "none";
+                    $("#loader_messages-content .load-more").removeClass("active");
                     alert("could not load content");
                 }
             });
@@ -368,6 +379,8 @@
         var repliedMsgId = null;
         function showContactsOnly(){
             document.getElementById("chat_content").style.display = "none";
+            document.getElementById("content").innerHTML = "";
+            chat_id = null;
             document.getElementById("loader_messages-content").style.display = "none";
             document.getElementById("chat_contacts").style.display = "flex";
         }
@@ -432,17 +445,36 @@
                 stomp.subscribe('/user/queue/typingstatus', function(result) {
                     //
                 });
-                stomp.subscribe('/user/queue/reply', function(result) {
+                stomp.subscribe('/user/queue/messagestatus', function(result) {
+                    //will recieve a specific message id to update a specific message. from /chat/api/messages & /chat/sendmessage
+                    //will also recieve recipient id to make sure the recipient is in view...
+                    //to do: if its not last message, hide status
+                    console.log("status: "+JSON.parse(result.body).status);
+                    if(chat_id == JSON.parse(result.body).recipientId){//=== wont work for this
+                        console.log(document.getElementById("msg_sts_"+JSON.parse(result.body).messageId));
+                        if(document.getElementById("msg_sts_"+JSON.parse(result.body).messageId)){
+                            document.getElementById("msg_sts_"+JSON.parse(result.body).messageId).innerHTML = JSON.parse(result.body).status;
+                        }
+                    }
+                });
+                stomp.subscribe('/user/queue/recievemessage', function(result) {
                     var text = JSON.parse(result.body).text;
-                    $.ajax({
-                        url: "/chat/sendmessage?insert=false",
-                        data: {'recipientId':chat_id, 'text':text, 'to':chat_username},
+                    //however the initial is sent, it will remail sent there if user is not subscribed
+
+                    /*var text = document.getElementById('privateText').value;
+                        var to = document.getElementById('to').value;
+                        stompClient.send("/app/specific/test", {}, JSON.stringify({'text':text, 'to':to, 'timezone': timezone}));*/
+                    if(chat_id == JSON.parse(result.body).senderId){//seen
+                        $.ajax({
+                        url: "/chat/message?insert=false",//does not insert into database
+                        data: {'messageId': JSON.parse(result.body).messageId, 'recipientId':chat_id, 'text':text, 'to':chat_username},
                         type: "POST", 
                         beforeSend: function(xhr){
                             xhr.setRequestHeader(headerName, token);
                         },
                         success: function(html){
-                            console.log(html);
+                            //console.log(html);
+
                             newElement = document.createElement('div');
                             newElement.innerHTML = html;
                             last_child = document.getElementById("messages").lastChild;
@@ -462,13 +494,21 @@
                             alert("Error !! Could not send message !");
                         }
                     });
+                    }
+                    else{//dilivered 
+                        //sent and delivered are controlled by /chat/message
+                    }
                 });
             });
         }
         function subscribeToUser(userId){
             userId = userId.replace(/[^\d]/g, '');
             stomp.subscribe('/topic/friend/' + userId, function(result) {
-                //show online
+                //show onlinestatus
+                if(document.getElementById("status_"+JSON.parse(result.body).userId)){
+                    document.getElementById("status_"+JSON.parse(result.body).userId).innerHTML = JSON.parse(result.body).status;
+                }
+
             },
             {id: userId});
         }
@@ -505,7 +545,7 @@
             text = document.getElementById('privateText').value;
             document.getElementById('privateText').value = "";
             $.ajax({
-                url: "/chat/sendmessage?insert=true",
+                url: "/chat/message?insert=true",//Must insert into database
                 data: {'recipientId':chat_id, 'text':text, 'to':chat_username},
                 type: "POST", 
                 beforeSend: function(xhr){

@@ -7,6 +7,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.TimeZoneStorage;
 import org.hibernate.type.SqlTypes;
 
+import com.kapelle.inc.tradezonemarket.Chat.Model.Status.Message;
 import com.kapelle.inc.tradezonemarket.authentication.user.Model.UserEntity;
 
 import jakarta.persistence.CascadeType;
@@ -57,14 +58,14 @@ public class ChatEntity {
     public String image;
 
     @Enumerated(EnumType.ORDINAL)
-    public Status status;
+    public Message status;
 
     @TimeZoneStorage
     ZonedDateTime datetime;
 
     public ChatEntity() {}
 
-    public ChatEntity(Long usersId, UserEntity sender, UserEntity recipient, ChatEntity replied, String message, String image, Status status, ZonedDateTime datetime){
+    public ChatEntity(Long usersId, UserEntity sender, UserEntity recipient, ChatEntity replied, String message, String image, Message status, ZonedDateTime datetime){
         this.usersId = usersId;
         this.sender = sender;
         this.recipient = recipient;
@@ -125,10 +126,10 @@ public class ChatEntity {
         this.message = message;
     }
 
-    public Status getStatus() {
+    public Message getStatus() {
         return status;
     }
-    public void setStatus(Status status) {
+    public void setStatus(Message status) {
         this.status = status;
     }
 

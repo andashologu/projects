@@ -12,10 +12,10 @@
     </c:if>
     <c:choose>
         <c:when test = "${message.getSender().getUsername() == username}">
-            <div class="message-wrapper sender small-margin">
+            <div id="replied-wrapper_${message.getId()}" class="message-wrapper sender small-margin">
         </c:when>
         <c:otherwise>
-            <div class="message-wrapper recipient small-margin">
+            <div id="replied-wrapper_${message.getId()}" class="message-wrapper recipient small-margin">
         </c:otherwise>
     </c:choose><!--open of message-wrapper-->
         <div class="row">
@@ -46,7 +46,7 @@
                     <label class="label-field time smallest-text light">${message.getDatetime().toLocalTime().truncatedTo(ChronoUnit.MINUTES)}</label>
                 </div><!--close of message-->
                 <c:if test="${message.getSender().getUsername() == username}">
-                    <label class="label-field msg-status smaller-text light">${message.getStatus()}</label>
+                    <label id="msg_sts_${message.getId()}" class="label-field msg-status smaller-text light">${message.getStatus()}</label>
                 </c:if>
             </div>
             <div id="reply_${message.getId()}" onclick="openReply(this)" class="reply-icon"><svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="18"><path d="M780-200v-174q0-54-38-92t-92-38H234l154 154-42 42-226-226 226-226 42 42-154 154h416q78 0 134 55.5T840-374v174h-60Z"/></svg></div>

@@ -57,7 +57,7 @@ public class WebSocketControllerTest {
             ZonedDateTime serverDateTime = ZonedDateTime.now();
             ZoneId clientTimeZone = timezone.toZoneId();
             ZonedDateTime clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
-            ChatEntity chat = new ChatEntity(null,sender, recipient, null, message.getText(), null, Status.Sent, clientDateTime);
+            ChatEntity chat = new ChatEntity(null,sender, recipient, null, message.getText(), null, Status.Message.Sent, clientDateTime);
             chat.setUsersid();
             chatRepository.save(chat);
             simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply/test", message);

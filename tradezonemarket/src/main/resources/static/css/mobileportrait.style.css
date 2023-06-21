@@ -38,16 +38,6 @@
     .text-field{
         background-color: #cacaca2a;
     }
-    textarea.text-field {
-        appearance: none;/*mobile ignore box-shadow*/
-        border-radius: 35px;
-        padding: 10px 25px;
-        box-shadow: 0px 0px 2px 0 #cacaca;
-        background-color: white;
-    }
-    textarea.text-field + .horozontalline{
-        display: none;
-    }
     .auth-component{
         padding: 0 40px 0px;
     }
@@ -61,6 +51,7 @@
     .chat_item.content {
         height: 100%;
         padding: 0;
+        margin-top: 0;
     }
     #mobile-back-arrow{
         display: flex;

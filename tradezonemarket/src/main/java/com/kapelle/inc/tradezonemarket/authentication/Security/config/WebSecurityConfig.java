@@ -59,17 +59,16 @@ public class WebSecurityConfig {
 
         http
             .authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/admin/**").hasRole("ADMIN")//user roles has not been configured corrctly so these urls will not work
-                .requestMatchers("/user/**").hasRole("USER") // url such as /user/add/post
+                .requestMatchers("/admin/**").hasRole("ADMIN")//if user roles are not configured correctly, these urls will not work
+                .requestMatchers("/user/**").hasRole("USER") // url such as /user/editor or add/post
                 .requestMatchers("/chat", "chat/**").authenticated()
                 .anyRequest().permitAll()
             )
             .formLogin((form) -> form
                 .loginPage("/login").permitAll()
-                //.successForwardUrl("/login_success_handler")//support POST method
-                .failureForwardUrl("/login_failure_handler")
-                //success handler not implemented to allow webwsite (default) to continue to previous url
-                //we'll need modal for pages that allow all users
+                .failureForwardUrl("/login_failure_handler") //support POST method
+                //success handler not implemented to allow website (default) to continue to previous url
+                //A modal will be required for pages that allow all users
             )
             .rememberMe(me -> me
                 .key("KSESSIONLGN")
@@ -82,7 +81,6 @@ public class WebSecurityConfig {
             )
             .securityContext(context -> context
                 .securityContextRepository(securityContextRepository))
-            //spring security forms already take care of this...
             .csrf((csrf) -> csrf
                 .ignoringRequestMatchers("/ws/**")
                 //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())

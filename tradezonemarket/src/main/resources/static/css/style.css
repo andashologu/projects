@@ -42,7 +42,7 @@ p{
     margin: 0;
     line-height: 1.2em;
 }
-input[type="text"], textarea, p{
+input[type="text"], input[type="password"], textarea, p{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 label{
@@ -111,10 +111,39 @@ h1{
     width: 255px;
     min-height: 475px;
     /*border-radius: 10px;*/
-    overflow: hidden;
+    /*overflow: hidden;*//*dropshadow*/
     background-color: transparent;
     box-shadow: inset 0 1px 0px 1px rgb(202 202 202 / 50%);/*#cacaca80 same*/
 }
+.lifted {
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.drop-shadow {
+    position: relative;
+    background: #fff;/*hide after and before*/
+}
+.lifted:before, .lifted:after {
+    bottom: 15px;
+    left: 10px;
+    width: 50%;
+    height: 20%;
+    max-width: 300px;
+    max-height: 100px;
+    box-shadow: 0 15px 10px rgba(0, 0, 0, 0.7);
+    transform: rotate(-3deg);
+}
+.drop-shadow:before, .drop-shadow:after {
+    content: "";
+    position: absolute;
+    z-index: -2;
+}
+.lifted:after{
+    right: 10px;
+    left: auto;
+    transform: rotate(3deg);
+}
+
 .auth_form_wrapper.large{
     display: flex;
     flex-direction: column;
@@ -156,9 +185,6 @@ h1{
     flex-direction: column;
     align-items: stretch;
 }
-.field-wrapper-2 .field-wrapper{
-    column-gap: 115px;
-}
 .content-wrapper-2{
     display: flex;
     flex-direction: column;
@@ -193,9 +219,15 @@ h1{
     min-width: 0; /*avoid flex children (inputs have min width > 100) exceed parent wodth*/
     border-radius: 0;
 }
+textarea.text-field {
+    appearance: none;/*mobile ignore box-shadow*/
+    border-radius: 35px;
+    padding: 10px 25px;
+    box-shadow: 0px 0px 2px 0 #cacaca;
+    background-color: white;
+}
 .search-field{
     padding: 10px 0 10px 25px;
-    background-color: #cacaca2a;
 }
 .field-wrapper .label-field{
     flex-grow: 1;
@@ -260,7 +292,7 @@ h1{
     height: 1px;
     width: 100%;
 }
-button, input[type="button"], input[type="submit"], .button{
+button, input[type="button"], input[type="submit"], .button, .submit{
     font-family: 'Cormorant Garamond', serif;
 }
 .button{
@@ -275,10 +307,13 @@ button, input[type="button"], input[type="submit"], .button{
     display: flex; 
     flex-direction: row; 
     flex-grow: 0; 
-    flex-wrap: wrap; 
     align-items: center; 
     box-shadow: 0 0 10px 0px #cacaca;
     font-weight: 600;
+}
+.submit{
+    background: transparent;
+    color: white;
 }
 .button:hover{
     box-shadow: none;
@@ -293,7 +328,6 @@ button, input[type="button"], input[type="submit"], .button{
     align-self: stretch;
     text-align: center;
     text-decoration: none;
-    padding: 8px 15px;
     /*border: 1px solid #cacaca;*//*NB: desktop browsers dont support border width less than 1px*/
     border: none;
     box-shadow: none;
@@ -346,9 +380,8 @@ button, input[type="button"], input[type="submit"], .button{
     display: grid;  
 }
 .grid_3 {
-    width: 100%;
     grid-template-rows: auto;
-    grid-template-columns: 0.8fr 1.4fr 0.8fr;
+    grid-template-columns: 0.8fr 1.2fr 1fr;
     grid-auto-columns: 1fr;
     display: grid;
 }
@@ -368,6 +401,11 @@ button, input[type="button"], input[type="submit"], .button{
     display: flex;/*solve: last chat of containers margin-top increase parent max-height*/
     flex-direction: column;
     padding: 0 10px 0 10px;
+    margin-top: 5%;
+}
+.chat_item.content .flexi-content-wrapper{
+    margin-left: 5%;
+    
 }
 .chat_item.profile{
     background-color: white;

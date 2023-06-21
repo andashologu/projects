@@ -5,12 +5,15 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUser;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,35 +39,51 @@ public class WebSocketController {
     @Autowired 
     UserRepository userRepository;
 
-    @PostMapping("/chat/sendmessage")
-    public String sendToSpecificUser(@RequestParam Boolean insert, @Payload ChatMessage message, Principal user, TimeZone timezone, Model model, Principal loggedUser) throws UsernameNotFoundException {
+    @Autowired 
+    SimpUserRegistry simpUserRegistry;//work with stomp
+
+    @PostMapping("/chat/message")
+    public String sendToSpecificUser(@RequestParam Boolean insert, @Payload ChatMessage message, Principal user, TimeZone timezone, Model model) throws UsernameNotFoundException {
         UserEntity sender = null;
         UserEntity recipient = null;
-        if(insert){
+        if(insert) { //returned sender
             sender = userRepository.findByUsernameIgnoreCase(user.getName());
             recipient = userRepository.findByUsernameIgnoreCase(message.getTo());
-        }
-        else{
+        } else { //returned to recipient
             sender = userRepository.findByUsernameIgnoreCase(message.getTo());
             recipient = userRepository.findByUsernameIgnoreCase(user.getName());
         }
         ZonedDateTime clientDateTime = null;
         ChatEntity chat = null;
-        if(sender != null | recipient != null) {
-            if(recipient == null) {
-                recipient = userRepository.findById(message.getRecipientId()).get();
-                if(recipient == null){
-                    throw new UsernameNotFoundException("Recipient could not be found !!!");
-                }
-            }
+        if(sender != null && recipient != null) {
             ZonedDateTime serverDateTime = ZonedDateTime.now();
             ZoneId clientTimeZone = timezone.toZoneId();
             clientDateTime = serverDateTime.withZoneSameInstant(clientTimeZone);
-            chat = new ChatEntity(null,sender, recipient, null, message.getText(), null, Status.Sent, clientDateTime);
-            if(insert){
+            if(insert) {
+                chat = new ChatEntity(null,sender, recipient, null, message.getText(), null, Status.Message.Sent, clientDateTime);//initially set message status to sent
+                Set<SimpUser> loggedUsers = simpUserRegistry.getUsers();
+                for(SimpUser simpUser: loggedUsers) {
+                    if(simpUser.getName().equals(message.getTo())){//if recipient is logged to websocket, set message status to delivered
+                        chat.setStatus(Status.Message.Delivered);
+                        break;
+                    }
+                }
                 chat.setUsersid();
                 chatRepository.save(chat);
-                simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/reply", message);
+                if(sender != null) {
+                    message.setSenderId(sender.getId());
+                }
+                message.setMessageId(chat.getId());
+                simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/recievemessage", message);
+            } else {
+                Optional<ChatEntity> sentChat = chatRepository.findById(message.getMessageId());
+                chat = sentChat.get();
+                chat.setStatus(Status.Message.Seen);
+                chatRepository.save(chat);//will be updated, not new record
+                if(sender != null) {
+                    simpMessagingTemplate.convertAndSendToUser(sender.getUsername(), "/queue/messagestatus", new ChatMessage(chat.getId(), null, chat.getRecipient().getId(), null, null, Status.Message.Seen, null));
+                }
+                //the message is updated as seen on the client side with javascript using message Id
             }
         } 
         else {
@@ -86,15 +105,10 @@ public class WebSocketController {
 
         model.addAttribute("messages", messagesList);
         model.addAttribute("pagenumber", null);
-        model.addAttribute("username", loggedUser.getName());
+        model.addAttribute("username", user.getName());
         model.addAttribute("today", today.toLocalDate());/*must compare only date! not zone date, hence this conversion */
         model.addAttribute("yesterday", yesterday.toLocalDate());
         model.addAttribute("thisweek", thisweek.toLocalDate());
         return "chat/components/messages";
-    }
-    // Mapped as /app/specific/typingstatus
-    @MessageMapping("/specific/typingstatus")
-    public void sendTypingStatus(@Payload ChatMessage message) {
-        simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/queue/typingstatus", message);
     }
 }

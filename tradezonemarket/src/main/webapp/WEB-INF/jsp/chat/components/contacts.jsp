@@ -19,6 +19,7 @@
                         <div class="label-field smaller-text light bold-text">${contact.getRecipient().getUsername()}</div><!--label tag does not inherit cursor-->
                     </c:otherwise>
                 </c:choose>
+                <div class="smaller-text light">&#x2022;</div>
                 <c:set var="date" scope="request" value="${contact.getDatetime()}"/>
                 <!--goes after the above scope for date the following page/component-->
                 <jsp:include page="date.jsp">

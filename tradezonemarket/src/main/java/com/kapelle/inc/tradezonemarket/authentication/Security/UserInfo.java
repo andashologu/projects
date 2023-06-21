@@ -22,11 +22,11 @@ public class UserInfo implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String ROLE_PERFIX = "ROLE_";
+        String ROLE_PREFIX = "ROLE_";
         Collection<RoleEntity> roles = user.getRoles();
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for(RoleEntity role: roles){
-            authorities.add(new SimpleGrantedAuthority(ROLE_PERFIX + role.getName()));
+            authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + role.getName()));
         }
         return authorities;
     }
