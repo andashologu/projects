@@ -6,7 +6,6 @@ public class Status {
         Sent, Delivered, Seen;
     }
 
-
     public class Online {
 
         private Long userId;

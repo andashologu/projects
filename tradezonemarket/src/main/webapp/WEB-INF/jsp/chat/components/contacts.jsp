@@ -13,21 +13,21 @@
             <div class="row">
                 <c:choose>
                     <c:when test = "${contact.getSender().getUsername() != username}">
-                        <div class="label-field smaller-text light bold-text">${contact.getSender().getUsername()}</div><!--label tag does not inherit cursor-->
+                        <div class="label-field smaller-text dark bold-text">${contact.getSender().getUsername()}</div><!--label tag does not inherit cursor-->
                     </c:when>
                     <c:otherwise>
-                        <div class="label-field smaller-text light bold-text">${contact.getRecipient().getUsername()}</div><!--label tag does not inherit cursor-->
+                        <div class="label-field smaller-text dark bold-text">${contact.getRecipient().getUsername()}</div><!--label tag does not inherit cursor-->
                     </c:otherwise>
                 </c:choose>
-                <div class="smaller-text light">&#x2022;</div>
+                <div class="smaller-text dark">&#x2022;</div>
                 <c:set var="date" scope="request" value="${contact.getDatetime()}"/>
                 <!--goes after the above scope for date the following page/component-->
                 <jsp:include page="date.jsp">
-                    <jsp:param name="style" value="message-wrapper smaller-text light italic"/>
+                    <jsp:param name="style" value="message-wrapper smaller-text dark italic"/>
                 </jsp:include>
-                <label style="text-decoration: underline;" class="label-field smaller-text light italic">@${contact.getDatetime().toLocalTime().truncatedTo(ChronoUnit.MINUTES)}</label>
+                <label style="text-decoration: underline;" class="label-field smaller-text dark italic">@${contact.getDatetime().toLocalTime().truncatedTo(ChronoUnit.MINUTES)}</label>
             </div>
-            <p style="margin-right: 15px;" class="smaller-text dark short-text">${contact.getMessage()}</p>
+            <p style="margin-right: 15px;" class="smaller-text light short-text">${contact.getMessage()}</p>
         </div>
     </div>
 </c:forEach>

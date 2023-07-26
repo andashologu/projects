@@ -42,7 +42,14 @@
                             <p class="smaller-text light short-text">${message.getReplied().getMessage()}</p>
                         </div>
                     </c:if>
-                    <p id="msg_${message.getId()}" class="smaller-text dark">${message.getMessage()}</p>
+                    <c:choose>
+                        <c:when test = "${!message.isRead()}">
+                            <p style="font-weight: bold;" id="msg_${message.getId()}" class="smaller-text dark">${message.getMessage()}</p>
+                        </c:when>
+                        <c:otherwise>
+                            <p id="msg_${message.getId()}" class="smaller-text dark">${message.getMessage()}</p>
+                        </c:otherwise>
+                    </c:choose>
                     <label class="label-field time smallest-text light">${message.getDatetime().toLocalTime().truncatedTo(ChronoUnit.MINUTES)}</label>
                 </div><!--close of message-->
                 <c:if test="${message.getSender().getUsername() == username}">

@@ -99,6 +99,7 @@ public class ChatController {
             chat.setDatetime(loggedUserDateTime);
             if(chat.getStatus() != Status.Message.Seen && user == chat.getRecipient()) {
                     chat.setStatus(Status.Message.Seen);
+                    chat.setRead(false);
                     chatRepository.save(chat);
                     simpMessagingTemplate.convertAndSendToUser(chat.getSender().getUsername(), "/queue/messagestatus", new ChatMessage(chat.getId(), null, chat.getRecipient().getId(), null, null, Status.Message.Seen, null));
                     //message can be updated as seen on the client side with javascript using message Id

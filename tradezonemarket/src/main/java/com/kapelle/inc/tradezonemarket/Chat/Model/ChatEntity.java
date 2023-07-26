@@ -22,6 +22,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -54,6 +55,9 @@ public class ChatEntity {
     @JdbcTypeCode(SqlTypes.LONGVARCHAR)/*for long text storage. But please specify max size for this field in js and html */
     @NotNull
     public String message;
+
+    @Transient
+    public Boolean isRead; //is read false only if status must be update to seen by the recipient
 
     public String image;
 
@@ -131,6 +135,13 @@ public class ChatEntity {
     }
     public void setStatus(Message status) {
         this.status = status;
+    }
+
+    public Boolean isRead() {
+        return isRead;
+    }
+    public void setRead(Boolean isRead) {
+        this.isRead = isRead;
     }
 
     public ZonedDateTime getDatetime() {

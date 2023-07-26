@@ -107,7 +107,7 @@ h1{
 .auth_form_wrapper{
     position: relative;
     margin: 0 auto;
-    padding: 90px 80px 40px 80px;/*top , left&right, bottom*/
+    padding: 10px 80px 40px 80px;/*top , left&right, bottom*/
     width: 255px;
     min-height: 475px;
     /*border-radius: 10px;*/
@@ -168,6 +168,7 @@ h1{
     flex-direction: column;
     row-gap: 10px;
     z-index: 2;
+    padding-top: 70px;
 }
 .field-wrapper{
     display: flex;
@@ -237,7 +238,7 @@ textarea.text-field {
     font-size: 13px;
 }
 .smaller-text{
-    font-size: 16px;
+    font-size: 18px;
 }
 .small-text{
     font-size: 20px;
@@ -298,12 +299,11 @@ button, input[type="button"], input[type="submit"], .button, .submit{
 .button{
     font-weight: 700;
     letter-spacing: 1.13px;
-    padding: auto 15px;
     color: white;
     background-color: black;
     cursor: pointer;
     border: none;
-    border-radius: 0;
+    border-radius: 35px;
     display: flex; 
     flex-direction: row; 
     flex-grow: 0; 
@@ -323,7 +323,7 @@ button, input[type="button"], input[type="submit"], .button, .submit{
     font-family:  'Times New Roman', Times, serif;
     letter-spacing: 0.7px;
     font-weight: normal;
-    background-color: transparent;
+    background-color: white;
     color: black;
     align-self: stretch;
     text-align: center;
