@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,9 +15,11 @@ import org.springframework.security.web.context.DelegatingSecurityContextReposit
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.kapelle.inc.tradezonemarket.authentication.user.Service.UserInfoService;
 
@@ -51,7 +54,7 @@ public class WebSecurityConfig {
     }
 
     @Bean 
-    public SecurityFilterChain filterChain(HttpSecurity http, SecurityContextRepository securityContextRepository) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc, SecurityContextRepository securityContextRepository) throws Exception {
     
         //spring security forms already take care of this...
         //CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
@@ -59,9 +62,9 @@ public class WebSecurityConfig {
 
         http
             .authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/admin/**").hasRole("ADMIN")//if user roles are not configured correctly, these urls will not work
-                .requestMatchers("/user/**").hasRole("USER") // url such as /user/editor or add/post
-                .requestMatchers("/chat", "chat/**").authenticated()
+                .requestMatchers(mvc.pattern("/admin/**")).hasRole("ADMIN")//if user roles are not configured correctly, these urls will not work
+                .requestMatchers(mvc.pattern("/user/**")).hasRole("USER") // url such as /user/editor or add/post
+                .requestMatchers(mvc.pattern("/chat"), mvc.pattern( "chat/**")).authenticated()
                 .anyRequest().permitAll()
             )
             .formLogin((form) -> form
@@ -82,7 +85,7 @@ public class WebSecurityConfig {
             .securityContext(context -> context
                 .securityContextRepository(securityContextRepository))
             .csrf((csrf) -> csrf
-                .ignoringRequestMatchers("/ws/**")
+                .ignoringRequestMatchers(mvc.pattern("/ws/**"))
                 //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 //.csrfTokenRequestHandler(requestHandler)
             )
@@ -90,7 +93,13 @@ public class WebSecurityConfig {
                 .frameOptions((frameOptions) -> frameOptions.sameOrigin())
             );
         return http.build();
-    } 
+    }
+
+    @Scope("prototype")
+	@Bean
+	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+		return new MvcRequestMatcher.Builder(introspector);
+	}
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
