@@ -42,8 +42,9 @@ p{
     margin: 0;
     line-height: 1.2em;
 }
-input[type="text"], input[type="password"], textarea, p{
+input[type="text"], input[type="password"], input[type="email"], textarea, p{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 5px 10px;
 }
 label{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -111,7 +112,11 @@ h1{
     margin: 0 auto;
     width: 255px;
     min-height: 475px;
+    min-height: 600px;
     min-width: 400px;
+}
+.auth_form_wrapper form{
+    padding: 20px 70px;
 }
 .lifted {
     -moz-border-radius: 4px;
@@ -142,7 +147,7 @@ h1{
     transform: rotate(3deg);
 }
 
-.auth_form_wrapper.large{
+/*.auth_form_wrapper.large{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -151,6 +156,9 @@ h1{
     height: auto;
     padding: 0;
     border: none;
+}*/
+.auth_form_wrapper.large{
+    width: 100%;
 }
 .auth-component{
     position: relative;
@@ -215,6 +223,9 @@ h1{
     padding: 12px;
     min-width: 0; /*avoid flex children (inputs have min width > 100) exceed parent wodth*/
     border-radius: 0;
+}
+.text-field-2 {
+    background-color: transparent;
 }
 textarea.text-field {
     appearance: none;/*mobile ignore box-shadow*/
@@ -304,7 +315,6 @@ button, input[type="button"], input[type="submit"], .button, .submit{
     flex-direction: row; 
     flex-grow: 0; 
     align-items: center; 
-    box-shadow: 0 0 10px 0px #cacaca;
     font-weight: 600;
 }
 .submit{
