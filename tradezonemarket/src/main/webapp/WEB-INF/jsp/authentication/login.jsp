@@ -68,21 +68,21 @@
                 <div style="box-shadow: 0 0 6px #efefef inset;" class="auth_form_wrapper drop-shadow lifted">
                     <button id="close_button" class="hidden">Close</button>
                     <div></div>
-                    <svg style="height: 50%; width: 100%; background: linear-gradient(90deg, whitesmoke 50%, transparent 50%);" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.96 25.06">
+                    <svg style="background: linear-gradient(90deg, whitesmoke 50%, transparent 50%);" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.96 25.06">
                         <rect fill="#efefef" class="cls-1" y="1.51" width="8" height="4"/>
-                        <rect fill="#efefef" class="cls-1" x="4" y="5.51" width="4" height="19.55"/>
-                        <rect fill="#efefef" class="cls-1" x="9" y="1.51" width="4" height="4"/>
+                        <rect fill="white" class="cls-1" x="4" y="5.51" width="4" height="19.55"/>
+                        <rect fill="white" class="cls-1" x="9" y="1.51" width="4" height="4"/>
+                        <polygon fill="white" class="cls-1" points="11 25.06 14 1.51 18 1.51 15 25.06 11 25.06"/>
+                        <rect fill="#efefef" class="cls-1" x="18" y="21.06" width="4" height="4"/>
+                        <path fill="whitesmoke" class="cls-1" d="m18,20.06h4s0-6.06,0-6.06c0,0,.2-1.63,1.41-1.75l1.71-.05,1.41.04c1.27.03,1.41,1.76,1.41,1.76v11.06h4.02v-11.17s-.02-3.5-.28-4.38c0,0-.05-2.74-3.74-2.73-2.33-.01-2.97,2.71-2.97,2.71,0,0-.37-2.72-2.97-2.71,0,0-2.5-.03-4,0v13.28Z"/>
+                    </svg>
+                    <svg style="background: linear-gradient(90deg, #efefef 50%, transparent 50%);" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.96 25.06">
+                        <rect fill="white" class="cls-1" y="1.51" width="8" height="4"/>
+                        <rect fill="white" class="cls-1" x="4" y="5.51" width="4" height="19.55"/>
+                        <rect fill="white" class="cls-1" x="9" y="1.51" width="4" height="4"/>
                         <polygon fill="white" class="cls-1" points="11 25.06 14 1.51 18 1.51 15 25.06 11 25.06"/>
                         <rect fill="whitesmoke" class="cls-1" x="18" y="21.06" width="4" height="4"/>
                         <path fill="whitesmoke" class="cls-1" d="m18,20.06h4s0-6.06,0-6.06c0,0,.2-1.63,1.41-1.75l1.71-.05,1.41.04c1.27.03,1.41,1.76,1.41,1.76v11.06h4.02v-11.17s-.02-3.5-.28-4.38c0,0-.05-2.74-3.74-2.73-2.33-.01-2.97,2.71-2.97,2.71,0,0-.37-2.72-2.97-2.71,0,0-2.5-.03-4,0v13.28Z"/>
-                    </svg>
-                    <svg style="height: 50%; width: 100%; background: linear-gradient(90deg, #efefef 50%, transparent 50%);" id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.96 25.06">
-                        <rect fill="whitesmoke" class="cls-1" y="1.51" width="8" height="4"/>
-                        <rect fill="whitesmoke" class="cls-1" x="4" y="5.51" width="4" height="19.55"/>
-                        <rect fill="whitesmoke" class="cls-1" x="9" y="1.51" width="4" height="4"/>
-                        <polygon fill="white" class="cls-1" points="11 25.06 14 1.51 18 1.51 15 25.06 11 25.06"/>
-                        <rect fill="#efefef" class="cls-1" x="18" y="21.06" width="4" height="4"/>
-                        <path fill="#efefef" class="cls-1" d="m18,20.06h4s0-6.06,0-6.06c0,0,.2-1.63,1.41-1.75l1.71-.05,1.41.04c1.27.03,1.41,1.76,1.41,1.76v11.06h4.02v-11.17s-.02-3.5-.28-4.38c0,0-.05-2.74-3.74-2.73-2.33-.01-2.97,2.71-2.97,2.71,0,0-.37-2.72-2.97-2.71,0,0-2.5-.03-4,0v13.28Z"/>
                     </svg>
                     <form:form id="login_form" class="form-block"  action="/login" method="POST">
                         <div class="field-wrapper-2">
