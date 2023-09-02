@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.authentication.Security;
+package com.kapelles.inc.TZm.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,8 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.kapelles.inc.TZm.authentication.user.Model.RoleEntity;
-import com.kapelles.inc.TZm.authentication.user.Model.UserEntity;
+import com.kapelles.inc.TZm.authentication.user.model.RoleEntity;
+import com.kapelles.inc.TZm.authentication.user.model.UserEntity;
 
 public class UserInfo implements UserDetails {
     

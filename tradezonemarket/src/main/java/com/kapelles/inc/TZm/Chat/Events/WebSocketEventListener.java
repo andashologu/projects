@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.Chat.Events;
+package com.kapelles.inc.TZm.chat.events;
 
 import java.security.Principal;
 import java.util.List;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import com.kapelles.inc.TZm.Chat.Model.ChatEntity;
-import com.kapelles.inc.TZm.Chat.Model.ChatMessage;
-import com.kapelles.inc.TZm.Chat.Model.ChatRepository;
-import com.kapelles.inc.TZm.Chat.Model.Status;
-import com.kapelles.inc.TZm.authentication.user.Model.UserEntity;
-import com.kapelles.inc.TZm.authentication.user.Model.UserRepository;
+import com.kapelles.inc.TZm.chat.model.ChatEntity;
+import com.kapelles.inc.TZm.chat.model.ChatMessage;
+import com.kapelles.inc.TZm.chat.model.ChatRepository;
+import com.kapelles.inc.TZm.chat.model.Status;
+import com.kapelles.inc.TZm.authentication.user.model.UserEntity;
+import com.kapelles.inc.TZm.authentication.user.model.UserRepository;
 
 @Component
 public class WebSocketEventListener {

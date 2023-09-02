@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.authentication.Security.config;
+package com.kapelles.inc.TZm.security.config;
 
 import java.util.Arrays;
 
@@ -21,7 +21,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import com.kapelles.inc.TZm.authentication.user.Service.UserInfoService;
+import com.kapelles.inc.TZm.authentication.user.service.UserInfoService;
 
 @Configuration 
 @EnableWebSecurity 

@@ -1,8 +1,8 @@
-package com.kapelles.inc.TZm.TradeZoneMarket.Controller;
+package com.kapelles.inc.TZm.home.controller;
 
 
 //@Controller
-public class User{
+public class UserController{
     /* 
     @GetMapping("/user/settings/update-account")
     public String accountSettings(){

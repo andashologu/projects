@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.authentication.user.Model;
+package com.kapelles.inc.TZm.authentication.user.model;
 
 import java.util.Optional;
 

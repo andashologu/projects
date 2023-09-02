@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.Chat.Controller;
+package com.kapelles.inc.TZm.chat.controller;
 
 import java.security.Principal;
 import java.time.ZoneId;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kapelles.inc.TZm.Chat.Model.ChatEntity;
-import com.kapelles.inc.TZm.Chat.Model.ChatMessage;
-import com.kapelles.inc.TZm.Chat.Model.ChatRepository;
-import com.kapelles.inc.TZm.Chat.Model.Status;
-import com.kapelles.inc.TZm.authentication.user.Model.UserEntity;
-import com.kapelles.inc.TZm.authentication.user.Model.UserRepository;
+import com.kapelles.inc.TZm.chat.model.ChatEntity;
+import com.kapelles.inc.TZm.chat.model.ChatMessage;
+import com.kapelles.inc.TZm.chat.model.ChatRepository;
+import com.kapelles.inc.TZm.chat.model.Status;
+import com.kapelles.inc.TZm.authentication.user.model.UserEntity;
+import com.kapelles.inc.TZm.authentication.user.model.UserRepository;
 
 @Controller
 public class WebSocketControllerTest {

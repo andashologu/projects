@@ -1,13 +1,13 @@
-package com.kapelles.inc.TZm.authentication.user.Service;
+package com.kapelles.inc.TZm.authentication.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails; 
 import org.springframework.security.core.userdetails.UserDetailsService; 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.kapelles.inc.TZm.authentication.Security.UserInfo;
-import com.kapelles.inc.TZm.authentication.user.Model.UserEntity;
-import com.kapelles.inc.TZm.authentication.user.Model.UserRepository;
+import com.kapelles.inc.TZm.security.UserInfo;
+import com.kapelles.inc.TZm.authentication.user.model.UserEntity;
+import com.kapelles.inc.TZm.authentication.user.model.UserRepository;
 
 public class UserInfoService implements UserDetailsService { 
     

@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.authentication.login.Controller;
+package com.kapelles.inc.TZm.authentication.login.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

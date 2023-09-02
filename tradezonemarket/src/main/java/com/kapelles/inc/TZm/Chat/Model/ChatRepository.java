@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.Chat.Model;
+package com.kapelles.inc.TZm.chat.model;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -6,8 +6,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.kapelles.inc.TZm.Chat.Model.Status.Message;
-import com.kapelles.inc.TZm.authentication.user.Model.UserEntity;
+import com.kapelles.inc.TZm.chat.model.Status.Message;
+import com.kapelles.inc.TZm.authentication.user.model.UserEntity;
 
 public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
 

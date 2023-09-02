@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.Chat.Model;
+package com.kapelles.inc.TZm.chat.model;
 
 public class Status {
 

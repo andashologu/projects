@@ -1,11 +1,11 @@
-package com.kapelles.inc.TZm.authentication.user.Model;
+package com.kapelles.inc.TZm.authentication.user.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.kapelles.inc.TZm.Chat.Model.ChatEntity;
-import com.kapelles.inc.TZm.authentication.user.Validation.UniqueEmailConstraint;
-import com.kapelles.inc.TZm.authentication.user.Validation.UniqueUsernameConstraint;
+import com.kapelles.inc.TZm.chat.model.ChatEntity;
+import com.kapelles.inc.TZm.authentication.user.validation.UniqueEmailConstraint;
+import com.kapelles.inc.TZm.authentication.user.validation.UniqueUsernameConstraint;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

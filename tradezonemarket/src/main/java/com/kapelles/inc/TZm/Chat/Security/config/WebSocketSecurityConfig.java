@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.Chat.Security.config;
+package com.kapelles.inc.TZm.chat.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

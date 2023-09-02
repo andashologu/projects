@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.authentication.registration.Controller;
+package com.kapelles.inc.TZm.authentication.registration.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kapelles.inc.TZm.authentication.user.Model.RoleEntity;
-import com.kapelles.inc.TZm.authentication.user.Model.RoleRepository;
-import com.kapelles.inc.TZm.authentication.user.Model.UserEntity;
-import com.kapelles.inc.TZm.authentication.user.Model.UserRepository;
+import com.kapelles.inc.TZm.authentication.user.model.RoleEntity;
+import com.kapelles.inc.TZm.authentication.user.model.RoleRepository;
+import com.kapelles.inc.TZm.authentication.user.model.UserEntity;
+import com.kapelles.inc.TZm.authentication.user.model.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

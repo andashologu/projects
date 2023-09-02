@@ -1,12 +1,12 @@
-package com.kapelles.inc.TZm.authentication.user.Validation;
+package com.kapelles.inc.TZm.authentication.user.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.kapelles.inc.TZm.authentication.user.Model.UserEntity;
-import com.kapelles.inc.TZm.authentication.user.Model.UserRepository;
+import com.kapelles.inc.TZm.authentication.user.model.UserEntity;
+import com.kapelles.inc.TZm.authentication.user.model.UserRepository;
 
 
 

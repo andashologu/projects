@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.Chat.Model;
+package com.kapelles.inc.TZm.chat.model;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,8 +7,8 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.TimeZoneStorage;
 import org.hibernate.type.SqlTypes;
 
-import com.kapelles.inc.TZm.Chat.Model.Status.Message;
-import com.kapelles.inc.TZm.authentication.user.Model.UserEntity;
+import com.kapelles.inc.TZm.chat.model.Status.Message;
+import com.kapelles.inc.TZm.authentication.user.model.UserEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

@@ -1,4 +1,4 @@
-package com.kapelles.inc.TZm.authentication.user.Validation;
+package com.kapelles.inc.TZm.authentication.user.validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
