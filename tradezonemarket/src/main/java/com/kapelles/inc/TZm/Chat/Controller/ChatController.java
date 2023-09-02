@@ -6,7 +6,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TimeZone;
+import java.util.TimeZone; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -51,6 +51,7 @@ public class ChatController {
     }
     @GetMapping("/chat/api/contacts")
     public String contacts(@RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser, HttpSession session) {
+        
         Pageable pageable = PageRequest.of(pagenumber, pagesize);
         Slice<ChatEntity> contactsSlice = chatRepository.findContacts(userRepository.findByUsername(loggedUser.getName()), pageable);
         List<ChatEntity> contactsList = contactsSlice.getContent();
@@ -62,6 +63,7 @@ public class ChatController {
         ZonedDateTime chatDateTime = null;
         ZonedDateTime loggedUserDateTime = null;
         for(ChatEntity contact: contactsSlice) {
+
             chatDateTime = contact.getDatetime();
             loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
             contact.setDatetime(loggedUserDateTime);
@@ -77,6 +79,7 @@ public class ChatController {
     }
     @GetMapping("/chat/api/messages")
     public String messages(@RequestParam Long initialId, @RequestParam Long id, @RequestParam int pagenumber, @RequestParam int pagesize, TimeZone timezone, Model model, Principal loggedUser) {
+        
         Pageable pageable = PageRequest.of(pagenumber, pagesize);
         Optional<UserEntity> contact = userRepository.findById(id);
         UserEntity user = userRepository.findByUsername(loggedUser.getName());
@@ -94,6 +97,7 @@ public class ChatController {
         ZonedDateTime chatDateTime = null;
         ZonedDateTime loggedUserDateTime = null;
         for(ChatEntity chat: messagesSlice) {
+
             chatDateTime = chat.getDatetime();
             loggedUserDateTime = chatDateTime.withZoneSameInstant(timezone.toZoneId());
             chat.setDatetime(loggedUserDateTime);
@@ -124,6 +128,7 @@ public class ChatController {
         model.addAttribute("username", loggedUser.getName());
         Set<SimpUser> loggedUsers = simpUserRegistry.getUsers();
         for(SimpUser simpUser: loggedUsers){
+            
             if(simpUser.getName().equals(chat_username)) {//if recipient is logged to websocket, set message status to delivered
                 isActive = true;
                 break;
